@@ -1,0 +1,93 @@
+swagger: "2.0"
+info:
+  description: "This is API Document of Minnano-Zisuikun"
+  version: "1.0.0"
+  title: "ALTAIR API Document"
+  contact:
+    email: "sato-keiju@kcgrp.jp"
+host: "hostName"
+basePath: "/basePath"
+
+tags:
+  - name: "User"
+    description: "Access to User Information"
+  - name: "Calibrate"
+    description: "Post selected recipes"
+  - name: "Recipe"
+    description: "Access to recipe Information"
+  - name: "Food"
+    description: "Access to Food Information"
+  - name: "Cart"
+    description: "Access to Cart Information"
+  - name: "Order"
+    description: "Access to order Information"
+  - name: "Favorite"
+    description: "Access to favorite recipes Information"
+  - name: "Record"
+    description: "Access to cooking record Information"
+  - name: "Zisui-Power"
+    description: "Access to Zisui-Power Information"
+  - name: "Health"
+    description: "Health check"
+
+schemes:
+  - "https"
+
+paths:
+  # -------------------- User ----------------------
+
+  # -------------------- Caribrate ----------------------
+
+  # -------------------- Recipe ----------------------
+  /v1/recipe:
+    get:
+      tags:
+        - "Recipe"
+      summary: "Get all recipes"
+      description: ""
+      operationId: ""
+      responses:
+        "200":
+          description: "successful operation"
+    post:
+      tags:
+        - "Recipe"
+      summary: "Create new recipe"
+      description: ""
+      operationId: ""
+      produces:
+        - "application/json"
+      parameters:
+        - in: "body"
+          name: "body"
+          description: "recipe object to create"
+          required: true
+          schema:
+            type: "object"
+            required:
+              - "recipeName"
+            properties:
+              recipeName:
+                type: "string"
+                example: "こだわりのハンバーグ"
+              difficulty:
+                type: "int"
+                description: "1 - 5"
+                example: "4"
+      responses:
+        default:
+          description: "successful operation"
+
+  # -------------------- Food ----------------------
+
+  # -------------------- Cart ----------------------
+
+  # -------------------- Order ----------------------
+
+  # -------------------- Favorite ----------------------
+
+  # -------------------- Record ----------------------
+
+  # -------------------- Zisui-Power ----------------------
+
+  # -------------------- Health ----------------------
