@@ -2,7 +2,7 @@ swagger: "2.0"
 info:
   description: "This is API Document of Minnano-Zisuikun"
   version: "1.0.0"
-  title: "ALTAIR API Document"
+  title: "Minnna-No-Zisuikun API Document"
   contact:
     email: "sato-keiju@kcgrp.jp"
 host: "hostName"
@@ -71,9 +71,9 @@ paths:
                 type: "string"
                 example: "こだわりのハンバーグ"
               difficulty:
-                type: "int"
+                type: "integer"
                 description: "1 - 5"
-                example: "4"
+                example: 4
       responses:
         default:
           description: "successful operation"
