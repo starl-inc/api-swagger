@@ -1,8 +1,8 @@
 swagger: "2.0"
 info:
-  description: "This is API Document of Minnano-Zisuikun"
+  description: "This is API Document of Minnano-Jisuikun"
   version: "1.0.0"
-  title: "Minnna-No-Zisuikun API Document"
+  title: "Minnna-No-Jisuikun API Document"
   contact:
     email: "sato-keiju@kcgrp.jp"
 host: "hostName"
@@ -25,18 +25,172 @@ tags:
     description: "Access to favorite recipes Information"
   - name: "Record"
     description: "Access to cooking record Information"
-  - name: "Zisui-Power"
-    description: "Access to Zisui-Power Information"
+  - name: "Jisui-Power"
+    description: "Access to Jisui-Power Information"
   - name: "Health"
     description: "Health check"
 
 schemes:
   - "https"
 
+securityDefinitions:
+  cookieAuth:
+    type: "apiKey"
+    in: "header"
+    name: "sessionId"
+  # firebaseUserJwt:
+  #   type: "apiKey"
+  #   name: "Authorization"
+  #   in: "header"
+
 paths:
   # -------------------- User ----------------------
+  /v1/user:
+    get:
+      tags:
+        - "User"
+      summary: "Get all users"
+      description: ""
+      operationId: ""
+      responses:
+        "200":
+          description: "successful operation"
+    post:
+      tags:
+        - "User"
+      summary: "Create new user"
+      description: ""
+      operationId: ""
+      produces:
+        - "application/json"
+      parameters:
+        - name: "body"
+          in: "body"
+          description: "user object to create"
+          required: true
+          schema:
+            type: "object"
+            required:
+              - "userName"
+            properties:
+              recipeName:
+                type: "string"
+                example: "湊﨑紗夏"
+      responses:
+        "200":
+          description: "successful operation"
 
-  # -------------------- Caribrate ----------------------
+  /v1/user/{userId}:
+    get:
+      tags:
+        - "User"
+      summary: "Get user detail information by user ID"
+      description: ""
+      operationId: ""
+      produces:
+        - "application/json"
+      parameters:
+        - name: "userId"
+          in: "path"
+          description: "User ID"
+          required: true
+          type: "string"
+      responses:
+        "200":
+          description: "successful operation"
+        "404":
+          description: "User not found"
+    put:
+      tags:
+        - "User"
+      summary: "Update attributes of user resource"
+      description: ""
+      operationId: ""
+      produces:
+        - "application/json"
+      parameters:
+        - name: "userId"
+          in: "path"
+          description: "User Id"
+          required: true
+          type: "string"
+        - name: "body"
+          in: "body"
+          description: "Latest user object"
+          required: true
+          schema:
+            type: "object"
+            properties:
+              address:
+                type: "string"
+                example: "大阪府大阪市阿倍野区阿倍野筋1丁目1−43"
+      responses:
+        "200":
+          description: "successful operation"
+        "404":
+          description: "User not found"
+        "422":
+          description: "Invalid payload supplied"
+    delete:
+      tags:
+        - "Recipe"
+      summary: "Delete user"
+      description: ""
+      operationId: ""
+      produces:
+        - "application/json"
+      parameters:
+        - name: "userId"
+          in: "path"
+          description: "User Id"
+          required: true
+          type: "string"
+      responses:
+        "200":
+          description: "successful operation"
+        "404":
+          description: "User not found"
+
+
+  # -------------------- Calibrate ----------------------
+  /v1/caribrate:
+    post:
+      tags:
+        - "Calibrate"
+      summary: "calibration of user"
+      description: ""
+      operationId: ""
+      security:
+        - cookieAuth: []
+      produces:
+        - "application/json"
+      parameters:
+        - name: "body"
+          in: "body"
+          description: "favorite recipes and cooking experience"
+          required: true
+          schema:
+            type: "object"
+            required:
+              - "favoriteRecipes"
+            properties:
+              favoriteRecipes:
+                type: "array"
+                items:
+                  type: "string"
+                example: ["ハンバーグ", "ラーメン"]
+              experience:
+                type: "array"
+                description: "recipes user had made"
+                items:
+                  type: "string"
+                example: ["野菜炒め"]
+      responses:
+        "200":
+          description: "successful operation"
+        "404":
+          description: "User not found"
+
 
   # -------------------- Recipe ----------------------
   /v1/recipe:
@@ -58,8 +212,8 @@ paths:
       produces:
         - "application/json"
       parameters:
-        - in: "body"
-          name: "body"
+        - name: "body"
+          in: "body"
           description: "recipe object to create"
           required: true
           schema:
@@ -75,19 +229,594 @@ paths:
                 description: "1 - 5"
                 example: 4
       responses:
-        default:
+        "200":
           description: "successful operation"
 
+  /v1/recipe/{recipeId}:
+    get:
+      tags:
+        - "Recipe"
+      summary: "Get recipe detail information by recipe ID"
+      description: ""
+      operationId: ""
+      produces:
+        - "application/json"
+      parameters:
+        - name: "recipeId"
+          in: "path"
+          description: "Recipe ID"
+          required: true
+          type: "string"
+      responses:
+        "200":
+          description: "successful operation"
+        "404":
+          description: "Recipe not found"
+    put:
+      tags:
+        - "Recipe"
+      summary: "Update attributes of recipe resource"
+      description: ""
+      operationId: ""
+      produces:
+        - "application/json"
+      parameters:
+        - name: "recipeId"
+          in: "path"
+          description: "Recipe Id"
+          required: true
+          type: "string"
+        - name: "body"
+          in: "body"
+          description: "Latest recipe object"
+          required: true
+          schema:
+            type: "object"
+            properties:
+              recipeName:
+                type: "string"
+                example: "超こだわりのハンバーグ"
+      responses:
+        "200":
+          description: "successful operation"
+        "404":
+          description: "Recipe not found"
+        "422":
+          description: "Invalid payload supplied"
+    delete:
+      tags:
+        - "Recipe"
+      summary: "Delete recipe"
+      description: ""
+      operationId: ""
+      produces:
+        - "application/json"
+      parameters:
+        - name: "recipeId"
+          in: "path"
+          description: "Recipe Id"
+          required: true
+          type: "string"
+      responses:
+        "200":
+          description: "successful operation"
+        "404":
+          description: "Recipe not found"
+
+
   # -------------------- Food ----------------------
+  /v1/food:
+    get:
+      tags:
+        - "Food"
+      summary: "Get all foods"
+      description: ""
+      operationId: ""
+      responses:
+        "200":
+          description: "successful operation"
+    post:
+      tags:
+        - "Food"
+      summary: "Create new food"
+      description: ""
+      operationId: ""
+      produces:
+        - "application/json"
+      parameters:
+        - name: "body"
+          in: "body"
+          description: "food object to create"
+          required: true
+          schema:
+            type: "object"
+            required:
+              - "foodName"
+            properties:
+              recipeName:
+                type: "string"
+                example: "カリフラワー"
+      responses:
+        "200":
+          description: "successful operation"
+
+  /v1/food/{foodId}:
+    get:
+      tags:
+        - "Food"
+      summary: "Get food detail information by food ID"
+      description: ""
+      operationId: ""
+      produces:
+        - "application/json"
+      parameters:
+        - name: "foodId"
+          in: "path"
+          description: "Food ID"
+          required: true
+          type: "string"
+      responses:
+        "200":
+          description: "successful operation"
+        "404":
+          description: "Food not found"
+    put:
+      tags:
+        - "Food"
+      summary: "Update attributes of food resource"
+      description: ""
+      operationId: ""
+      produces:
+        - "application/json"
+      parameters:
+        - name: "foodId"
+          in: "path"
+          description: "Food Id"
+          required: true
+          type: "string"
+        - name: "body"
+          in: "body"
+          description: "Latest food object"
+          required: true
+          schema:
+            type: "object"
+            properties:
+              foodName:
+                type: "string"
+                example: "ネオカリフラワー"
+      responses:
+        "200":
+          description: "successful operation"
+        "404":
+          description: "Food not found"
+        "422":
+          description: "Invalid payload supplied"
+    delete:
+      tags:
+        - "Food"
+      summary: "Delete food"
+      description: ""
+      operationId: ""
+      produces:
+        - "application/json"
+      parameters:
+        - name: "foodId"
+          in: "path"
+          description: "Food Id"
+          required: true
+          type: "string"
+      responses:
+        "200":
+          description: "successful operation"
+        "404":
+          description: "Food not found"
+
 
   # -------------------- Cart ----------------------
+  /v1/cart:
+    get:
+      tags:
+        - "Cart"
+      summary: "Get all recipes in cart"
+      description: ""
+      operationId: ""
+      security:
+        - cookieAuth: []
+      responses:
+        "200":
+          description: "successful operation"
+
+  /v1/cart/{recipeId}:
+    post:
+      tags:
+        - "Cart"
+      summary: "Add new recipe to cart"
+      description: ""
+      operationId: ""
+      security:
+        - cookieAuth: []
+      produces:
+        - "application/json"
+      parameters:
+        - name: "recipeId"
+          in: "path"
+          description: "Recipe ID"
+          required: true
+          type: "string"
+        - name: "body"
+          in: "body"
+          description: "recipe object to add"
+          required: true
+          schema:
+            type: "object"
+            properties:
+              size:
+                type: "string"
+                example: "大盛"
+              number:
+                type: "integer"
+                example: 2
+      responses:
+        "200":
+          description: "successful operation"
+    put:
+      tags:
+        - "Cart"
+      summary: "Update detail of buying recipe in cart"
+      description: ""
+      operationId: ""
+      security:
+        - cookieAuth: []
+      produces:
+        - "application/json"
+      parameters:
+        - name: "recipeId"
+          in: "path"
+          description: "Recipe Id"
+          required: true
+          type: "string"
+        - name: "body"
+          in: "body"
+          description: "Fields of recipe to update"
+          required: true
+          schema:
+            type: "object"
+            properties:
+              number:
+                type: "integer"
+                example: 1
+      responses:
+        "200":
+          description: "successful operation"
+        "404":
+          description: "Food not found"
+        "422":
+          description: "Invalid payload supplied"
+    delete:
+      tags:
+        - "Cart"
+      summary: "Delete recipe from cart"
+      description: ""
+      operationId: ""
+      security:
+        - cookieAuth: []
+      produces:
+        - "application/json"
+      parameters:
+        - name: "recipeId"
+          in: "path"
+          description: "recipe Id to delete"
+          required: true
+          type: "string"
+      responses:
+        "200":
+          description: "successful operation"
+        "404":
+          description: "recipe not found"
+
 
   # -------------------- Order ----------------------
+  /v1/order:
+    get:
+      tags:
+        - "Order"
+      summary: "Get all orders"
+      description: ""
+      operationId: ""
+      security:
+        - cookieAuth: []
+      responses:
+        "200":
+          description: "successful operation"
+
+  /v1/order/{orderId}:
+    post:
+      tags:
+        - "Order"
+      summary: "Add new recipe to cart"
+      description: ""
+      operationId: ""
+      security:
+        - cookieAuth: []
+      produces:
+        - "application/json"
+      parameters:
+        - name: "orderId"
+          in: "path"
+          description: "Recipe ID"
+          required: true
+          type: "string"
+        - name: "body"
+          in: "body"
+          description: "recipe object to add"
+          required: true
+          schema:
+            type: "object"
+            properties:
+              size:
+                type: "string"
+                example: "大盛"
+              number:
+                type: "integer"
+                example: 2
+      responses:
+        "200":
+          description: "successful operation"
+    put:
+      tags:
+        - "Order"
+      summary: "Update detail of buying recipe in cart"
+      description: ""
+      operationId: ""
+      security:
+        - cookieAuth: []
+      produces:
+        - "application/json"
+      parameters:
+        - name: "orderId"
+          in: "path"
+          description: "Order Id"
+          required: true
+          type: "string"
+        - name: "body"
+          in: "body"
+          description: "Fields of recipe to update"
+          required: true
+          schema:
+            type: "object"
+            properties:
+              number:
+                type: "integer"
+                example: 1
+      responses:
+        "200":
+          description: "successful operation"
+        "404":
+          description: "Food not found"
+        "422":
+          description: "Invalid payload supplied"
+    delete:
+      tags:
+        - "Order"
+      summary: "Delete recipe from cart"
+      description: ""
+      operationId: ""
+      security:
+        - cookieAuth: []
+      produces:
+        - "application/json"
+      parameters:
+        - name: "orderId"
+          in: "path"
+          description: "recipe Id to delete"
+          required: true
+          type: "string"
+      responses:
+        "200":
+          description: "successful operation"
+        "404":
+          description: "recipe not found"
+
 
   # -------------------- Favorite ----------------------
+  /v1/favorite:
+    get:
+      tags:
+        - "Favorite"
+      summary: "Get all favorite recipes"
+      description: ""
+      operationId: ""
+      security:
+        - cookieAuth: []
+      responses:
+        "200":
+          description: "successful operation"
+
+  /v1/favorite/{recipeId}:
+    post:
+      tags:
+        - "Favorite"
+      summary: "Add new favorite recipe"
+      description: ""
+      operationId: ""
+      security:
+        - cookieAuth: []
+      produces:
+        - "application/json"
+      parameters:
+        - name: "recipeId"
+          in: "path"
+          description: "Recipe ID"
+          required: true
+          type: "string"
+      responses:
+        "200":
+          description: "successful operation"
+    delete:
+      tags:
+        - "Favorite"
+      summary: "Delete recipe from favorite recipes"
+      description: ""
+      operationId: ""
+      security:
+        - cookieAuth: []
+      produces:
+        - "application/json"
+      parameters:
+        - name: "recipeId"
+          in: "path"
+          description: "recipe Id to delete from favorite recipes"
+          required: true
+          type: "string"
+      responses:
+        "200":
+          description: "successful operation"
+        "404":
+          description: "recipe not found"
+
 
   # -------------------- Record ----------------------
+  /v1/record:
+    get:
+      tags:
+        - "Record"
+      summary: "Get all records"
+      description: ""
+      operationId: ""
+      security:
+        - cookieAuth: []
+      responses:
+        "200":
+          description: "successful operation"
+    post:
+      tags:
+        - "Record"
+      summary: "Add new record"
+      description: ""
+      operationId: ""
+      security:
+        - cookieAuth: []
+      produces:
+        - "application/json"
+      parameters:
+        - name: "body"
+          in: "body"
+          description: "record object to add"
+          required: true
+          schema:
+            type: "object"
+            properties:
+              recipeId:
+                type: "string"
+                example: "1234"
+              satisfaction:
+                type: "integer"
+                example: 4
+      responses:
+        "200":
+          description: "successful operation"
 
-  # -------------------- Zisui-Power ----------------------
+  /v1/record/{recordId}:
+    get:
+      tags:
+        - "Record"
+      summary: "Get record detail information by record ID"
+      description: ""
+      operationId: ""
+      security:
+        - cookieAuth: []
+      produces:
+        - "application/json"
+      parameters:
+        - name: "recordId"
+          in: "path"
+          description: "Record ID"
+          required: true
+          type: "string"
+      responses:
+        "200":
+          description: "successful operation"
+        "404":
+          description: "Record not found"
+    put:
+      tags:
+        - "Record"
+      summary: "Update record"
+      description: ""
+      operationId: ""
+      security:
+        - cookieAuth: []
+      produces:
+        - "application/json"
+      parameters:
+        - name: "recordId"
+          in: "path"
+          description: "Record Id"
+          required: true
+          type: "string"
+        - name: "body"
+          in: "body"
+          description: "Fields of record to update"
+          required: true
+          schema:
+            type: "object"
+            properties:
+              satisfaction:
+                type: "integer"
+                example: 5
+      responses:
+        "200":
+          description: "successful operation"
+        "404":
+          description: "Food not found"
+        "422":
+          description: "Invalid payload supplied"
+    delete:
+      tags:
+        - "Record"
+      summary: "Delete record"
+      description: ""
+      operationId: ""
+      security:
+        - cookieAuth: []
+      produces:
+        - "application/json"
+      parameters:
+        - name: "recordId"
+          in: "path"
+          description: "record Id to delete"
+          required: true
+          type: "string"
+      responses:
+        "200":
+          description: "successful operation"
+        "404":
+          description: "record not found"
+
+
+  # -------------------- Jisui-Power ----------------------
+  /v1/jisuiPower:
+    get:
+      tags:
+        - "Jisui-Power"
+      summary: "Get Jisui-Power"
+      description: ""
+      operationId: ""
+      security:
+        - cookieAuth: []
+      responses:
+        "200":
+          description: "successful operation"
+
 
   # -------------------- Health ----------------------
+  /v1/health:
+    get:
+      tags:
+        - "Health"
+      summary: "Health check"
+      description: ""
+      operationId: ""
+      responses:
+        "200":
+          description: "successful operation"
