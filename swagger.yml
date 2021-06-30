@@ -2,7 +2,7 @@ swagger: "2.0"
 info:
   description: "This is API Document of Minnano-Jisuikun"
   version: "1.0.0"
-  title: "Minnna-No-Jisuikun API Document"
+  title: "Minna-No-Jisuikun API Document"
   contact:
     email: "sato-keiju@kcgrp.jp"
 host: "hostName"
@@ -11,6 +11,8 @@ basePath: "/basePath"
 tags:
   - name: "User"
     description: "Access to User Information"
+  - name: "Sign"
+    description: "Sign up, sign in, and sign out"
   - name: "Calibrate"
     description: "Post selected recipes"
   - name: "Recipe"
@@ -38,10 +40,6 @@ securityDefinitions:
     type: "apiKey"
     in: "header"
     name: "sessionId"
-  # firebaseUserJwt:
-  #   type: "apiKey"
-  #   name: "Authorization"
-  #   in: "header"
 
 paths:
   # -------------------- User ----------------------
@@ -52,68 +50,32 @@ paths:
       summary: "Get all users"
       description: ""
       operationId: ""
+      security:
+        - cookieAuth: []
       responses:
         "200":
-          description: "successful operation"
-    post:
-      tags:
-        - "User"
-      summary: "Create new user"
-      description: ""
-      operationId: ""
-      produces:
-        - "application/json"
-      parameters:
-        - name: "body"
-          in: "body"
-          description: "user object to create"
-          required: true
+          description: "Successful Operation"
           schema:
             type: "object"
-            required:
-              - "userName"
             properties:
-              recipeName:
+              userName:
                 type: "string"
-                example: "湊﨑紗夏"
-      responses:
-        "200":
-          description: "successful operation"
-
-  /v1/user/{userId}:
-    get:
-      tags:
-        - "User"
-      summary: "Get user detail information by user ID"
-      description: ""
-      operationId: ""
-      produces:
-        - "application/json"
-      parameters:
-        - name: "userId"
-          in: "path"
-          description: "User ID"
-          required: true
-          type: "string"
-      responses:
-        "200":
-          description: "successful operation"
+                example: "自炊太郎"
+        "401":
+          description: "Unauthorized"
         "404":
-          description: "User not found"
+          description: "User Not Found"
     put:
       tags:
         - "User"
       summary: "Update attributes of user resource"
       description: ""
       operationId: ""
+      security:
+        - cookieAuth: []
       produces:
         - "application/json"
       parameters:
-        - name: "userId"
-          in: "path"
-          description: "User Id"
-          required: true
-          type: "string"
         - name: "body"
           in: "body"
           description: "Latest user object"
@@ -125,31 +87,195 @@ paths:
                 type: "string"
                 example: "大阪府大阪市阿倍野区阿倍野筋1丁目1−43"
       responses:
-        "200":
-          description: "successful operation"
+        "201":
+          description: "Successful Operation"
+          schema:
+            type: "object"
+            properties:
+              userName:
+                type: "string"
+                example: "自炊太郎"
+              address:
+                type: "string"
+                example: "大阪府大阪市阿倍野区阿倍野筋1丁目1−43"
+        "400":
+          description: "Bad Request"
+        "401":
+          description: "Unauthorized"
         "404":
-          description: "User not found"
-        "422":
-          description: "Invalid payload supplied"
+          description: "User Not Found"
     delete:
       tags:
-        - "Recipe"
+        - "User"
       summary: "Delete user"
+      description: ""
+      operationId: ""
+      security:
+        - cookieAuth: []
+      produces:
+        - "application/json"
+      responses:
+        "204":
+          description: "Successful Operation"
+        "401":
+          description: "Unauthorized"
+
+  /v1/user/oneTimePassword:
+    post:
+      tags:
+        - "User"
+      summary: "Reset password"
+      description: ""
+      operationId: ""
+      security:
+        - cookieAuth: []
+      produces:
+        - "application/json"
+      parameters:
+        - name: "body"
+          in: "body"
+          description: "New password"
+          required: true
+          schema:
+            type: "object"
+            required:
+              - "email"
+              - "otp"
+            properties:
+              email:
+                type: "string"
+                example: "hoge@gmail.com"
+              otp:
+                type: "string"
+                example: "12345"
+      responses:
+        "201":
+          description: "Successful Operation"
+          schema:
+            type: "object"
+            properties:
+              userName:
+                type: "string"
+                example: "自炊太郎"
+        "400":
+          description: "Bad Request"
+        "401":
+          description: "Unauthorized"
+
+  /v1/user/passwordReset:
+    post:
+      tags:
+        - "User"
+      summary: "Reset password"
+      description: ""
+      operationId: ""
+      security:
+        - cookieAuth: []
+      produces:
+        - "application/json"
+      parameters:
+        - name: "body"
+          in: "body"
+          description: "New password"
+          required: true
+          schema:
+            type: "object"
+            required:
+              - "newPassword"
+            properties:
+              newPassword:
+                type: "string"
+                example: "hogehogehoge"
+      responses:
+        "201":
+          description: "Successful Operation"
+        "400":
+          description: "Bad Request"
+        "401":
+          description: "Unauthorized"
+
+
+  # -------------------- Sign ----------------------
+  /v1/signUp:
+    post:
+      tags:
+        - "Sign"
+      summary: "Send new user's information to sign up"
       description: ""
       operationId: ""
       produces:
         - "application/json"
       parameters:
-        - name: "userId"
-          in: "path"
-          description: "User Id"
+        - name: "body"
+          in: "body"
+          description: "information to create new user"
           required: true
-          type: "string"
+          schema:
+            type: "object"
+            required:
+              - "userName"
+              - "password"
+            properties:
+              username:
+                type: "string"
+                example: "jisuitarou"
+              password:
+                type: "string"
+                example: "hogehoge1234"
+      responses:
+        "201":
+          description: "Successful Operation"
+        "400":
+          description: "Bad Request"
+  /v1/signIn:
+    post:
+      tags:
+        - "Sign"
+      summary: "Send user's information to sign in"
+      description: ""
+      operationId: ""
+      produces:
+        - "application/json"
+      parameters:
+        - name: "body"
+          in: "body"
+          description: "information to validate existing user"
+          required: true
+          schema:
+            type: "object"
+            required:
+              - "userName"
+              - "password"
+            properties:
+              username:
+                type: "string"
+                example: "jisuitarou"
+              password:
+                type: "string"
+                example: "hogehoge1234"
+      responses:
+        "201":
+          description: "Successful Operation"
+        "400":
+          description: "Bad Request"
+        "404":
+          description: "User Not Found"
+  /v1/signOut:
+    get:
+      tags:
+        - "Sign"
+      summary: "Sign out"
+      description: ""
+      operationId: ""
+      security:
+        - cookieAuth: []
+      produces:
+        - "application/json"
       responses:
         "200":
-          description: "successful operation"
-        "404":
-          description: "User not found"
+          description: "Successful Operation"
+        "401":
+          description: "Unauthorized"
 
 
   # -------------------- Calibrate ----------------------
@@ -186,51 +312,72 @@ paths:
                   type: "string"
                 example: ["野菜炒め"]
       responses:
-        "200":
-          description: "successful operation"
-        "404":
-          description: "User not found"
-
-
-  # -------------------- Recipe ----------------------
-  /v1/recipe:
-    get:
-      tags:
-        - "Recipe"
-      summary: "Get all recipes"
-      description: ""
-      operationId: ""
-      responses:
-        "200":
-          description: "successful operation"
-    post:
-      tags:
-        - "Recipe"
-      summary: "Create new recipe"
-      description: ""
-      operationId: ""
-      produces:
-        - "application/json"
-      parameters:
-        - name: "body"
-          in: "body"
-          description: "recipe object to create"
-          required: true
+        "201":
+          description: "Successful Operation"
           schema:
             type: "object"
             required:
-              - "recipeName"
+              - "favoriteRecipes"
             properties:
-              recipeName:
-                type: "string"
-                example: "こだわりのハンバーグ"
-              difficulty:
-                type: "integer"
-                description: "1 - 5"
-                example: 4
-      responses:
-        "200":
-          description: "successful operation"
+              favoriteRecipes:
+                type: "array"
+                items:
+                  type: "string"
+                example: ["ハンバーグ", "ラーメン"]
+              experience:
+                type: "array"
+                description: "recipes user had made"
+                items:
+                  type: "string"
+                example: ["野菜炒め"]
+        "400":
+          description: "Bad Request"
+        "401":
+          description: "Unauthorized"
+        "404":
+          description: "Recipe Not Found"
+
+
+          # -------------------- Recipe ----------------------
+          # 管理者機能のため本開発研修のスコープ外
+          # /v1/recipe:
+          #   get:
+          #     tags:
+          #     - "Recipe"
+          #     summary: "Get all recipes"
+          #     description: ""
+          #     operationId: ""
+          #     responses:
+          #       "200":
+          #         description: "successful operation"
+          #   post:
+          #     tags:
+          #     - "Recipe"
+          #     summary: "Create new recipe"
+          #     description: ""
+          #     operationId: ""
+          #     produces:
+          #     - "application/json"
+          #     parameters:
+          #     - name: "body"
+          #       in: "body"
+          #       description: "recipe object to create"
+          #       required: true
+          #       schema:
+          #         type: "object"
+          #         required:
+          #         - "recipeName"
+          #         properties:
+          #           recipeName:
+          #             type: "string"
+          #             example: "こだわりのハンバーグ"
+          #           difficulty:
+          #             type: "integer"
+          #             description: "1 - 5"
+          #             example: 4
+          #     responses:
+          #       "200":
+          #         description: "successful operation"
 
   /v1/recipe/{recipeId}:
     get:
@@ -249,96 +396,105 @@ paths:
           type: "string"
       responses:
         "200":
-          description: "successful operation"
-        "404":
-          description: "Recipe not found"
-    put:
-      tags:
-        - "Recipe"
-      summary: "Update attributes of recipe resource"
-      description: ""
-      operationId: ""
-      produces:
-        - "application/json"
-      parameters:
-        - name: "recipeId"
-          in: "path"
-          description: "Recipe Id"
-          required: true
-          type: "string"
-        - name: "body"
-          in: "body"
-          description: "Latest recipe object"
-          required: true
+          description: "Successful Operation"
           schema:
             type: "object"
             properties:
               recipeName:
                 type: "string"
-                example: "超こだわりのハンバーグ"
-      responses:
-        "200":
-          description: "successful operation"
+                example: "こだわりのハンバーグ"
         "404":
-          description: "Recipe not found"
-        "422":
-          description: "Invalid payload supplied"
-    delete:
-      tags:
-        - "Recipe"
-      summary: "Delete recipe"
-      description: ""
-      operationId: ""
-      produces:
-        - "application/json"
-      parameters:
-        - name: "recipeId"
-          in: "path"
-          description: "Recipe Id"
-          required: true
-          type: "string"
-      responses:
-        "200":
-          description: "successful operation"
-        "404":
-          description: "Recipe not found"
+          description: "Recipe Not Found"
+
+          # 管理者機能のため本開発研修のスコープ外
+          # put:
+          #   tags:
+          #   - "Recipe"
+          #   summary: "Update attributes of recipe resource"
+          #   description: ""
+          #   operationId: ""
+          #   produces:
+          #   - "application/json"
+          #   parameters:
+          #   - name: "recipeId"
+          #     in: "path"
+          #     description: "Recipe Id"
+          #     required: true
+          #     type: "string"
+          #   - name: "body"
+          #     in: "body"
+          #     description: "Latest recipe object"
+          #     required: true
+          #     schema:
+          #       type: "object"
+          #       properties:
+          #         recipeName:
+          #           type: "string"
+          #           example: "超こだわりのハンバーグ"
+          #   responses:
+          #     "200":
+          #       description: "successful operation"
+          #     "404":
+          #       description: "Recipe not found"
+          #     "422":
+          #       description: "Invalid payload supplied"
+          # delete:
+          #   tags:
+          #   - "Recipe"
+          #   summary: "Delete recipe"
+          #   description: ""
+          #   operationId: ""
+          #   produces:
+          #   - "application/json"
+          #   parameters:
+          #   - name: "recipeId"
+          #     in: "path"
+          #     description: "Recipe Id"
+          #     required: true
+          #     type: "string"
+          #   responses:
+          #     "200":
+          #       description: "successful operation"
+          #     "404":
+          #       description: "Recipe not found"
 
 
-  # -------------------- Food ----------------------
-  /v1/food:
-    get:
-      tags:
-        - "Food"
-      summary: "Get all foods"
-      description: ""
-      operationId: ""
-      responses:
-        "200":
-          description: "successful operation"
-    post:
-      tags:
-        - "Food"
-      summary: "Create new food"
-      description: ""
-      operationId: ""
-      produces:
-        - "application/json"
-      parameters:
-        - name: "body"
-          in: "body"
-          description: "food object to create"
-          required: true
-          schema:
-            type: "object"
-            required:
-              - "foodName"
-            properties:
-              recipeName:
-                type: "string"
-                example: "カリフラワー"
-      responses:
-        "200":
-          description: "successful operation"
+          # -------------------- Food ----------------------
+          # 管理者機能のため本開発研修のスコープ外
+          # /v1/food:
+          #   get:
+          #     tags:
+          #     - "Food"
+          #     summary: "Get all foods"
+          #     description: ""
+          #     operationId: ""
+          #     responses:
+          #       "200":
+          #         description: "successful operation"
+          #   post:
+          #     tags:
+          #     - "Food"
+          #     summary: "Create new food"
+          #     description: ""
+          #     operationId: ""
+          #     produces:
+          #     - "application/json"
+          #     parameters:
+          #     - name: "body"
+          #       in: "body"
+          #       description: "food object to create"
+          #       required: true
+          #       schema:
+          #         type: "object"
+          #         required:
+          #         - "foodName"
+          #         properties:
+          #           recipeName:
+          #             type: "string"
+          #             example: "カリフラワー"
+          #     responses:
+          #       "200":
+          #         description: "successful operation"
 
   /v1/food/{foodId}:
     get:
@@ -357,59 +513,66 @@ paths:
           type: "string"
       responses:
         "200":
-          description: "successful operation"
-        "404":
-          description: "Food not found"
-    put:
-      tags:
-        - "Food"
-      summary: "Update attributes of food resource"
-      description: ""
-      operationId: ""
-      produces:
-        - "application/json"
-      parameters:
-        - name: "foodId"
-          in: "path"
-          description: "Food Id"
-          required: true
-          type: "string"
-        - name: "body"
-          in: "body"
-          description: "Latest food object"
-          required: true
+          description: "Successful Operation"
           schema:
             type: "object"
             properties:
               foodName:
                 type: "string"
-                example: "ネオカリフラワー"
-      responses:
-        "200":
-          description: "successful operation"
+                example: "ブロッコリー"
         "404":
-          description: "Food not found"
-        "422":
-          description: "Invalid payload supplied"
-    delete:
-      tags:
-        - "Food"
-      summary: "Delete food"
-      description: ""
-      operationId: ""
-      produces:
-        - "application/json"
-      parameters:
-        - name: "foodId"
-          in: "path"
-          description: "Food Id"
-          required: true
-          type: "string"
-      responses:
-        "200":
-          description: "successful operation"
-        "404":
-          description: "Food not found"
+          description: "Food Not Found"
+    # 管理者系機能のため本開発研修のスコープ外
+    # put:
+    #   tags:
+    #   - "Food"
+    #   summary: "Update attributes of food resource"
+    #   description: ""
+    #   operationId: ""
+    #   produces:
+    #   - "application/json"
+    #   parameters:
+    #   - name: "foodId"
+    #     in: "path"
+    #     description: "Food Id"
+    #     required: true
+    #     type: "string"
+    #   - name: "body"
+    #     in: "body"
+    #     description: "Latest food object"
+    #     required: true
+    #     schema:
+    #       type: "object"
+    #       properties:
+    #         foodName:
+    #           type: "string"
+    #           example: "ネオカリフラワー"
+    #   responses:
+    #     "200":
+    #       description: "successful operation"
+    #     "404":
+    #       description: "Food not found"
+    #     "422":
+    #       description: "Invalid payload supplied"
+    # delete:
+    #   tags:
+    #   - "Food"
+    #   summary: "Delete food"
+    #   description: ""
+    #   operationId: ""
+    #   produces:
+    #   - "application/json"
+    #   parameters:
+    #   - name: "foodId"
+    #     in: "path"
+    #     description: "Food Id"
+    #     required: true
+    #     type: "string"
+    #   responses:
+    #     "200":
+    #       description: "successful operation"
+    #     "404":
+    #       description: "Food not found"
 
 
   # -------------------- Cart ----------------------
@@ -424,9 +587,20 @@ paths:
         - cookieAuth: []
       responses:
         "200":
-          description: "successful operation"
-
-  /v1/cart/{recipeId}:
+          description: "Successful Operation"
+          schema:
+            type: "object"
+            properties:
+              favoriteRecipes:
+                type: "array"
+                items:
+                  type: "object"
+                example: [
+                  {"recipeName": "ハンバーグ"},
+                  {"recipeName": "ラーメン"}
+                ]
+        "401":
+          description: "Unauthorized"
     post:
       tags:
         - "Cart"
@@ -438,18 +612,18 @@ paths:
       produces:
         - "application/json"
       parameters:
-        - name: "recipeId"
-          in: "path"
-          description: "Recipe ID"
-          required: true
-          type: "string"
         - name: "body"
           in: "body"
           description: "recipe object to add"
           required: true
           schema:
             type: "object"
+            required:
+              - "recipeId"
             properties:
+              recipeId:
+                type: "string"
+                example: "1234"
               size:
                 type: "string"
                 example: "大盛"
@@ -457,8 +631,28 @@ paths:
                 type: "integer"
                 example: 2
       responses:
-        "200":
-          description: "successful operation"
+        "201":
+          description: "Successful Operation"
+          schema:
+            type: "object"
+            required:
+              - "recipeId"
+            properties:
+              recipeId:
+                type: "string"
+                example: "1234"
+              size:
+                type: "string"
+                example: "大盛"
+              number:
+                type: "integer"
+                example: 2
+        "400":
+          description: "Bad Request"
+        "401":
+          description: "Unauthorized"
+
+  /v1/cart/{recipeId}:
     put:
       tags:
         - "Cart"
@@ -487,11 +681,27 @@ paths:
                 example: 1
       responses:
         "200":
-          description: "successful operation"
+          description: "Successful Operation"
+          schema:
+            type: "object"
+            required:
+              - "recipeId"
+            properties:
+              recipeId:
+                type: "string"
+                example: "1234"
+              size:
+                type: "string"
+                example: "大盛"
+              number:
+                type: "integer"
+                example: 1
+        "400":
+          description: "Bad Request"
+        "401":
+          description: "Unauthorized"
         "404":
-          description: "Food not found"
-        "422":
-          description: "Invalid payload supplied"
+          description: "Recipe Not Found"
     delete:
       tags:
         - "Cart"
@@ -509,10 +719,12 @@ paths:
           required: true
           type: "string"
       responses:
-        "200":
-          description: "successful operation"
+        "204":
+          description: "No Content"
+        "401":
+          description: "Unauthorized"
         "404":
-          description: "recipe not found"
+          description: "Recipe Not Found"
 
 
   # -------------------- Order ----------------------
@@ -527,9 +739,20 @@ paths:
         - cookieAuth: []
       responses:
         "200":
-          description: "successful operation"
-
-  /v1/order/{orderId}:
+          description: "Successful Operation"
+          schema:
+            type: "object"
+            properties:
+              orders:
+                type: "array"
+                items:
+                  type: "object"
+                example: [
+                  {"orderId": "1234"},
+                  {"orderId": "5678"}
+                ]
+        "401":
+          description: "Unauthorized"
     post:
       tags:
         - "Order"
@@ -541,11 +764,6 @@ paths:
       produces:
         - "application/json"
       parameters:
-        - name: "orderId"
-          in: "path"
-          description: "Recipe ID"
-          required: true
-          type: "string"
         - name: "body"
           in: "body"
           description: "recipe object to add"
@@ -553,48 +771,80 @@ paths:
           schema:
             type: "object"
             properties:
-              size:
-                type: "string"
-                example: "大盛"
-              number:
-                type: "integer"
-                example: 2
+              recipes:
+                type: "array"
+                items:
+                  type: "object"
+                example: [
+                  {
+                    "recipeId": "1234",
+                    "number": 2
+                  },
+                  {
+                    "recipeId": "5678",
+                    "number": 2
+                  }
+                ]
       responses:
-        "200":
-          description: "successful operation"
-    put:
-      tags:
-        - "Order"
-      summary: "Update detail of buying recipe in cart"
-      description: ""
-      operationId: ""
-      security:
-        - cookieAuth: []
-      produces:
-        - "application/json"
-      parameters:
-        - name: "orderId"
-          in: "path"
-          description: "Order Id"
-          required: true
-          type: "string"
-        - name: "body"
-          in: "body"
-          description: "Fields of recipe to update"
-          required: true
+        "201":
+          description: "Successful Operation"
           schema:
             type: "object"
             properties:
-              number:
-                type: "integer"
-                example: 1
-      responses:
-        "200":
-          description: "successful operation"
-        "404":
-          description: "Food not found"
-        "422":
-          description: "Invalid payload supplied"
+              recipes:
+                type: "array"
+                items:
+                  type: "object"
+                example: [
+                  {
+                    "recipeId": "1234",
+                    "number": 2
+                  },
+                  {
+                    "recipeId": "5678",
+                    "number": 2
+                  }
+                ]
+        "400":
+          description: "Bad Request"
+        "401":
+          description: "Unauthorized"
+
+  /v1/order/{orderId}:
+    # 注文後の変更機能は本開発研修のスコープ外
+    # put:
+    #   tags:
+    #   - "Order"
+    #   summary: "Update detail of buying recipe in cart"
+    #   description: ""
+    #   operationId: ""
+    #   security:
+    #   - cookieAuth: []
+    #   produces:
+    #   - "application/json"
+    #   parameters:
+    #   - name: "orderId"
+    #     in: "path"
+    #     description: "Order Id"
+    #     required: true
+    #     type: "string"
+    #   - name: "body"
+    #     in: "body"
+    #     description: "Fields of recipe to update"
+    #     required: true
+    #     schema:
+    #       type: "object"
+    #       properties:
+    #         number:
+    #           type: "integer"
+    #           example: 1
+    #   responses:
+    #     "200":
+    #       description: "successful operation"
+    #     "404":
+    #       description: "Food not found"
+    #     "422":
+    #       description: "Invalid payload supplied"
     delete:
       tags:
         - "Order"
@@ -612,10 +862,10 @@ paths:
           required: true
           type: "string"
       responses:
-        "200":
-          description: "successful operation"
+        "204":
+          description: "No Content"
         "404":
-          description: "recipe not found"
+          description: "Order Not Found"
 
 
   # -------------------- Favorite ----------------------
@@ -630,9 +880,17 @@ paths:
         - cookieAuth: []
       responses:
         "200":
-          description: "successful operation"
-
-  /v1/favorite/{recipeId}:
+          description: "Successful Operation"
+          schema:
+            type: "object"
+            properties:
+              recipes:
+                type: "array"
+                items:
+                  type: "string"
+                example: ["1234", "5678"]
+        "401":
+          description: "Unauthorized"
     post:
       tags:
         - "Favorite"
@@ -644,14 +902,33 @@ paths:
       produces:
         - "application/json"
       parameters:
-        - name: "recipeId"
-          in: "path"
+        - name: "body"
+          in: "body"
           description: "Recipe ID"
           required: true
-          type: "string"
+          schema:
+            type: "object"
+            required:
+              - "recipeId"
+            properties:
+              recipeId:
+                type: "string"
+                example: "1234"
       responses:
-        "200":
-          description: "successful operation"
+        "201":
+          description: "Successful Operation"
+          schema:
+            type: "object"
+            required:
+              - "recipeId"
+            properties:
+              recipeId:
+                type: "string"
+                example: "1234"
+        "400":
+          description: "Bad Request"
+
+  /v1/favorite/{recipeId}:
     delete:
       tags:
         - "Favorite"
@@ -669,10 +946,10 @@ paths:
           required: true
           type: "string"
       responses:
-        "200":
-          description: "successful operation"
-        "404":
-          description: "recipe not found"
+        "204":
+          description: "Successful Operation"
+        "401":
+          description: "Unauthorized"
 
 
   # -------------------- Record ----------------------
@@ -688,6 +965,25 @@ paths:
       responses:
         "200":
           description: "successful operation"
+          schema:
+            type: "object"
+            properties:
+              recipes:
+                type: "array"
+                items:
+                  type: "object"
+                example: [
+                  {
+                    "recipeId": "1234",
+                    "satisfaction": 3
+                  },
+                  {
+                    "recipeId": "5678",
+                    "satisfaction": 4
+                  }
+                ]
+        "401":
+          description: "Unauthorized"
     post:
       tags:
         - "Record"
@@ -705,6 +1001,8 @@ paths:
           required: true
           schema:
             type: "object"
+            required:
+              - "recipeId"
             properties:
               recipeId:
                 type: "string"
@@ -713,8 +1011,52 @@ paths:
                 type: "integer"
                 example: 4
       responses:
-        "200":
+        "201":
           description: "successful operation"
+          schema:
+            type: "object"
+            properties:
+              recipeId:
+                type: "string"
+                example: "1234"
+              satisfaction:
+                type: "integer"
+                example: 4
+        "400":
+          description: "Bad Request"
+        "401":
+          description: "Unauthorized"
+
+  /v1/record/media:
+    post:
+      tags:
+        - "Record"
+      summary: "Add new image used in records"
+      description: ""
+      operationId: ""
+      security:
+        - cookieAuth: []
+      consumes:
+        - "multipart/form-data"
+      parameters:
+        - name: "file"
+          in: "formData"
+          type: "string"
+          description: "Image to upload(binary)"
+          required: true
+      responses:
+        "201":
+          description: "Successful Operation"
+          schema:
+            type: "object"
+            properties:
+              mediaId:
+                type: "string"
+                example: "1234"
+        "400":
+          description: "Bad Request"
+        "401":
+          description: "Unauthorized"
 
   /v1/record/{recordId}:
     get:
@@ -735,7 +1077,26 @@ paths:
           type: "string"
       responses:
         "200":
-          description: "successful operation"
+          description: "Successful Operation"
+          schema:
+            type: "object"
+            properties:
+              recipes:
+                type: "array"
+                items:
+                  type: "object"
+                example: [
+                  {
+                    "recordId": "1234",
+                    "recipeId": "1234"
+                  },
+                  {
+                    "recordId": "5678",
+                    "recipeId": "5678"
+                  }
+                ]
+        "401":
+          description: "Unauthorized"
         "404":
           description: "Record not found"
     put:
@@ -767,10 +1128,19 @@ paths:
       responses:
         "200":
           description: "successful operation"
+          schema:
+            type: "object"
+            properties:
+              recordId:
+                type: "string"
+                example: "1234"
+              satisfaction:
+                type: "integer"
+                example: 5
+        "401":
+          description: "Unauthorized"
         "404":
-          description: "Food not found"
-        "422":
-          description: "Invalid payload supplied"
+          description: "Record Not Found"
     delete:
       tags:
         - "Record"
@@ -788,10 +1158,10 @@ paths:
           required: true
           type: "string"
       responses:
-        "200":
-          description: "successful operation"
+        "204":
+          description: "No Content"
         "404":
-          description: "record not found"
+          description: "Record Not Found"
 
 
   # -------------------- Jisui-Power ----------------------
@@ -806,11 +1176,22 @@ paths:
         - cookieAuth: []
       responses:
         "200":
-          description: "successful operation"
+          description: "Successful Operation"
+          schema:
+            type: "object"
+            properties:
+              money:
+                type: "integer"
+                example: 70
+              nutrition:
+                type: "integer"
+                example: 50
+        "401":
+          description: "Unauthorized"
 
 
   # -------------------- Health ----------------------
-  /v1/health:
+  /v1/admin/health:
     get:
       tags:
         - "Health"
@@ -819,4 +1200,12 @@ paths:
       operationId: ""
       responses:
         "200":
-          description: "successful operation"
+          description: "Successful Operation"
+          schema:
+            type: "object"
+            properties:
+              message:
+                type: "string"
+                example: "Hello Jisui-kun!"
+        "404":
+          description: "Jisui-kun is dead..."
