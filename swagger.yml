@@ -120,48 +120,6 @@ paths:
         "401":
           description: "Unauthorized"
 
-  /v1/user/oneTimePassword:
-    post:
-      tags:
-        - "User"
-      summary: "Reset password"
-      description: ""
-      operationId: ""
-      security:
-        - cookieAuth: []
-      produces:
-        - "application/json"
-      parameters:
-        - name: "body"
-          in: "body"
-          description: "New password"
-          required: true
-          schema:
-            type: "object"
-            required:
-              - "email"
-              - "otp"
-            properties:
-              email:
-                type: "string"
-                example: "hoge@gmail.com"
-              otp:
-                type: "string"
-                example: "12345"
-      responses:
-        "201":
-          description: "Successful Operation"
-          schema:
-            type: "object"
-            properties:
-              userName:
-                type: "string"
-                example: "自炊太郎"
-        "400":
-          description: "Bad Request"
-        "401":
-          description: "Unauthorized"
-
   /v1/user/passwordReset:
     post:
       tags:
@@ -194,7 +152,6 @@ paths:
         "401":
           description: "Unauthorized"
 
-
   # -------------------- Sign ----------------------
   /v1/signUp:
     post:
@@ -213,18 +170,28 @@ paths:
           schema:
             type: "object"
             required:
-              - "userName"
+              - "name"
+              - "email"
               - "password"
             properties:
-              username:
+              name:
                 type: "string"
                 example: "jisuitarou"
+              email:
+                type: "string"
+                example: "jisuitarou@example.com"
               password:
                 type: "string"
                 example: "hogehoge1234"
       responses:
         "201":
           description: "Successful Operation"
+          schema:
+            type: "object"
+            properties:
+              usersub:
+                type: "string"
+                example: "8b322172-d5bc-411f-937b-67d7369b7199"
         "400":
           description: "Bad Request"
   /v1/signIn:
@@ -244,22 +211,76 @@ paths:
           schema:
             type: "object"
             required:
-              - "userName"
+              - "email"
               - "password"
             properties:
-              username:
+              email:
                 type: "string"
-                example: "jisuitarou"
+                example: "jisuitarou@example.com"
               password:
                 type: "string"
                 example: "hogehoge1234"
       responses:
         "201":
           description: "Successful Operation"
+          schema:
+            type: "object"
+            properties:
+              id:
+                type: "integer"
+                example: "1"
+              name:
+                type: "string"
+                example: "自炊太郎"
         "400":
           description: "Bad Request"
         "404":
           description: "User Not Found"
+  /v1/oneTimePassword:
+    post:
+      tags:
+        - "Sign"
+      summary: "onetime password for email validation"
+      description: ""
+      operationId: ""
+      security:
+        - cookieAuth: []
+      produces:
+        - "application/json"
+      parameters:
+        - name: "body"
+          in: "body"
+          description: "New password"
+          required: true
+          schema:
+            type: "object"
+            required:
+              - "usersub"
+              - "otp"
+            properties:
+              usersub:
+                type: "string"
+                example: "8b322172-d5bc-411f-937b-67d7369b7199"
+              otp:
+                type: "string"
+                example: "12345"
+      responses:
+        "201":
+          description: "Successful Operation"
+          schema:
+            type: "object"
+            properties:
+              id:
+                type: "integer"
+                example: "1"
+              name:
+                type: "string"
+                example: "自炊太郎"
+
+        "400":
+          description: "Bad Request"
+        "401":
+          description: "Unauthorized"
   /v1/signOut:
     get:
       tags:
@@ -276,7 +297,6 @@ paths:
           description: "Successful Operation"
         "401":
           description: "Unauthorized"
-
 
   # -------------------- Calibrate ----------------------
   /v1/caribrate:
@@ -336,8 +356,6 @@ paths:
           description: "Unauthorized"
         "404":
           description: "Recipe Not Found"
-
-
           # -------------------- Recipe ----------------------
           # 管理者機能のため本開発研修のスコープ外
           # /v1/recipe:
@@ -405,7 +423,6 @@ paths:
                 example: "こだわりのハンバーグ"
         "404":
           description: "Recipe Not Found"
-
           # 管理者機能のため本開発研修のスコープ外
           # put:
           #   tags:
@@ -457,8 +474,6 @@ paths:
           #       description: "successful operation"
           #     "404":
           #       description: "Recipe not found"
-
-
           # -------------------- Food ----------------------
           # 管理者機能のため本開発研修のスコープ外
           # /v1/food:
@@ -574,7 +589,6 @@ paths:
     #     "404":
     #       description: "Food not found"
 
-
   # -------------------- Cart ----------------------
   /v1/cart:
     get:
@@ -595,10 +609,8 @@ paths:
                 type: "array"
                 items:
                   type: "object"
-                example: [
-                  {"recipeName": "ハンバーグ"},
-                  {"recipeName": "ラーメン"}
-                ]
+                example:
+                  [{ "recipeName": "ハンバーグ" }, { "recipeName": "ラーメン" }]
         "401":
           description: "Unauthorized"
     post:
@@ -726,7 +738,6 @@ paths:
         "404":
           description: "Recipe Not Found"
 
-
   # -------------------- Order ----------------------
   /v1/order:
     get:
@@ -747,10 +758,7 @@ paths:
                 type: "array"
                 items:
                   type: "object"
-                example: [
-                  {"orderId": "1234"},
-                  {"orderId": "5678"}
-                ]
+                example: [{ "orderId": "1234" }, { "orderId": "5678" }]
         "401":
           description: "Unauthorized"
     post:
@@ -775,16 +783,11 @@ paths:
                 type: "array"
                 items:
                   type: "object"
-                example: [
-                  {
-                    "recipeId": "1234",
-                    "number": 2
-                  },
-                  {
-                    "recipeId": "5678",
-                    "number": 2
-                  }
-                ]
+                example:
+                  [
+                    { "recipeId": "1234", "number": 2 },
+                    { "recipeId": "5678", "number": 2 },
+                  ]
       responses:
         "201":
           description: "Successful Operation"
@@ -795,16 +798,11 @@ paths:
                 type: "array"
                 items:
                   type: "object"
-                example: [
-                  {
-                    "recipeId": "1234",
-                    "number": 2
-                  },
-                  {
-                    "recipeId": "5678",
-                    "number": 2
-                  }
-                ]
+                example:
+                  [
+                    { "recipeId": "1234", "number": 2 },
+                    { "recipeId": "5678", "number": 2 },
+                  ]
         "400":
           description: "Bad Request"
         "401":
@@ -866,7 +864,6 @@ paths:
           description: "No Content"
         "404":
           description: "Order Not Found"
-
 
   # -------------------- Favorite ----------------------
   /v1/favorite:
@@ -951,7 +948,6 @@ paths:
         "401":
           description: "Unauthorized"
 
-
   # -------------------- Record ----------------------
   /v1/record:
     get:
@@ -972,16 +968,11 @@ paths:
                 type: "array"
                 items:
                   type: "object"
-                example: [
-                  {
-                    "recipeId": "1234",
-                    "satisfaction": 3
-                  },
-                  {
-                    "recipeId": "5678",
-                    "satisfaction": 4
-                  }
-                ]
+                example:
+                  [
+                    { "recipeId": "1234", "satisfaction": 3 },
+                    { "recipeId": "5678", "satisfaction": 4 },
+                  ]
         "401":
           description: "Unauthorized"
     post:
@@ -1085,16 +1076,11 @@ paths:
                 type: "array"
                 items:
                   type: "object"
-                example: [
-                  {
-                    "recordId": "1234",
-                    "recipeId": "1234"
-                  },
-                  {
-                    "recordId": "5678",
-                    "recipeId": "5678"
-                  }
-                ]
+                example:
+                  [
+                    { "recordId": "1234", "recipeId": "1234" },
+                    { "recordId": "5678", "recipeId": "5678" },
+                  ]
         "401":
           description: "Unauthorized"
         "404":
@@ -1163,7 +1149,6 @@ paths:
         "404":
           description: "Record Not Found"
 
-
   # -------------------- Jisui-Power ----------------------
   /v1/jisuiPower:
     get:
@@ -1188,7 +1173,6 @@ paths:
                 example: 50
         "401":
           description: "Unauthorized"
-
 
   # -------------------- Health ----------------------
   /v1/admin/health:
