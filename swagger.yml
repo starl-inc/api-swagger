@@ -391,65 +391,7 @@ paths:
         "401":
           description: "Unauthorized"
 
-  # -------------------- Calibrate ----------------------
-  /v1/caribrate:
-    post:
-      tags:
-        - "Calibrate"
-      summary: "calibration of user"
-      description: ""
-      operationId: ""
-      security:
-        - cookieAuth: []
-      produces:
-        - "application/json"
-      parameters:
-        - name: "body"
-          in: "body"
-          description: "favorite recipes and cooking experience"
-          required: true
-          schema:
-            type: "object"
-            required:
-              - "favoriteRecipes"
-            properties:
-              favoriteRecipes:
-                type: "array"
-                items:
-                  type: "string"
-                example: ["ハンバーグ", "ラーメン"]
-              experience:
-                type: "array"
-                description: "recipes user had made"
-                items:
-                  type: "string"
-                example: ["野菜炒め"]
-      responses:
-        "201":
-          description: "Successful Operation"
-          schema:
-            type: "object"
-            required:
-              - "favoriteRecipes"
-            properties:
-              favoriteRecipes:
-                type: "array"
-                items:
-                  type: "string"
-                example: ["ハンバーグ", "ラーメン"]
-              experience:
-                type: "array"
-                description: "recipes user had made"
-                items:
-                  type: "string"
-                example: ["野菜炒め"]
-        "400":
-          description: "Bad Request"
-        "401":
-          description: "Unauthorized"
-        "404":
-          description: "Recipe Not Found"
-
+  
   # -------------------- recipe ----------------------
 
   /v1/recipes:
@@ -504,6 +446,9 @@ paths:
                 name:
                   type: "string"
                   example: "こだわりのハンバーグ"
+                description:
+                  type: "string"
+                  example: "hogehoge"
                 thumbnail_url:
                   type: "string"
                   example: "http://hoge.com/aa.png"
@@ -540,6 +485,9 @@ paths:
               name:
                 type: "string"
                 example: "こだわりのハンバーグ"
+              description:
+                type: "string"
+                example: "とてもうまい"                
               thumbnail_url:
                 type: "string"
                 example: "http://hoge.com/aa.png"
@@ -716,20 +664,22 @@ paths:
         "200":
           description: "Successful Operation"
           schema:
-            type: "object"
-            properties:
-              id:
-                type: "integer"
-                example: 1
-              name:
-                type: "string"
-                example: "こだわりのハンバーグ"
-              thumbnail_url:
-                type: "string"
-                example: "http://hoge.com/aa.png"
-              count:
-                type: "integer"
-                example: 1
+            type: "array"
+            items:
+              type: "object"
+              properties:
+                id:
+                  type: "integer"
+                  example: 1
+                name:
+                  type: "string"
+                  example: "こだわりのハンバーグ"
+                thumbnail_url:
+                  type: "string"
+                  example: "http://hoge.com/aa.png"
+                count:
+                  type: "integer"
+                  example: 1
         "400":
           description: "Bad Request"
         "401":
@@ -876,6 +826,10 @@ paths:
           in: "query"
           description: "オフセット"
           type: "integer"
+        - name: "since"
+          in: "query"
+          description: "直近nヶ月"
+          type: "integer"
       responses:
         "200":
           description: "Successful Operation"
@@ -886,7 +840,8 @@ paths:
             example:
               [
                 {
-                  "orderId": "1234",
+                  "id": 1234,
+                  "uuid": "xxx-yyy-zzz",
                   "ordered_at": "2021/02/11",
                   "deliveried_at": "2021/02/11",
                   "price": 1200,
@@ -897,7 +852,8 @@ paths:
                     ],
                 },
                 {
-                  "orderId": "3523",
+                  "id": 3523,
+                  "uuid": "xxx-yyy-zzz",
                   "ordered_at": "2021/02/11",
                   "deliveried_at": "2021/02/11",
                   "price": 1200,
@@ -921,8 +877,12 @@ paths:
       produces:
         - "application/json"
       responses:
-        "201":
+        "200":
           description: "Successful Operation"
+          schema:
+            type: "object"
+            example:
+              {"id": 32, "uuid": "xxx-yy-zzz"}
         "400":
           description: "Bad Request"
         "401":
@@ -1035,9 +995,23 @@ paths:
           schema:
             type: "array"
             items:
-              type: "string"
-            example:
-              [{ "id": 222, "name": "唐揚げ", "thumbnail_url": "http://a.png" }]
+              type: "object"
+              properties:
+                id:
+                  type: "integer"
+                  example: 1
+                name:
+                  type: "string"
+                  example: "こだわりのハンバーグ"
+                description:
+                  type: "string"
+                  example: "hogehoge"
+                thumbnail_url:
+                  type: "string"
+                  example: "http://hoge.com/aa.png"
+                liked:
+                  type: "boolean"
+                  example: false
         "401":
           description: "Unauthorized"
     post:
@@ -1125,6 +1099,10 @@ paths:
           in: "query"
           description: "オフセット"
           type: "integer"
+        - name: "since"
+          in: "query"
+          description: "直近nヶ月を返す"
+          type: "integer"          
       responses:
         "200":
           description: "successful operation"
@@ -1171,7 +1149,7 @@ paths:
             required:
               - "recipe_id"
             properties:
-              recipeId:
+              recipe_id:
                 type: "integer"
                 example: 1234
               satisfaction:
@@ -1180,6 +1158,9 @@ paths:
               memo:
                 type: "string"
                 example: "うまい"
+              price:
+                type: "integer"
+                example: 1300
               image_ids:
                 type: "array"
                 example: [2, 3]
@@ -1276,18 +1257,22 @@ paths:
       operationId: ""
       security:
         - cookieAuth: []
+      parameters:
+        - name: "since"
+          in: "query"
+          description: "直近nヶ月を返す"
+          type: "integer"
+
       responses:
         "200":
           description: "Successful Operation"
           schema:
-            type: "object"
-            properties:
-              money:
-                type: "integer"
-                example: 70
-              nutrition:
-                type: "integer"
-                example: 50
+            type: "array"
+            example: [
+            { "date": "2021/01", "cost": 111000, "time": 200 },
+            { "date": "2021/02", "cost": 111000, "time": 200 },
+            { "date": "2021/03", "cost": 111000, "time": 200 }
+            ]
         "401":
           description: "Unauthorized"
 
