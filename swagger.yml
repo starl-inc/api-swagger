@@ -79,6 +79,15 @@ paths:
               phone:
                 type: "string"
                 example: "08011112222"
+              avatar_url:
+                type: "string"
+                example: "https://hoge.com/aaa.png"
+              allow_order_mail:
+                type: "boolean"
+                example: true
+              allow_notification_mail:
+                type: "boolean"
+                example: false
 
         "401":
           description: "Unauthorized"
@@ -132,12 +141,22 @@ paths:
               phone:
                 type: "string"
                 example: "08011112222"
+              avatar_url:
+                type: "string"
+                example: "https://hoge.com/aaa.png"
+              allow_order_mail:
+                type: "boolean"
+                example: true
+              allow_notification_mail:
+                type: "boolean"
+                example: false
         "400":
           description: "Bad Request"
         "401":
           description: "Unauthorized"
         "404":
           description: "User Not Found"
+
     delete:
       tags:
         - "User"
@@ -196,6 +215,34 @@ paths:
           description: "Bad Request"
         "401":
           description: "Unauthorized"
+  /v1/user/avatar:
+    post:
+      tags:
+        - "User"
+      summary: Uploading a media attachment
+      description: ""
+      operationId: addMedia
+
+      consumes:
+        - multipart/form-data
+      parameters:
+        - in: formData
+          name: file
+          type: file
+          description: The file to upload.
+      responses:
+        "200":
+          description: "Successful Operation"
+          schema:
+            type: "object"
+            properties:
+              avatar_url:
+                type: "string"
+                example: "https://hoge.com/aaa.png"
+        "400":
+          description: "Bad Request"
+        "401":
+          description: "Unauthorized"
 
   # -------------------- Sign ----------------------
   /v1/signUp:
@@ -239,6 +286,7 @@ paths:
                 example: "8b322172-d5bc-411f-937b-67d7369b7199"
         "400":
           description: "Bad Request"
+
   /v1/signIn:
     post:
       tags:
