@@ -901,100 +901,13 @@ paths:
         - cookieAuth: []
       produces:
         - "application/json"
-      parameters:
-        - name: "body"
-          in: "body"
-          description: "recipe object to add"
-          required: true
-          schema:
-            type: "object"
-            properties:
-              recipes:
-                type: "array"
-                items:
-                  type: "object"
-                example:
-                  [
-                    { "recipeId": "1234", "number": 2 },
-                    { "recipeId": "5678", "number": 2 },
-                  ]
       responses:
         "201":
           description: "Successful Operation"
-          schema:
-            type: "object"
-            properties:
-              recipes:
-                type: "array"
-                items:
-                  type: "object"
-                example:
-                  [
-                    { "recipeId": "1234", "number": 2 },
-                    { "recipeId": "5678", "number": 2 },
-                  ]
         "400":
           description: "Bad Request"
         "401":
           description: "Unauthorized"
-
-  /v1/order/{orderId}:
-    # 注文後の変更機能は本開発研修のスコープ外
-    # put:
-    #   tags:
-    #   - "Order"
-    #   summary: "Update detail of buying recipe in cart"
-    #   description: ""
-    #   operationId: ""
-    #   security:
-    #   - cookieAuth: []
-    #   produces:
-    #   - "application/json"
-    #   parameters:
-    #   - name: "orderId"
-    #     in: "path"
-    #     description: "Order Id"
-    #     required: true
-    #     type: "string"
-    #   - name: "body"
-    #     in: "body"
-    #     description: "Fields of recipe to update"
-    #     required: true
-    #     schema:
-    #       type: "object"
-    #       properties:
-    #         number:
-    #           type: "integer"
-    #           example: 1
-    #   responses:
-    #     "200":
-    #       description: "successful operation"
-    #     "404":
-    #       description: "Food not found"
-    #     "422":
-    #       description: "Invalid payload supplied"
-    delete:
-      tags:
-        - "Order"
-      summary: "Delete recipe from cart"
-      description: ""
-      operationId: ""
-      security:
-        - cookieAuth: []
-      produces:
-        - "application/json"
-      parameters:
-        - name: "orderId"
-          in: "path"
-          description: "recipe Id to delete"
-          required: true
-          type: "string"
-      responses:
-        "204":
-          description: "No Content"
-        "404":
-          description: "Order Not Found"
-
   # -------------------- Favorite ----------------------
   /v1/favorite:
     get:
