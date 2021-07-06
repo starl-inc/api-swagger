@@ -58,9 +58,37 @@ paths:
           schema:
             type: "object"
             properties:
-              userName:
+              id:
+                type: "integer"
+                example: 1
+              name:
                 type: "string"
                 example: "自炊太郎"
+              email:
+                type: "string"
+                example: "hoge@gmail.com"
+              postcode:
+                type: "string"
+                example: "1112222"
+              address:
+                type: "string"
+                example: "東京都千代田区1-1"
+              card_last4:
+                type: "string"
+                example: "3332"
+              phone:
+                type: "string"
+                example: "08011112222"
+              avatar_url:
+                type: "string"
+                example: "https://hoge.com/aaa.png"
+              allow_order_mail:
+                type: "boolean"
+                example: true
+              allow_notification_mail:
+                type: "boolean"
+                example: false
+
         "401":
           description: "Unauthorized"
         "404":
@@ -87,23 +115,48 @@ paths:
                 type: "string"
                 example: "大阪府大阪市阿倍野区阿倍野筋1丁目1−43"
       responses:
-        "201":
+        "200":
           description: "Successful Operation"
           schema:
             type: "object"
             properties:
-              userName:
+              id:
+                type: "integer"
+                example: 1
+              name:
                 type: "string"
                 example: "自炊太郎"
+              email:
+                type: "string"
+                example: "hoge@gmail.com"
+              postcode:
+                type: "string"
+                example: "1112222"
               address:
                 type: "string"
                 example: "大阪府大阪市阿倍野区阿倍野筋1丁目1−43"
+              card_last4:
+                type: "string"
+                example: "3332"
+              phone:
+                type: "string"
+                example: "08011112222"
+              avatar_url:
+                type: "string"
+                example: "https://hoge.com/aaa.png"
+              allow_order_mail:
+                type: "boolean"
+                example: true
+              allow_notification_mail:
+                type: "boolean"
+                example: false
         "400":
           description: "Bad Request"
         "401":
           description: "Unauthorized"
         "404":
           description: "User Not Found"
+
     delete:
       tags:
         - "User"
@@ -114,8 +167,19 @@ paths:
         - cookieAuth: []
       produces:
         - "application/json"
+      parameters:
+        - name: "body"
+          in: "body"
+          description: "password"
+          required: true
+          schema:
+            type: "object"
+            properties:
+              password:
+                type: "string"
+                example: "password"
       responses:
-        "204":
+        "200":
           description: "Successful Operation"
         "401":
           description: "Unauthorized"
@@ -125,7 +189,7 @@ paths:
       tags:
         - "User"
       summary: "Reset password"
-      description: ""
+      description: "WIP パスワードリセットの流れを調べないといけない。優先順位低"
       operationId: ""
       security:
         - cookieAuth: []
@@ -147,6 +211,34 @@ paths:
       responses:
         "201":
           description: "Successful Operation"
+        "400":
+          description: "Bad Request"
+        "401":
+          description: "Unauthorized"
+  /v1/user/avatar:
+    post:
+      tags:
+        - "User"
+      summary: Uploading a media attachment
+      description: ""
+      operationId: addMedia
+
+      consumes:
+        - multipart/form-data
+      parameters:
+        - in: formData
+          name: file
+          type: file
+          description: The file to upload.
+      responses:
+        "200":
+          description: "Successful Operation"
+          schema:
+            type: "object"
+            properties:
+              avatar_url:
+                type: "string"
+                example: "https://hoge.com/aaa.png"
         "400":
           description: "Bad Request"
         "401":
@@ -194,6 +286,7 @@ paths:
                 example: "8b322172-d5bc-411f-937b-67d7369b7199"
         "400":
           description: "Bad Request"
+
   /v1/signIn:
     post:
       tags:
@@ -356,48 +449,71 @@ paths:
           description: "Unauthorized"
         "404":
           description: "Recipe Not Found"
-          # -------------------- Recipe ----------------------
-          # 管理者機能のため本開発研修のスコープ外
-          # /v1/recipe:
-          #   get:
-          #     tags:
-          #     - "Recipe"
-          #     summary: "Get all recipes"
-          #     description: ""
-          #     operationId: ""
-          #     responses:
-          #       "200":
-          #         description: "successful operation"
-          #   post:
-          #     tags:
-          #     - "Recipe"
-          #     summary: "Create new recipe"
-          #     description: ""
-          #     operationId: ""
-          #     produces:
-          #     - "application/json"
-          #     parameters:
-          #     - name: "body"
-          #       in: "body"
-          #       description: "recipe object to create"
-          #       required: true
-          #       schema:
-          #         type: "object"
-          #         required:
-          #         - "recipeName"
-          #         properties:
-          #           recipeName:
-          #             type: "string"
-          #             example: "こだわりのハンバーグ"
-          #           difficulty:
-          #             type: "integer"
-          #             description: "1 - 5"
-          #             example: 4
-          #     responses:
-          #       "200":
-          #         description: "successful operation"
 
-  /v1/recipe/{recipeId}:
+  # -------------------- recipe ----------------------
+
+  /v1/recipes:
+    get:
+      tags:
+        - "Recipe"
+      summary: "Get recipe summary information"
+      description: ""
+      operationId: ""
+      produces:
+        - "application/json"
+      parameters:
+        - name: "recommendation"
+          in: "query"
+          description: "おすすめを返すか？ =1が入ったときだけtrue"
+          type: "integer"
+        - name: "popular"
+          in: "query"
+          description: "人気を返すするか？ =1が入ったときだけtrue"
+          type: "integer"
+        - name: "latest"
+          in: "query"
+          description: "新着を返すか？ =1が入ったときだけtrue"
+          type: "integer"
+        - name: "ordered"
+          in: "query"
+          description: "注文済みを返すか？ =1が入ったときだけtrue"
+          type: "integer"
+        - name: "searchq"
+          in: "query"
+          description: "検索クエリ"
+          type: "string"
+        - name: "limit"
+          in: "query"
+          description: "表示件数"
+          type: "integer"
+        - name: "offset"
+          in: "query"
+          description: "オフセット"
+          type: "integer"
+      responses:
+        "200":
+          description: "Successful Operation"
+          schema:
+            type: "array"
+            items:
+              type: "object"
+              properties:
+                id:
+                  type: "integer"
+                  example: 1
+                name:
+                  type: "string"
+                  example: "こだわりのハンバーグ"
+                thumbnail_url:
+                  type: "string"
+                  example: "http://hoge.com/aa.png"
+                liked:
+                  type: "boolean"
+                  example: false
+        "404":
+          description: "Recipe Not Found"
+
+  /v1/recipes/{recipeId}:
     get:
       tags:
         - "Recipe"
@@ -418,98 +534,79 @@ paths:
           schema:
             type: "object"
             properties:
-              recipeName:
+              id:
+                type: "integer"
+                example: 1
+              name:
                 type: "string"
                 example: "こだわりのハンバーグ"
+              thumbnail_url:
+                type: "string"
+                example: "http://hoge.com/aa.png"
+              time_hour:
+                type: "integer"
+                example: 1
+              time_minutes:
+                type: "integer"
+                example: 20
+              price:
+                type: "integer"
+                example: 1200
+              energy:
+                type: "integer"
+                example: 400
+              liked:
+                type: "boolean"
+                example: false
+              movie_url:
+                type: "string"
+                example: "http://hoge.com/aa.mov"
+              genre:
+                type: "string"
+                example: "和食"
+              ingredients:
+                type: "array"
+                items:
+                  type: "object"
+                  properties:
+                    id:
+                      type: "integer"
+                      example: 1
+                    name:
+                      type: "string"
+                      example: "じゃがいも"
+                    amount:
+                      type: "string"
+                      example: "少々"
+                    unit:
+                      type: "string"
+                      example: ""
+                    energy:
+                      type: "integer"
+                      example: 130
+                    price:
+                      type: "integer"
+                      example: 100
+
+              procedure:
+                type: "array"
+                items:
+                  type: "object"
+                  properties:
+                    procedure_number:
+                      type: "integer"
+                      example: 1
+                    title:
+                      type: "string"
+                      example: "刻む"
+                    description:
+                      type: "string"
+                      example: "ミンチ肉を良い感じに刻みまくります"
+                    image_url:
+                      type: "string"
+                      example: "http://hoge.com/aa.png"
         "404":
           description: "Recipe Not Found"
-          # 管理者機能のため本開発研修のスコープ外
-          # put:
-          #   tags:
-          #   - "Recipe"
-          #   summary: "Update attributes of recipe resource"
-          #   description: ""
-          #   operationId: ""
-          #   produces:
-          #   - "application/json"
-          #   parameters:
-          #   - name: "recipeId"
-          #     in: "path"
-          #     description: "Recipe Id"
-          #     required: true
-          #     type: "string"
-          #   - name: "body"
-          #     in: "body"
-          #     description: "Latest recipe object"
-          #     required: true
-          #     schema:
-          #       type: "object"
-          #       properties:
-          #         recipeName:
-          #           type: "string"
-          #           example: "超こだわりのハンバーグ"
-          #   responses:
-          #     "200":
-          #       description: "successful operation"
-          #     "404":
-          #       description: "Recipe not found"
-          #     "422":
-          #       description: "Invalid payload supplied"
-          # delete:
-          #   tags:
-          #   - "Recipe"
-          #   summary: "Delete recipe"
-          #   description: ""
-          #   operationId: ""
-          #   produces:
-          #   - "application/json"
-          #   parameters:
-          #   - name: "recipeId"
-          #     in: "path"
-          #     description: "Recipe Id"
-          #     required: true
-          #     type: "string"
-          #   responses:
-          #     "200":
-          #       description: "successful operation"
-          #     "404":
-          #       description: "Recipe not found"
-          # -------------------- Food ----------------------
-          # 管理者機能のため本開発研修のスコープ外
-          # /v1/food:
-          #   get:
-          #     tags:
-          #     - "Food"
-          #     summary: "Get all foods"
-          #     description: ""
-          #     operationId: ""
-          #     responses:
-          #       "200":
-          #         description: "successful operation"
-          #   post:
-          #     tags:
-          #     - "Food"
-          #     summary: "Create new food"
-          #     description: ""
-          #     operationId: ""
-          #     produces:
-          #     - "application/json"
-          #     parameters:
-          #     - name: "body"
-          #       in: "body"
-          #       description: "food object to create"
-          #       required: true
-          #       schema:
-          #         type: "object"
-          #         required:
-          #         - "foodName"
-          #         properties:
-          #           recipeName:
-          #             type: "string"
-          #             example: "カリフラワー"
-          #     responses:
-          #       "200":
-          #         description: "successful operation"
 
   /v1/food/{foodId}:
     get:
@@ -537,57 +634,6 @@ paths:
                 example: "ブロッコリー"
         "404":
           description: "Food Not Found"
-    # 管理者系機能のため本開発研修のスコープ外
-    # put:
-    #   tags:
-    #   - "Food"
-    #   summary: "Update attributes of food resource"
-    #   description: ""
-    #   operationId: ""
-    #   produces:
-    #   - "application/json"
-    #   parameters:
-    #   - name: "foodId"
-    #     in: "path"
-    #     description: "Food Id"
-    #     required: true
-    #     type: "string"
-    #   - name: "body"
-    #     in: "body"
-    #     description: "Latest food object"
-    #     required: true
-    #     schema:
-    #       type: "object"
-    #       properties:
-    #         foodName:
-    #           type: "string"
-    #           example: "ネオカリフラワー"
-    #   responses:
-    #     "200":
-    #       description: "successful operation"
-    #     "404":
-    #       description: "Food not found"
-    #     "422":
-    #       description: "Invalid payload supplied"
-    # delete:
-    #   tags:
-    #   - "Food"
-    #   summary: "Delete food"
-    #   description: ""
-    #   operationId: ""
-    #   produces:
-    #   - "application/json"
-    #   parameters:
-    #   - name: "foodId"
-    #     in: "path"
-    #     description: "Food Id"
-    #     required: true
-    #     type: "string"
-    #   responses:
-    #     "200":
-    #       description: "successful operation"
-    #     "404":
-    #       description: "Food not found"
 
   # -------------------- Cart ----------------------
   /v1/cart:
@@ -603,16 +649,35 @@ paths:
         "200":
           description: "Successful Operation"
           schema:
-            type: "object"
-            properties:
-              favoriteRecipes:
-                type: "array"
-                items:
-                  type: "object"
-                example:
-                  [{ "recipeName": "ハンバーグ" }, { "recipeName": "ラーメン" }]
+            type: "array"
+            example:
+              [
+                {
+                  "recipe":
+                    {
+                      "cart_recipe_id": 22,
+                      "recipe_id": 2233,
+                      "name": "ハンバーグ",
+                      "price": 100,
+                      "thumbnail_url": "http://hoge.com/aa.png",
+                    },
+                  "count": 2,
+                },
+                {
+                  "recipe":
+                    {
+                      "cart_recipe_id": 49,
+                      "recipe_id": 2233,
+                      "name": "きしめん",
+                      "price": 20,
+                      "thumbnail_url": "http://hoge.com/aa.png",
+                    },
+                  "count": 1,
+                },
+              ]
         "401":
           description: "Unauthorized"
+
     post:
       tags:
         - "Cart"
@@ -624,47 +689,108 @@ paths:
       produces:
         - "application/json"
       parameters:
+        - name: "omakase"
+          in: "query"
+          description: "お任せ選択か？ =1が入ったときだけtrue"
+          type: "integer"
+        - name: "genre"
+          in: "query"
+          description: "お任せのジャンル指定"
+          type: "integer"
+        - name: "count"
+          in: "query"
+          description: "お任せの個数指定"
+          type: "integer"
         - name: "body"
           in: "body"
           description: "recipe object to add"
-          required: true
           schema:
             type: "object"
             required:
               - "recipeId"
             properties:
               recipeId:
-                type: "string"
-                example: "1234"
-              size:
-                type: "string"
-                example: "大盛"
-              number:
                 type: "integer"
-                example: 2
+                example: 223
       responses:
-        "201":
+        "200":
           description: "Successful Operation"
           schema:
             type: "object"
-            required:
-              - "recipeId"
             properties:
-              recipeId:
-                type: "string"
-                example: "1234"
-              size:
-                type: "string"
-                example: "大盛"
-              number:
+              id:
                 type: "integer"
-                example: 2
+                example: 1
+              name:
+                type: "string"
+                example: "こだわりのハンバーグ"
+              thumbnail_url:
+                type: "string"
+                example: "http://hoge.com/aa.png"
+              count:
+                type: "integer"
+                example: 1
         "400":
           description: "Bad Request"
         "401":
           description: "Unauthorized"
 
-  /v1/cart/{recipeId}:
+  /v1/cart/recipes/{cartRecipeID}:
+    get:
+      tags:
+        - "Cart"
+      summary: "Get detail recipe in cart"
+      description: ""
+      operationId: ""
+      security:
+        - cookieAuth: []
+      parameters:
+        - name: "cartRecipeID"
+          in: "path"
+          description: "Cart Recipe Id"
+          required: true
+          type: "string"
+      responses:
+        "200":
+          description: "Successful Operation"
+          schema:
+            type: "object"
+            example:
+              {
+                "cart_recipe_id": 22,
+                "recipe_id": 2233,
+                "name": "ハンバーグ",
+                "price": 2000,
+                "thumbnail_url": "http://hoge.com/aa.png",
+                "count": 2,
+                "ingredients":
+                  [
+                    {
+                      "ingredient":
+                        {
+                          "id": 3,
+                          "name": "ミンチ",
+                          "amount": "100",
+                          "unit": "g",
+                          "price": 300,
+                        },
+                      "count": 3,
+                    },
+                    {
+                      "ingredient":
+                        {
+                          "id": 10,
+                          "name": "卵",
+                          "amount": "1",
+                          "unit": "個",
+                          "price": 10,
+                        },
+                      "count": 2,
+                    },
+                  ],
+              }
+        "401":
+          description: "Unauthorized"
     put:
       tags:
         - "Cart"
@@ -676,7 +802,7 @@ paths:
       produces:
         - "application/json"
       parameters:
-        - name: "recipeId"
+        - name: "cartRecipeId"
           in: "path"
           description: "Recipe Id"
           required: true
@@ -687,37 +813,21 @@ paths:
           required: true
           schema:
             type: "object"
-            properties:
-              number:
-                type: "integer"
-                example: 1
+            example: { "count": 2 }
       responses:
         "200":
           description: "Successful Operation"
-          schema:
-            type: "object"
-            required:
-              - "recipeId"
-            properties:
-              recipeId:
-                type: "string"
-                example: "1234"
-              size:
-                type: "string"
-                example: "大盛"
-              number:
-                type: "integer"
-                example: 1
         "400":
           description: "Bad Request"
         "401":
           description: "Unauthorized"
         "404":
           description: "Recipe Not Found"
-    delete:
+  /v1/cart/recipes/{cartRecipeID}/ingredients:
+    put:
       tags:
         - "Cart"
-      summary: "Delete recipe from cart"
+      summary: "Update detail of buying recipe in cart"
       description: ""
       operationId: ""
       security:
@@ -725,21 +835,30 @@ paths:
       produces:
         - "application/json"
       parameters:
-        - name: "recipeId"
+        - name: "cartRecipeId"
           in: "path"
-          description: "recipe Id to delete"
+          description: "Recipe Id"
           required: true
           type: "string"
+        - name: "body"
+          in: "body"
+          description: "Fields of recipe to update"
+          required: true
+          schema:
+            type: "array"
+            example: [{ "id": 33, "count": 2 }, { "id": 3, "count": 1 }]
       responses:
-        "204":
-          description: "No Content"
+        "200":
+          description: "Successful Operation"
+        "400":
+          description: "Bad Request"
         "401":
           description: "Unauthorized"
         "404":
           description: "Recipe Not Found"
 
   # -------------------- Order ----------------------
-  /v1/order:
+  /v1/orders:
     get:
       tags:
         - "Order"
@@ -748,125 +867,160 @@ paths:
       operationId: ""
       security:
         - cookieAuth: []
+      parameters:
+        - name: "limit"
+          in: "query"
+          description: "表示件数"
+          type: "integer"
+        - name: "offset"
+          in: "query"
+          description: "オフセット"
+          type: "integer"
       responses:
         "200":
           description: "Successful Operation"
           schema:
-            type: "object"
-            properties:
-              orders:
-                type: "array"
-                items:
-                  type: "object"
-                example: [{ "orderId": "1234" }, { "orderId": "5678" }]
+            type: "array"
+            items:
+              type: "object"
+            example:
+              [
+                {
+                  "orderId": "1234",
+                  "ordered_at": "2021/02/11",
+                  "deliveried_at": "2021/02/11",
+                  "price": 1200,
+                  "recipes":
+                    [
+                      { "id": 2, "name": "オムレツ" },
+                      { "id": 3, "name": "たこ焼き" },
+                    ],
+                },
+                {
+                  "orderId": "3523",
+                  "ordered_at": "2021/02/11",
+                  "deliveried_at": "2021/02/11",
+                  "price": 1200,
+                  "recipes":
+                    [
+                      { "id": 2, "name": "オムレツ" },
+                      { "id": 3, "name": "たこ焼き" },
+                    ],
+                },
+              ]
         "401":
           description: "Unauthorized"
     post:
       tags:
         - "Order"
-      summary: "Add new recipe to cart"
+      summary: "注文実行"
       description: ""
       operationId: ""
       security:
         - cookieAuth: []
       produces:
         - "application/json"
-      parameters:
-        - name: "body"
-          in: "body"
-          description: "recipe object to add"
-          required: true
-          schema:
-            type: "object"
-            properties:
-              recipes:
-                type: "array"
-                items:
-                  type: "object"
-                example:
-                  [
-                    { "recipeId": "1234", "number": 2 },
-                    { "recipeId": "5678", "number": 2 },
-                  ]
       responses:
         "201":
           description: "Successful Operation"
-          schema:
-            type: "object"
-            properties:
-              recipes:
-                type: "array"
-                items:
-                  type: "object"
-                example:
-                  [
-                    { "recipeId": "1234", "number": 2 },
-                    { "recipeId": "5678", "number": 2 },
-                  ]
         "400":
           description: "Bad Request"
         "401":
           description: "Unauthorized"
 
-  /v1/order/{orderId}:
-    # 注文後の変更機能は本開発研修のスコープ外
-    # put:
-    #   tags:
-    #   - "Order"
-    #   summary: "Update detail of buying recipe in cart"
-    #   description: ""
-    #   operationId: ""
-    #   security:
-    #   - cookieAuth: []
-    #   produces:
-    #   - "application/json"
-    #   parameters:
-    #   - name: "orderId"
-    #     in: "path"
-    #     description: "Order Id"
-    #     required: true
-    #     type: "string"
-    #   - name: "body"
-    #     in: "body"
-    #     description: "Fields of recipe to update"
-    #     required: true
-    #     schema:
-    #       type: "object"
-    #       properties:
-    #         number:
-    #           type: "integer"
-    #           example: 1
-    #   responses:
-    #     "200":
-    #       description: "successful operation"
-    #     "404":
-    #       description: "Food not found"
-    #     "422":
-    #       description: "Invalid payload supplied"
-    delete:
+  /v1/orders/{orderID}:
+    get:
       tags:
         - "Order"
-      summary: "Delete recipe from cart"
+      summary: "detail orders"
       description: ""
       operationId: ""
       security:
         - cookieAuth: []
-      produces:
-        - "application/json"
       parameters:
-        - name: "orderId"
-          in: "path"
-          description: "recipe Id to delete"
+        - name: "orderID"
           required: true
-          type: "string"
+          in: "path"
+          description: "orderID"
+          type: "integer"
       responses:
-        "204":
-          description: "No Content"
-        "404":
-          description: "Order Not Found"
+        "200":
+          description: "Successful Operation"
+          schema:
+            type: "object"
+            example:
+              {
+                "orderId": "1234",
+                "ordered_at": "2021/02/11",
+                "deliveried_at": "2021/02/11",
+                "price": 1200,
+                "recipes":
+                  [
+                    {
+                      "id": 2,
+                      "name": "オムレツ",
+                      "ingredients":
+                        [
+                          {
+                            "ingredient":
+                              {
+                                "id": 3,
+                                "name": "ミンチ",
+                                "amount": "100",
+                                "unit": "g",
+                                "price": 300,
+                              },
+                            "count": 3,
+                          },
+                          {
+                            "ingredient":
+                              {
+                                "id": 3,
+                                "name": "卵",
+                                "amount": "100",
+                                "unit": "g",
+                                "price": 300,
+                              },
+                            "count": 3,
+                          },
+                        ],
+                    },
+                    {
+                      "id": 3,
+                      "name": "たこ焼き",
+                      "ingredients":
+                        [
+                          {
+                            "ingredient":
+                              {
+                                "id": 3,
+                                "name": "ミンチ",
+                                "amount": "100",
+                                "unit": "g",
+                                "price": 300,
+                              },
+                            "count": 3,
+                          },
+                          {
+                            "ingredient":
+                              {
+                                "id": 3,
+                                "name": "卵",
+                                "amount": "100",
+                                "unit": "g",
+                                "price": 300,
+                              },
+                            "count": 3,
+                          },
+                        ],
+                    },
+                  ],
+              }
 
+        "401":
+          description: "Unauthorized"
   # -------------------- Favorite ----------------------
-  /v1/favorite:
+  /v1/like:
     get:
       tags:
         - "Favorite"
@@ -879,13 +1033,11 @@ paths:
         "200":
           description: "Successful Operation"
           schema:
-            type: "object"
-            properties:
-              recipes:
-                type: "array"
-                items:
-                  type: "string"
-                example: ["1234", "5678"]
+            type: "array"
+            items:
+              type: "string"
+            example:
+              [{ "id": 222, "name": "唐揚げ", "thumbnail_url": "http://a.png" }]
         "401":
           description: "Unauthorized"
     post:
@@ -906,26 +1058,25 @@ paths:
           schema:
             type: "object"
             required:
-              - "recipeId"
+              - "id"
             properties:
-              recipeId:
-                type: "string"
-                example: "1234"
+              id:
+                type: "integer"
+                example: 1234
       responses:
-        "201":
+        "200":
           description: "Successful Operation"
           schema:
             type: "object"
             required:
-              - "recipeId"
+              - "id"
             properties:
-              recipeId:
-                type: "string"
-                example: "1234"
+              id:
+                type: "integer"
+                example: 1234
         "400":
           description: "Bad Request"
 
-  /v1/favorite/{recipeId}:
     delete:
       tags:
         - "Favorite"
@@ -937,13 +1088,20 @@ paths:
       produces:
         - "application/json"
       parameters:
-        - name: "recipeId"
-          in: "path"
-          description: "recipe Id to delete from favorite recipes"
+        - name: "body"
+          in: "body"
+          description: "Recipe ID"
           required: true
-          type: "string"
+          schema:
+            type: "object"
+            required:
+              - "id"
+            properties:
+              id:
+                type: "integer"
+                example: 1234
       responses:
-        "204":
+        "200":
           description: "Successful Operation"
         "401":
           description: "Unauthorized"
@@ -958,21 +1116,39 @@ paths:
       operationId: ""
       security:
         - cookieAuth: []
+      parameters:
+        - name: "limit"
+          in: "query"
+          description: "表示件数"
+          type: "integer"
+        - name: "offset"
+          in: "query"
+          description: "オフセット"
+          type: "integer"
       responses:
         "200":
           description: "successful operation"
           schema:
-            type: "object"
-            properties:
-              recipes:
-                type: "array"
-                items:
-                  type: "object"
-                example:
-                  [
-                    { "recipeId": "1234", "satisfaction": 3 },
-                    { "recipeId": "5678", "satisfaction": 4 },
-                  ]
+            type: "array"
+            items:
+              type: "object"
+            example:
+              [
+                {
+                  "recipeId": "1234",
+                  "name": "鯛焼き",
+                  "created_at": "2021/01/22",
+                  "satisfaction": 3,
+                  "image_url": "hoge.com/a.png",
+                },
+                {
+                  "recipeId": "3323",
+                  "name": "鯛",
+                  "created_at": "2021/01/22",
+                  "satisfaction": 3,
+                  "image_url": "hoge.com/a.png",
+                },
+              ]
         "401":
           description: "Unauthorized"
     post:
@@ -993,16 +1169,22 @@ paths:
           schema:
             type: "object"
             required:
-              - "recipeId"
+              - "recipe_id"
             properties:
               recipeId:
-                type: "string"
-                example: "1234"
+                type: "integer"
+                example: 1234
               satisfaction:
                 type: "integer"
                 example: 4
+              memo:
+                type: "string"
+                example: "うまい"
+              image_ids:
+                type: "array"
+                example: [2, 3]
       responses:
-        "201":
+        "200":
           description: "successful operation"
           schema:
             type: "object"
@@ -1036,14 +1218,14 @@ paths:
           description: "Image to upload(binary)"
           required: true
       responses:
-        "201":
+        "200":
           description: "Successful Operation"
           schema:
             type: "object"
             properties:
-              mediaId:
-                type: "string"
-                example: "1234"
+              id:
+                type: "integer"
+                example: 1234
         "400":
           description: "Bad Request"
         "401":
@@ -1071,83 +1253,18 @@ paths:
           description: "Successful Operation"
           schema:
             type: "object"
-            properties:
-              recipes:
-                type: "array"
-                items:
-                  type: "object"
-                example:
-                  [
-                    { "recordId": "1234", "recipeId": "1234" },
-                    { "recordId": "5678", "recipeId": "5678" },
-                  ]
+            example:
+              {
+                "name": "焼き鳥",
+                "recipeId": "1234",
+                "image_urls": ["hoge.com/a.png", "hoge.com/b.png"],
+                "memo": "うまし",
+                "created_at": "2020/02/01",
+              }
         "401":
           description: "Unauthorized"
         "404":
           description: "Record not found"
-    put:
-      tags:
-        - "Record"
-      summary: "Update record"
-      description: ""
-      operationId: ""
-      security:
-        - cookieAuth: []
-      produces:
-        - "application/json"
-      parameters:
-        - name: "recordId"
-          in: "path"
-          description: "Record Id"
-          required: true
-          type: "string"
-        - name: "body"
-          in: "body"
-          description: "Fields of record to update"
-          required: true
-          schema:
-            type: "object"
-            properties:
-              satisfaction:
-                type: "integer"
-                example: 5
-      responses:
-        "200":
-          description: "successful operation"
-          schema:
-            type: "object"
-            properties:
-              recordId:
-                type: "string"
-                example: "1234"
-              satisfaction:
-                type: "integer"
-                example: 5
-        "401":
-          description: "Unauthorized"
-        "404":
-          description: "Record Not Found"
-    delete:
-      tags:
-        - "Record"
-      summary: "Delete record"
-      description: ""
-      operationId: ""
-      security:
-        - cookieAuth: []
-      produces:
-        - "application/json"
-      parameters:
-        - name: "recordId"
-          in: "path"
-          description: "record Id to delete"
-          required: true
-          type: "string"
-      responses:
-        "204":
-          description: "No Content"
-        "404":
-          description: "Record Not Found"
 
   # -------------------- Jisui-Power ----------------------
   /v1/jisuiPower:
