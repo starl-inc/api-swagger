@@ -1112,21 +1112,39 @@ paths:
       operationId: ""
       security:
         - cookieAuth: []
+      parameters:
+        - name: "limit"
+          in: "query"
+          description: "表示件数"
+          type: "integer"
+        - name: "offset"
+          in: "query"
+          description: "オフセット"
+          type: "integer"
       responses:
         "200":
           description: "successful operation"
           schema:
-            type: "object"
-            properties:
-              recipes:
-                type: "array"
-                items:
-                  type: "object"
-                example:
-                  [
-                    { "recipeId": "1234", "satisfaction": 3 },
-                    { "recipeId": "5678", "satisfaction": 4 },
-                  ]
+            type: "array"
+            items:
+              type: "object"
+            example:
+              [
+                {
+                  "recipeId": "1234",
+                  "name": "鯛焼き",
+                  "created_at": "2021/01/22",
+                  "satisfaction": 3,
+                  "image_url": "hoge.com/a.png",
+                },
+                {
+                  "recipeId": "3323",
+                  "name": "鯛",
+                  "created_at": "2021/01/22",
+                  "satisfaction": 3,
+                  "image_url": "hoge.com/a.png",
+                },
+              ]
         "401":
           description: "Unauthorized"
     post:
@@ -1147,16 +1165,22 @@ paths:
           schema:
             type: "object"
             required:
-              - "recipeId"
+              - "recipe_id"
             properties:
               recipeId:
-                type: "string"
-                example: "1234"
+                type: "integer"
+                example: 1234
               satisfaction:
                 type: "integer"
                 example: 4
+              memo:
+                type: "string"
+                example: "うまい"
+              image_ids:
+                type: "array"
+                example: [2, 3]
       responses:
-        "201":
+        "200":
           description: "successful operation"
           schema:
             type: "object"
@@ -1190,14 +1214,14 @@ paths:
           description: "Image to upload(binary)"
           required: true
       responses:
-        "201":
+        "200":
           description: "Successful Operation"
           schema:
             type: "object"
             properties:
-              mediaId:
-                type: "string"
-                example: "1234"
+              id:
+                type: "integer"
+                example: 1234
         "400":
           description: "Bad Request"
         "401":
@@ -1225,83 +1249,18 @@ paths:
           description: "Successful Operation"
           schema:
             type: "object"
-            properties:
-              recipes:
-                type: "array"
-                items:
-                  type: "object"
-                example:
-                  [
-                    { "recordId": "1234", "recipeId": "1234" },
-                    { "recordId": "5678", "recipeId": "5678" },
-                  ]
+            example:
+              {
+                "name": "焼き鳥",
+                "recipeId": "1234",
+                "image_urls": ["hoge.com/a.png", "hoge.com/b.png"],
+                "memo": "うまし",
+                "created_at": "2020/02/01",
+              }
         "401":
           description: "Unauthorized"
         "404":
           description: "Record not found"
-    put:
-      tags:
-        - "Record"
-      summary: "Update record"
-      description: ""
-      operationId: ""
-      security:
-        - cookieAuth: []
-      produces:
-        - "application/json"
-      parameters:
-        - name: "recordId"
-          in: "path"
-          description: "Record Id"
-          required: true
-          type: "string"
-        - name: "body"
-          in: "body"
-          description: "Fields of record to update"
-          required: true
-          schema:
-            type: "object"
-            properties:
-              satisfaction:
-                type: "integer"
-                example: 5
-      responses:
-        "200":
-          description: "successful operation"
-          schema:
-            type: "object"
-            properties:
-              recordId:
-                type: "string"
-                example: "1234"
-              satisfaction:
-                type: "integer"
-                example: 5
-        "401":
-          description: "Unauthorized"
-        "404":
-          description: "Record Not Found"
-    delete:
-      tags:
-        - "Record"
-      summary: "Delete record"
-      description: ""
-      operationId: ""
-      security:
-        - cookieAuth: []
-      produces:
-        - "application/json"
-      parameters:
-        - name: "recordId"
-          in: "path"
-          description: "record Id to delete"
-          required: true
-          type: "string"
-      responses:
-        "204":
-          description: "No Content"
-        "404":
-          description: "Record Not Found"
 
   # -------------------- Jisui-Power ----------------------
   /v1/jisuiPower:
