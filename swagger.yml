@@ -839,7 +839,7 @@ paths:
           description: "Recipe Not Found"
 
   # -------------------- Order ----------------------
-  /v1/order:
+  /v1/orders:
     get:
       tags:
         - "Order"
@@ -848,17 +848,47 @@ paths:
       operationId: ""
       security:
         - cookieAuth: []
+      parameters:
+        - name: "limit"
+          in: "query"
+          description: "表示件数"
+          type: "integer"
+        - name: "offset"
+          in: "query"
+          description: "オフセット"
+          type: "integer"
       responses:
         "200":
           description: "Successful Operation"
           schema:
-            type: "object"
-            properties:
-              orders:
-                type: "array"
-                items:
-                  type: "object"
-                example: [{ "orderId": "1234" }, { "orderId": "5678" }]
+            type: "array"
+            items:
+              type: "object"
+            example:
+              [
+                {
+                  "orderId": "1234",
+                  "ordered_at": "2021/02/11",
+                  "deliveried_at": "2021/02/11",
+                  "price": 1200,
+                  "recipes":
+                    [
+                      { "id": 2, "name": "オムレツ" },
+                      { "id": 3, "name": "たこ焼き" },
+                    ],
+                },
+                {
+                  "orderId": "3523",
+                  "ordered_at": "2021/02/11",
+                  "deliveried_at": "2021/02/11",
+                  "price": 1200,
+                  "recipes":
+                    [
+                      { "id": 2, "name": "オムレツ" },
+                      { "id": 3, "name": "たこ焼き" },
+                    ],
+                },
+              ]
         "401":
           description: "Unauthorized"
     post:
