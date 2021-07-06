@@ -449,48 +449,63 @@ paths:
           description: "Unauthorized"
         "404":
           description: "Recipe Not Found"
-          # -------------------- Recipe ----------------------
-          # 管理者機能のため本開発研修のスコープ外
-          # /v1/recipe:
-          #   get:
-          #     tags:
-          #     - "Recipe"
-          #     summary: "Get all recipes"
-          #     description: ""
-          #     operationId: ""
-          #     responses:
-          #       "200":
-          #         description: "successful operation"
-          #   post:
-          #     tags:
-          #     - "Recipe"
-          #     summary: "Create new recipe"
-          #     description: ""
-          #     operationId: ""
-          #     produces:
-          #     - "application/json"
-          #     parameters:
-          #     - name: "body"
-          #       in: "body"
-          #       description: "recipe object to create"
-          #       required: true
-          #       schema:
-          #         type: "object"
-          #         required:
-          #         - "recipeName"
-          #         properties:
-          #           recipeName:
-          #             type: "string"
-          #             example: "こだわりのハンバーグ"
-          #           difficulty:
-          #             type: "integer"
-          #             description: "1 - 5"
-          #             example: 4
-          #     responses:
-          #       "200":
-          #         description: "successful operation"
 
-  /v1/recipe/{recipeId}:
+  # -------------------- recipe ----------------------
+
+  /v1/recipes:
+    get:
+      tags:
+        - "Recipe"
+      summary: "Get recipe summary information"
+      description: ""
+      operationId: ""
+      produces:
+        - "application/json"
+      parameters:
+        - name: "recommendation"
+          in: "query"
+          description: "おすすめ欄に表示するか？ =1が入ったときだけtrue"
+          type: "integer"
+        - name: "popular"
+          in: "query"
+          description: "人気欄に表示するか？ =1が入ったときだけtrue"
+          type: "integer"
+        - name: "latest"
+          in: "query"
+          description: "新着欄に表示するか？ =1が入ったときだけtrue"
+          type: "integer"
+        - name: "limit"
+          in: "query"
+          description: "表示件数"
+          type: "integer"
+        - name: "offset"
+          in: "query"
+          description: "オフセット"
+          type: "integer"
+      responses:
+        "200":
+          description: "Successful Operation"
+          schema:
+            type: "array"
+            items:
+              type: "object"
+              properties:
+                id:
+                  type: "integer"
+                  example: 1
+                name:
+                  type: "string"
+                  example: "こだわりのハンバーグ"
+                thumbnail_url:
+                  type: "string"
+                  example: "http://hoge.com/aa.png"
+                liked:
+                  type: "boolean"
+                  example: false
+        "404":
+          description: "Recipe Not Found"
+
+  /v1/recipes/{recipeId}:
     get:
       tags:
         - "Recipe"
@@ -511,98 +526,32 @@ paths:
           schema:
             type: "object"
             properties:
-              recipeName:
+              id:
+                type: "integer"
+                example: 1
+              name:
                 type: "string"
                 example: "こだわりのハンバーグ"
+              thumbnail_url:
+                type: "string"
+                example: "http://hoge.com/aa.png"
+              time_hour:
+                type: "integer"
+                example: 1
+              time_minutes:
+                type: "integer"
+                example: 20
+              cost:
+                type: "integer"
+                example: 1200
+              energy:
+                type: "integer"
+                example: 400
+              liked:
+                type: "boolean"
+                example: false
         "404":
           description: "Recipe Not Found"
-          # 管理者機能のため本開発研修のスコープ外
-          # put:
-          #   tags:
-          #   - "Recipe"
-          #   summary: "Update attributes of recipe resource"
-          #   description: ""
-          #   operationId: ""
-          #   produces:
-          #   - "application/json"
-          #   parameters:
-          #   - name: "recipeId"
-          #     in: "path"
-          #     description: "Recipe Id"
-          #     required: true
-          #     type: "string"
-          #   - name: "body"
-          #     in: "body"
-          #     description: "Latest recipe object"
-          #     required: true
-          #     schema:
-          #       type: "object"
-          #       properties:
-          #         recipeName:
-          #           type: "string"
-          #           example: "超こだわりのハンバーグ"
-          #   responses:
-          #     "200":
-          #       description: "successful operation"
-          #     "404":
-          #       description: "Recipe not found"
-          #     "422":
-          #       description: "Invalid payload supplied"
-          # delete:
-          #   tags:
-          #   - "Recipe"
-          #   summary: "Delete recipe"
-          #   description: ""
-          #   operationId: ""
-          #   produces:
-          #   - "application/json"
-          #   parameters:
-          #   - name: "recipeId"
-          #     in: "path"
-          #     description: "Recipe Id"
-          #     required: true
-          #     type: "string"
-          #   responses:
-          #     "200":
-          #       description: "successful operation"
-          #     "404":
-          #       description: "Recipe not found"
-          # -------------------- Food ----------------------
-          # 管理者機能のため本開発研修のスコープ外
-          # /v1/food:
-          #   get:
-          #     tags:
-          #     - "Food"
-          #     summary: "Get all foods"
-          #     description: ""
-          #     operationId: ""
-          #     responses:
-          #       "200":
-          #         description: "successful operation"
-          #   post:
-          #     tags:
-          #     - "Food"
-          #     summary: "Create new food"
-          #     description: ""
-          #     operationId: ""
-          #     produces:
-          #     - "application/json"
-          #     parameters:
-          #     - name: "body"
-          #       in: "body"
-          #       description: "food object to create"
-          #       required: true
-          #       schema:
-          #         type: "object"
-          #         required:
-          #         - "foodName"
-          #         properties:
-          #           recipeName:
-          #             type: "string"
-          #             example: "カリフラワー"
-          #     responses:
-          #       "200":
-          #         description: "successful operation"
 
   /v1/food/{foodId}:
     get:
