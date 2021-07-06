@@ -550,6 +550,56 @@ paths:
               liked:
                 type: "boolean"
                 example: false
+              movie_url:
+                type: "string"
+                example: "http://hoge.com/aa.mov"
+              genre:
+                type: "string"
+                example: "和食"
+              ingredients:
+                type: "array"
+                items:
+                  type: "object"
+                  properties:
+                    id:
+                      type: "integer"
+                      example: 1
+                    name:
+                      type: "string"
+                      example: "じゃがいも"
+                    amount:
+                      type: "string"
+                      example: "少々"
+                    unit:
+                      type: "string"
+                      example: ""
+                    energy:
+                      type: "integer"
+                      example: 130
+                    price:
+                      type: "integer"
+                      example: 100
+                    percentage_of_one_unit_of_ingredient:
+                      type: "integer"
+                      example: 50
+
+              procedure:
+                type: "array"
+                items:
+                  type: "object"
+                  properties:
+                    procedure_number:
+                      type: "integer"
+                      example: 1
+                    title:
+                      type: "string"
+                      example: "刻む"
+                    description:
+                      type: "string"
+                      example: "ミンチ肉を良い感じに刻みまくります"
+                    image_url:
+                      type: "string"
+                      example: "http://hoge.com/aa.png"
         "404":
           description: "Recipe Not Found"
 
@@ -579,57 +629,6 @@ paths:
                 example: "ブロッコリー"
         "404":
           description: "Food Not Found"
-    # 管理者系機能のため本開発研修のスコープ外
-    # put:
-    #   tags:
-    #   - "Food"
-    #   summary: "Update attributes of food resource"
-    #   description: ""
-    #   operationId: ""
-    #   produces:
-    #   - "application/json"
-    #   parameters:
-    #   - name: "foodId"
-    #     in: "path"
-    #     description: "Food Id"
-    #     required: true
-    #     type: "string"
-    #   - name: "body"
-    #     in: "body"
-    #     description: "Latest food object"
-    #     required: true
-    #     schema:
-    #       type: "object"
-    #       properties:
-    #         foodName:
-    #           type: "string"
-    #           example: "ネオカリフラワー"
-    #   responses:
-    #     "200":
-    #       description: "successful operation"
-    #     "404":
-    #       description: "Food not found"
-    #     "422":
-    #       description: "Invalid payload supplied"
-    # delete:
-    #   tags:
-    #   - "Food"
-    #   summary: "Delete food"
-    #   description: ""
-    #   operationId: ""
-    #   produces:
-    #   - "application/json"
-    #   parameters:
-    #   - name: "foodId"
-    #     in: "path"
-    #     description: "Food Id"
-    #     required: true
-    #     type: "string"
-    #   responses:
-    #     "200":
-    #       description: "successful operation"
-    #     "404":
-    #       description: "Food not found"
 
   # -------------------- Cart ----------------------
   /v1/cart:
