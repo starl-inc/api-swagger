@@ -772,8 +772,6 @@ paths:
               }
         "401":
           description: "Unauthorized"
-
-  /v1/cart/{recipeId}:
     put:
       tags:
         - "Cart"
@@ -785,7 +783,7 @@ paths:
       produces:
         - "application/json"
       parameters:
-        - name: "recipeId"
+        - name: "cartRecipeId"
           in: "path"
           description: "Recipe Id"
           required: true
@@ -796,37 +794,21 @@ paths:
           required: true
           schema:
             type: "object"
-            properties:
-              number:
-                type: "integer"
-                example: 1
+            example: { "count": 2 }
       responses:
         "200":
           description: "Successful Operation"
-          schema:
-            type: "object"
-            required:
-              - "recipeId"
-            properties:
-              recipeId:
-                type: "string"
-                example: "1234"
-              size:
-                type: "string"
-                example: "大盛"
-              number:
-                type: "integer"
-                example: 1
         "400":
           description: "Bad Request"
         "401":
           description: "Unauthorized"
         "404":
           description: "Recipe Not Found"
-    delete:
+  /v1/cart/recipes/{cartRecipeID}/ingredients:
+    put:
       tags:
         - "Cart"
-      summary: "Delete recipe from cart"
+      summary: "Update detail of buying recipe in cart"
       description: ""
       operationId: ""
       security:
@@ -834,14 +816,23 @@ paths:
       produces:
         - "application/json"
       parameters:
-        - name: "recipeId"
+        - name: "cartRecipeId"
           in: "path"
-          description: "recipe Id to delete"
+          description: "Recipe Id"
           required: true
           type: "string"
+        - name: "body"
+          in: "body"
+          description: "Fields of recipe to update"
+          required: true
+          schema:
+            type: "array"
+            example: [{ "id": 33, "count": 2 }, { "id": 3, "count": 1 }]
       responses:
-        "204":
-          description: "No Content"
+        "200":
+          description: "Successful Operation"
+        "400":
+          description: "Bad Request"
         "401":
           description: "Unauthorized"
         "404":
