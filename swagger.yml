@@ -681,10 +681,21 @@ paths:
       produces:
         - "application/json"
       parameters:
+        - name: "omakase"
+          in: "query"
+          description: "お任せ選択か？ =1が入ったときだけtrue"
+          type: "integer"
+        - name: "genre"
+          in: "query"
+          description: "お任せのジャンル指定"
+          type: "integer"
+        - name: "count"
+          in: "query"
+          description: "お任せの個数指定"
+          type: "integer"
         - name: "body"
           in: "body"
           description: "recipe object to add"
-          required: true
           schema:
             type: "object"
             required:
@@ -708,9 +719,9 @@ paths:
               thumbnail_url:
                 type: "string"
                 example: "http://hoge.com/aa.png"
-              liked:
-                type: "boolean"
-                example: false
+              count:
+                type: "integer"
+                example: 1
         "400":
           description: "Bad Request"
         "401":
