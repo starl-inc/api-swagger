@@ -670,6 +670,52 @@ paths:
         "401":
           description: "Unauthorized"
 
+    post:
+      tags:
+        - "Cart"
+      summary: "Add new recipe to cart"
+      description: ""
+      operationId: ""
+      security:
+        - cookieAuth: []
+      produces:
+        - "application/json"
+      parameters:
+        - name: "body"
+          in: "body"
+          description: "recipe object to add"
+          required: true
+          schema:
+            type: "object"
+            required:
+              - "recipeId"
+            properties:
+              recipeId:
+                type: "integer"
+                example: 223
+      responses:
+        "200":
+          description: "Successful Operation"
+          schema:
+            type: "object"
+            properties:
+              id:
+                type: "integer"
+                example: 1
+              name:
+                type: "string"
+                example: "こだわりのハンバーグ"
+              thumbnail_url:
+                type: "string"
+                example: "http://hoge.com/aa.png"
+              liked:
+                type: "boolean"
+                example: false
+        "400":
+          description: "Bad Request"
+        "401":
+          description: "Unauthorized"
+
   /v1/cart/recipes/{cartRecipeID}:
     get:
       tags:
@@ -724,56 +770,6 @@ paths:
                     },
                   ],
               }
-        "401":
-          description: "Unauthorized"
-    post:
-      tags:
-        - "Cart"
-      summary: "Add new recipe to cart"
-      description: ""
-      operationId: ""
-      security:
-        - cookieAuth: []
-      produces:
-        - "application/json"
-      parameters:
-        - name: "body"
-          in: "body"
-          description: "recipe object to add"
-          required: true
-          schema:
-            type: "object"
-            required:
-              - "recipeId"
-            properties:
-              recipeId:
-                type: "string"
-                example: "1234"
-              size:
-                type: "string"
-                example: "大盛"
-              number:
-                type: "integer"
-                example: 2
-      responses:
-        "201":
-          description: "Successful Operation"
-          schema:
-            type: "object"
-            required:
-              - "recipeId"
-            properties:
-              recipeId:
-                type: "string"
-                example: "1234"
-              size:
-                type: "string"
-                example: "大盛"
-              number:
-                type: "integer"
-                example: 2
-        "400":
-          description: "Bad Request"
         "401":
           description: "Unauthorized"
 
