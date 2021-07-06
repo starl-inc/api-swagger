@@ -58,9 +58,28 @@ paths:
           schema:
             type: "object"
             properties:
-              userName:
+              id:
+                type: "integer"
+                example: 1
+              name:
                 type: "string"
                 example: "自炊太郎"
+              email:
+                type: "string"
+                example: "hoge@gmail.com"
+              postcode:
+                type: "string"
+                example: "1112222"
+              address:
+                type: "string"
+                example: "東京都千代田区1-1"
+              card_last4:
+                type: "string"
+                example: "3332"
+              phone:
+                type: "string"
+                example: "08011112222"
+
         "401":
           description: "Unauthorized"
         "404":
@@ -87,17 +106,32 @@ paths:
                 type: "string"
                 example: "大阪府大阪市阿倍野区阿倍野筋1丁目1−43"
       responses:
-        "201":
+        "200":
           description: "Successful Operation"
           schema:
             type: "object"
             properties:
-              userName:
+              id:
+                type: "integer"
+                example: 1
+              name:
                 type: "string"
                 example: "自炊太郎"
+              email:
+                type: "string"
+                example: "hoge@gmail.com"
+              postcode:
+                type: "string"
+                example: "1112222"
               address:
                 type: "string"
                 example: "大阪府大阪市阿倍野区阿倍野筋1丁目1−43"
+              card_last4:
+                type: "string"
+                example: "3332"
+              phone:
+                type: "string"
+                example: "08011112222"
         "400":
           description: "Bad Request"
         "401":
@@ -114,8 +148,19 @@ paths:
         - cookieAuth: []
       produces:
         - "application/json"
+      parameters:
+        - name: "body"
+          in: "body"
+          description: "password"
+          required: true
+          schema:
+            type: "object"
+            properties:
+              password:
+                type: "string"
+                example: "password"
       responses:
-        "204":
+        "200":
           description: "Successful Operation"
         "401":
           description: "Unauthorized"
@@ -125,7 +170,7 @@ paths:
       tags:
         - "User"
       summary: "Reset password"
-      description: ""
+      description: "WIP パスワードリセットの流れを調べないといけない。優先順位低"
       operationId: ""
       security:
         - cookieAuth: []
