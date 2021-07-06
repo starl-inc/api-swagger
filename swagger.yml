@@ -905,7 +905,7 @@ paths:
     post:
       tags:
         - "Order"
-      summary: "Add new recipe to cart"
+      summary: "注文実行"
       description: ""
       operationId: ""
       security:
@@ -917,6 +917,98 @@ paths:
           description: "Successful Operation"
         "400":
           description: "Bad Request"
+        "401":
+          description: "Unauthorized"
+
+  /v1/orders/{orderID}:
+    get:
+      tags:
+        - "Order"
+      summary: "detail orders"
+      description: ""
+      operationId: ""
+      security:
+        - cookieAuth: []
+      parameters:
+        - name: "orderID"
+          required: true
+          in: "path"
+          description: "orderID"
+          type: "integer"
+      responses:
+        "200":
+          description: "Successful Operation"
+          schema:
+            type: "object"
+            example:
+              {
+                "orderId": "1234",
+                "ordered_at": "2021/02/11",
+                "deliveried_at": "2021/02/11",
+                "price": 1200,
+                "recipes":
+                  [
+                    {
+                      "id": 2,
+                      "name": "オムレツ",
+                      "ingredients":
+                        [
+                          {
+                            "ingredient":
+                              {
+                                "id": 3,
+                                "name": "ミンチ",
+                                "amount": "100",
+                                "unit": "g",
+                                "price": 300,
+                              },
+                            "count": 3,
+                          },
+                          {
+                            "ingredient":
+                              {
+                                "id": 3,
+                                "name": "卵",
+                                "amount": "100",
+                                "unit": "g",
+                                "price": 300,
+                              },
+                            "count": 3,
+                          },
+                        ],
+                    },
+                    {
+                      "id": 3,
+                      "name": "たこ焼き",
+                      "ingredients":
+                        [
+                          {
+                            "ingredient":
+                              {
+                                "id": 3,
+                                "name": "ミンチ",
+                                "amount": "100",
+                                "unit": "g",
+                                "price": 300,
+                              },
+                            "count": 3,
+                          },
+                          {
+                            "ingredient":
+                              {
+                                "id": 3,
+                                "name": "卵",
+                                "amount": "100",
+                                "unit": "g",
+                                "price": 300,
+                              },
+                            "count": 3,
+                          },
+                        ],
+                    },
+                  ],
+              }
+
         "401":
           description: "Unauthorized"
   # -------------------- Favorite ----------------------
