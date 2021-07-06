@@ -541,7 +541,7 @@ paths:
               time_minutes:
                 type: "integer"
                 example: 20
-              cost:
+              price:
                 type: "integer"
                 example: 1200
               energy:
@@ -644,14 +644,18 @@ paths:
         "200":
           description: "Successful Operation"
           schema:
-            type: "object"
-            properties:
-              favoriteRecipes:
-                type: "array"
-                items:
-                  type: "object"
-                example:
-                  [{ "recipeName": "ハンバーグ" }, { "recipeName": "ラーメン" }]
+            type: "array"
+            example:
+              [
+                {
+                  "recipe": { "id": 2, "name": "ハンバーグ", "price": 100 },
+                  "count": 2,
+                },
+                {
+                  "recipe": { "id": 7, "name": "きしめん", "price": 20 },
+                  "count": 1,
+                },
+              ]
         "401":
           description: "Unauthorized"
     post:
