@@ -579,9 +579,6 @@ paths:
                     price:
                       type: "integer"
                       example: 100
-                    percentage_of_one_unit_of_ingredient:
-                      type: "integer"
-                      example: 50
 
               procedure:
                 type: "array"
@@ -648,14 +645,85 @@ paths:
             example:
               [
                 {
-                  "recipe": { "id": 2, "name": "ハンバーグ", "price": 100 },
+                  "recipe":
+                    {
+                      "cart_recipe_id": 22,
+                      "recipe_id": 2233,
+                      "name": "ハンバーグ",
+                      "price": 100,
+                      "thumbnail_url": "http://hoge.com/aa.png",
+                    },
                   "count": 2,
                 },
                 {
-                  "recipe": { "id": 7, "name": "きしめん", "price": 20 },
+                  "recipe":
+                    {
+                      "cart_recipe_id": 49,
+                      "recipe_id": 2233,
+                      "name": "きしめん",
+                      "price": 20,
+                      "thumbnail_url": "http://hoge.com/aa.png",
+                    },
                   "count": 1,
                 },
               ]
+        "401":
+          description: "Unauthorized"
+
+  /v1/cart/recipes/{cartRecipeID}:
+    get:
+      tags:
+        - "Cart"
+      summary: "Get detail recipe in cart"
+      description: ""
+      operationId: ""
+      security:
+        - cookieAuth: []
+      parameters:
+        - name: "cartRecipeID"
+          in: "path"
+          description: "Cart Recipe Id"
+          required: true
+          type: "string"
+      responses:
+        "200":
+          description: "Successful Operation"
+          schema:
+            type: "object"
+            example:
+              {
+                "cart_recipe_id": 22,
+                "recipe_id": 2233,
+                "name": "ハンバーグ",
+                "price": 2000,
+                "thumbnail_url": "http://hoge.com/aa.png",
+                "count": 2,
+                "ingredients":
+                  [
+                    {
+                      "ingredient":
+                        {
+                          "id": 3,
+                          "name": "ミンチ",
+                          "amount": "100",
+                          "unit": "g",
+                          "price": 300,
+                        },
+                      "count": 3,
+                    },
+                    {
+                      "ingredient":
+                        {
+                          "id": 10,
+                          "name": "卵",
+                          "amount": "1",
+                          "unit": "個",
+                          "price": 10,
+                        },
+                      "count": 2,
+                    },
+                  ],
+              }
         "401":
           description: "Unauthorized"
     post:
