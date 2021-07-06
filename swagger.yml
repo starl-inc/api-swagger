@@ -1020,7 +1020,7 @@ paths:
         "401":
           description: "Unauthorized"
   # -------------------- Favorite ----------------------
-  /v1/favorite:
+  /v1/like:
     get:
       tags:
         - "Favorite"
@@ -1033,13 +1033,11 @@ paths:
         "200":
           description: "Successful Operation"
           schema:
-            type: "object"
-            properties:
-              recipes:
-                type: "array"
-                items:
-                  type: "string"
-                example: ["1234", "5678"]
+            type: "array"
+            items:
+              type: "string"
+            example:
+              [{ "id": 222, "name": "唐揚げ", "thumbnail_url": "http://a.png" }]
         "401":
           description: "Unauthorized"
     post:
@@ -1060,26 +1058,25 @@ paths:
           schema:
             type: "object"
             required:
-              - "recipeId"
+              - "id"
             properties:
-              recipeId:
-                type: "string"
-                example: "1234"
+              id:
+                type: "integer"
+                example: 1234
       responses:
-        "201":
+        "200":
           description: "Successful Operation"
           schema:
             type: "object"
             required:
-              - "recipeId"
+              - "id"
             properties:
-              recipeId:
-                type: "string"
-                example: "1234"
+              id:
+                type: "integer"
+                example: 1234
         "400":
           description: "Bad Request"
 
-  /v1/favorite/{recipeId}:
     delete:
       tags:
         - "Favorite"
@@ -1091,13 +1088,20 @@ paths:
       produces:
         - "application/json"
       parameters:
-        - name: "recipeId"
-          in: "path"
-          description: "recipe Id to delete from favorite recipes"
+        - name: "body"
+          in: "body"
+          description: "Recipe ID"
           required: true
-          type: "string"
+          schema:
+            type: "object"
+            required:
+              - "id"
+            properties:
+              id:
+                type: "integer"
+                example: 1234
       responses:
-        "204":
+        "200":
           description: "Successful Operation"
         "401":
           description: "Unauthorized"
