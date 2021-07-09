@@ -403,10 +403,6 @@ paths:
       produces:
         - "application/json"
       parameters:
-        - name: "recommendation"
-          in: "query"
-          description: "おすすめを返すか？ =1が入ったときだけtrue"
-          type: "integer"
         - name: "popular"
           in: "query"
           description: "人気を返すするか？ =1が入ったときだけtrue"
@@ -414,10 +410,6 @@ paths:
         - name: "latest"
           in: "query"
           description: "新着を返すか？ =1が入ったときだけtrue"
-          type: "integer"
-        - name: "ordered"
-          in: "query"
-          description: "注文済みを返すか？ =1が入ったときだけtrue"
           type: "integer"
         - name: "searchq"
           in: "query"
