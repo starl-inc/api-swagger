@@ -559,33 +559,6 @@ paths:
         "404":
           description: "Recipe Not Found"
 
-  /v1/food/{foodId}:
-    get:
-      tags:
-        - "Food"
-      summary: "Get food detail information by food ID"
-      description: ""
-      operationId: ""
-      produces:
-        - "application/json"
-      parameters:
-        - name: "foodId"
-          in: "path"
-          description: "Food ID"
-          required: true
-          type: "string"
-      responses:
-        "200":
-          description: "Successful Operation"
-          schema:
-            type: "object"
-            properties:
-              foodName:
-                type: "string"
-                example: "ブロッコリー"
-        "404":
-          description: "Food Not Found"
-
   # -------------------- Cart ----------------------
   /v1/cart:
     get:
