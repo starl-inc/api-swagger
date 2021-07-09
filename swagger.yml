@@ -1246,14 +1246,16 @@ paths:
                   "name": "鯛焼き",
                   "created_at": "2021/01/22",
                   "satisfaction": 3,
-                  "image_url": "hoge.com/a.png",
+                  "image_urls": ["hoge.com/a.png", "hoge.com/b.png"],
+                  "memo": "うまし"
                 },
                 {
                   "recipeId": "3323",
                   "name": "鯛",
                   "created_at": "2021/01/22",
                   "satisfaction": 3,
-                  "image_url": "hoge.com/a.png",
+                  "image_urls": ["hoge.com/a.png", "hoge.com/b.png"],
+                  "memo": "おいしい",
                 },
               ]
         "401":
