@@ -394,7 +394,7 @@ paths:
   
   # -------------------- recipe ----------------------
 
-  /v1/recipes:
+  /v1/recipes/public:
     get:
       tags:
         - "Recipe"
@@ -457,6 +457,169 @@ paths:
                   example: false
         "404":
           description: "Recipe Not Found"
+  /v1/recipes:
+    get:
+      tags:
+        - "Recipe"
+      summary: "Get recipe summary information"
+      description: ""
+      operationId: ""
+      produces:
+        - "application/json"
+      security:
+        - cookieAuth: []        
+      parameters:
+        - name: "recommendation"
+          in: "query"
+          description: "おすすめを返すか？ =1が入ったときだけtrue"
+          type: "integer"
+        - name: "popular"
+          in: "query"
+          description: "人気を返すするか？ =1が入ったときだけtrue"
+          type: "integer"
+        - name: "latest"
+          in: "query"
+          description: "新着を返すか？ =1が入ったときだけtrue"
+          type: "integer"
+        - name: "ordered"
+          in: "query"
+          description: "注文済みを返すか？ =1が入ったときだけtrue"
+          type: "integer"
+        - name: "searchq"
+          in: "query"
+          description: "検索クエリ"
+          type: "string"
+        - name: "limit"
+          in: "query"
+          description: "表示件数"
+          type: "integer"
+        - name: "offset"
+          in: "query"
+          description: "オフセット"
+          type: "integer"
+      responses:
+        "200":
+          description: "Successful Operation"
+          schema:
+            type: "array"
+            items:
+              type: "object"
+              properties:
+                id:
+                  type: "integer"
+                  example: 1
+                name:
+                  type: "string"
+                  example: "こだわりのハンバーグ"
+                information:
+                  type: "string"
+                  example: "hogehoge"
+                thumbnail_url:
+                  type: "string"
+                  example: "http://hoge.com/aa.png"
+                liked:
+                  type: "boolean"
+                  example: false
+        "404":
+          description: "Recipe Not Found"
+
+  /v1/recipes/public/{recipeId}:
+    get:
+      tags:
+        - "Recipe"
+      summary: "Get recipe detail information by recipe ID"
+      description: ""
+      operationId: ""
+      produces:
+        - "application/json"
+      parameters:
+        - name: "recipeId"
+          in: "path"
+          description: "Recipe ID"
+          required: true
+          type: "string"
+      responses:
+        "200":
+          description: "Successful Operation"
+          schema:
+            type: "object"
+            properties:
+              id:
+                type: "integer"
+                example: 1
+              name:
+                type: "string"
+                example: "こだわりのハンバーグ"
+              description:
+                type: "string"
+                example: "とてもうまい"                
+              thumbnail_url:
+                type: "string"
+                example: "http://hoge.com/aa.png"
+              time_hour:
+                type: "integer"
+                example: 1
+              time_minutes:
+                type: "integer"
+                example: 20
+              price:
+                type: "integer"
+                example: 1200
+              energy:
+                type: "integer"
+                example: 400
+              liked:
+                type: "boolean"
+                example: false
+              movie_url:
+                type: "string"
+                example: "http://hoge.com/aa.mov"
+              genre:
+                type: "string"
+                example: "和食"
+              ingredients:
+                type: "array"
+                items:
+                  type: "object"
+                  properties:
+                    id:
+                      type: "integer"
+                      example: 1
+                    name:
+                      type: "string"
+                      example: "じゃがいも"
+                    amount:
+                      type: "string"
+                      example: "少々"
+                    unit:
+                      type: "string"
+                      example: ""
+                    energy:
+                      type: "integer"
+                      example: 130
+                    price:
+                      type: "integer"
+                      example: 100
+
+              procedure:
+                type: "array"
+                items:
+                  type: "object"
+                  properties:
+                    procedure_number:
+                      type: "integer"
+                      example: 1
+                    title:
+                      type: "string"
+                      example: "刻む"
+                    description:
+                      type: "string"
+                      example: "ミンチ肉を良い感じに刻みまくります"
+                    image_url:
+                      type: "string"
+                      example: "http://hoge.com/aa.png"
+        "404":
+          description: "Recipe Not Found"
 
   /v1/recipes/{recipeId}:
     get:
@@ -465,6 +628,8 @@ paths:
       summary: "Get recipe detail information by recipe ID"
       description: ""
       operationId: ""
+      security:
+        - cookieAuth: []      
       produces:
         - "application/json"
       parameters:
