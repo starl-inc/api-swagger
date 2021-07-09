@@ -697,7 +697,7 @@ paths:
                     image_url:
                       type: "string"
                       example: "http://hoge.com/aa.png"
-                    recipe_ingredients:
+                    procedure_ingredients:
                       type: "array"
                       example: [{
                         "name": "バター",
