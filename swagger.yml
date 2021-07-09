@@ -586,7 +586,7 @@ paths:
                       type: "integer"
                       example: 100
 
-              procedure:
+              procedures:
                 type: "array"
                 items:
                   type: "object"
@@ -603,6 +603,18 @@ paths:
                     image_url:
                       type: "string"
                       example: "http://hoge.com/aa.png"
+                    procedure_ingredients:
+                      type: "array"
+                      example: [{
+                        "name": "バター",
+                        "amount": "1/4",
+                        "unit": "個",
+                      },
+                      {
+                        "name": "卵",
+                        "amount": "1/4",
+                        "unit": "個",
+                      }]
         "404":
           description: "Recipe Not Found"
 
