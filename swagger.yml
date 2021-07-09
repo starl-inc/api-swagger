@@ -222,7 +222,8 @@ paths:
       summary: Uploading a media attachment
       description: ""
       operationId: addMedia
-
+      security:
+        - cookieAuth: []
       consumes:
         - multipart/form-data
       parameters:
@@ -336,8 +337,6 @@ paths:
       summary: "onetime password for email validation"
       description: ""
       operationId: ""
-      security:
-        - cookieAuth: []
       produces:
         - "application/json"
       parameters:
@@ -400,6 +399,8 @@ paths:
         - "Recipe"
       summary: "Get recipe summary information"
       description: ""
+      security:
+        - cookieAuth: []
       operationId: ""
       produces:
         - "application/json"
@@ -464,6 +465,8 @@ paths:
         - "Recipe"
       summary: "Get recipe detail information by recipe ID"
       description: ""
+      security:
+        - cookieAuth: []
       operationId: ""
       produces:
         - "application/json"
