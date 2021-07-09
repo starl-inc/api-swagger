@@ -666,13 +666,13 @@ paths:
                       example: 1
                     name:
                       type: "string"
-                      example: "じゃがいも"
+                      example: "じゃがいも(ここの材料は購入可能単位になる)"
                     amount:
                       type: "string"
-                      example: "少々"
+                      example: "1"
                     unit:
                       type: "string"
-                      example: ""
+                      example: "個"
                     energy:
                       type: "integer"
                       example: 130
@@ -680,7 +680,7 @@ paths:
                       type: "integer"
                       example: 100
 
-              procedure:
+              procedures:
                 type: "array"
                 items:
                   type: "object"
@@ -697,6 +697,18 @@ paths:
                     image_url:
                       type: "string"
                       example: "http://hoge.com/aa.png"
+                    recipe_ingredients:
+                      type: "array"
+                      example: [{
+                        "name": "バター",
+                        "amount": "1/4",
+                        "unit": "個",
+                      },
+                      {
+                        "name": "卵",
+                        "amount": "1/4",
+                        "unit": "個",
+                      }]
         "404":
           description: "Recipe Not Found"
 
