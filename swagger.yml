@@ -541,7 +541,7 @@ paths:
               name:
                 type: "string"
                 example: "こだわりのハンバーグ"
-              description:
+              information:
                 type: "string"
                 example: "とてもうまい"                
               thumbnail_url:
@@ -641,7 +641,7 @@ paths:
               name:
                 type: "string"
                 example: "こだわりのハンバーグ"
-              description:
+              information:
                 type: "string"
                 example: "とてもうまい"                
               thumbnail_url:
