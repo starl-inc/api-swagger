@@ -547,12 +547,6 @@ paths:
               thumbnail_url:
                 type: "string"
                 example: "http://hoge.com/aa.png"
-              time_hour:
-                type: "integer"
-                example: 1
-              time_minutes:
-                type: "integer"
-                example: 20
               price:
                 type: "integer"
                 example: 1200
@@ -647,12 +641,6 @@ paths:
               thumbnail_url:
                 type: "string"
                 example: "http://hoge.com/aa.png"
-              time_hour:
-                type: "integer"
-                example: 1
-              time_minutes:
-                type: "integer"
-                example: 20
               price:
                 type: "integer"
                 example: 1200
