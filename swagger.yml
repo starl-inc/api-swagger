@@ -815,6 +815,9 @@ paths:
                 count:
                   type: "integer"
                   example: 1
+                price:
+                  type: "integer"
+                  example: 1000
         "400":
           description: "Bad Request"
         "401":
