@@ -882,38 +882,7 @@ paths:
               }
         "401":
           description: "Unauthorized"
-    put:
-      tags:
-        - "Cart"
-      summary: "Update detail of buying recipe in cart"
-      description: ""
-      operationId: ""
-      security:
-        - cookieAuth: []
-      produces:
-        - "application/json"
-      parameters:
-        - name: "cartRecipeId"
-          in: "path"
-          description: "Recipe Id"
-          required: true
-          type: "string"
-        - name: "body"
-          in: "body"
-          description: "Fields of recipe to update"
-          required: true
-          schema:
-            type: "object"
-            example: { "count": 2 }
-      responses:
-        "200":
-          description: "Successful Operation"
-        "400":
-          description: "Bad Request"
-        "401":
-          description: "Unauthorized"
-        "404":
-          description: "Recipe Not Found"
+    
   /v1/cart/recipes/{cartRecipeID}/ingredients:
     put:
       tags:
