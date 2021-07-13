@@ -790,11 +790,14 @@ paths:
           schema:
             type: "object"
             required:
-              - "recipeId"
+              - "recipe_id"
             properties:
               recipe_id:
                 type: "integer"
                 example: 223
+              count:
+                type: "integer"
+                example: 2
       responses:
         "200":
           description: "Successful Operation"
