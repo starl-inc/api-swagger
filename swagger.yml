@@ -792,7 +792,7 @@ paths:
             required:
               - "recipeId"
             properties:
-              recipeId:
+              recipe_id:
                 type: "integer"
                 example: 223
       responses:
