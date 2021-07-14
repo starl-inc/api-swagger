@@ -1246,6 +1246,7 @@ paths:
             example:
               [
                 {
+                  "id": 2,
                   "recipe_id": 1234,
                   "name": "鯛焼き",
                   "created_at": "2021/01/22",
@@ -1256,6 +1257,7 @@ paths:
                   "memo": "うまし",
                 },
                 {
+                  "id": 3,
                   "recipe_id": 3323,
                   "name": "鯛",
                   "created_at": "2021/01/22",
