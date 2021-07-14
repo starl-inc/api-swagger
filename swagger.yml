@@ -993,7 +993,7 @@ paths:
           schema:
             type: "object"
             example:
-              {"delivery_name": "hoge太郎", "delivery_address": "tokyo", "delivery_date": "2021-02-11"}
+              {"delivery_name": "hoge太郎", "delivery_address": "tokyo", "delivery_date": "2021-02-11 10:00:00"}
       produces:
         - "application/json"
       responses:
