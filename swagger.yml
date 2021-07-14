@@ -957,8 +957,8 @@ paths:
                   "price": 1200,
                   "recipes":
                     [
-                      { "id": 2, "name": "オムレツ" },
-                      { "id": 3, "name": "たこ焼き" },
+                      { "id": 2, "name": "オムレツ", "information": "hogehogehoge", "image_url": "http://hoge.a", "count": 1, "price": 120 },
+                      { "id": 3, "name": "たこ焼き", "information": "hogehogehoge", "image_url": "http://hoge.a", "count": 1, "price": 120},
                     ],
                 },
                 {
@@ -969,8 +969,8 @@ paths:
                   "price": 1200,
                   "recipes":
                     [
-                      { "id": 2, "name": "オムレツ" },
-                      { "id": 3, "name": "たこ焼き" },
+                      { "id": 2, "name": "オムレツ", "information": "hogehogehoge", "image_url": "http://hoge.a", "count": 1, "price": 120 },
+                      { "id": 3, "name": "たこ焼き", "information": "hogehogehoge", "image_url": "http://hoge.a", "count": 1, "price": 120},
                     ],
                 },
               ]
