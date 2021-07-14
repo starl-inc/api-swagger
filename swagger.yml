@@ -1210,7 +1210,7 @@ paths:
           description: "Unauthorized"
 
   # -------------------- Record ----------------------
-  /v1/record:
+  /v1/records:
     get:
       tags:
         - "Record"
@@ -1326,7 +1326,7 @@ paths:
         "401":
           description: "Unauthorized"
 
-  /v1/record/media:
+  /v1/records/media:
     post:
       tags:
         - "Record"
