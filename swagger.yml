@@ -1247,7 +1247,7 @@ paths:
               [
                 {
                   "recipe_id": 1234,
-                  "name": "鯛焼き(*******@フロントの人 自動入力したらここは空文字でrecipe_idを送る 自動入力しないならrecipe_id = 0にしてここにメニュー名をかく。 ********)",
+                  "name": "鯛焼き",
                   "created_at": "2021/01/22",
                   "satisfaction": 3,
                   "time_hour": 1,
