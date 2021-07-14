@@ -958,8 +958,8 @@ paths:
                   "address": "tokyo",
                   "recipes":
                     [
-                      { "id": 2, "name": "オムレツ", "information": "hogehogehoge", "image_url": "http://hoge.a", "count": 1, "price": 120 },
-                      { "id": 3, "name": "たこ焼き", "information": "hogehogehoge", "image_url": "http://hoge.a", "count": 1, "price": 120},
+                      { "id": 2, "name": "オムレツ", "information": "hogehogehoge", "thumbnail_url": "http://hoge.a", "count": 1, "price": 120 },
+                      { "id": 3, "name": "たこ焼き", "information": "hogehogehoge", "thumbnail_url": "http://hoge.a", "count": 1, "price": 120},
                     ],
                 },
                 {
@@ -971,8 +971,8 @@ paths:
                   "address": "tokyo",
                   "recipes":
                     [
-                      { "id": 2, "name": "オムレツ", "information": "hogehogehoge", "image_url": "http://hoge.a", "count": 1, "price": 120 },
-                      { "id": 3, "name": "たこ焼き", "information": "hogehogehoge", "image_url": "http://hoge.a", "count": 1, "price": 120},
+                      { "id": 2, "name": "オムレツ", "information": "hogehogehoge", "thumbnail_url": "http://hoge.a", "count": 1, "price": 120 },
+                      { "id": 3, "name": "たこ焼き", "information": "hogehogehoge", "thumbnail_url": "http://hoge.a", "count": 1, "price": 120},
                     ],
                 },
               ]
