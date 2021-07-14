@@ -1032,13 +1032,18 @@ paths:
               {
                 "orderId": "1234",
                 "ordered_at": "2021/02/11",
-                "deliveried_at": "2021/02/11",
+                "uuid": "xxxx",
+                "delivery_address": "tokyo",
+                "delivery_name": "hoge太郎",
+                "deliveried_at": "2021/02/11 11:10:11",
                 "price": 1200,
                 "recipes":
                   [
                     {
                       "id": 2,
                       "name": "オムレツ",
+                      "count": 1,
+                      "price": 200,
                       "ingredients":
                         [
                           {
@@ -1068,6 +1073,8 @@ paths:
                     {
                       "id": 3,
                       "name": "たこ焼き",
+                      "count": 1,
+                      "price": 200,
                       "ingredients":
                         [
                           {
