@@ -986,6 +986,14 @@ paths:
       operationId: ""
       security:
         - cookieAuth: []
+      parameters:
+        - name: "body"
+          in: "body"
+          description: "recipe object to add"
+          schema:
+            type: "object"
+            example:
+              {"delivery_name": "hoge太郎", "delivery_address": "tokyo", "delivery_date": "2021-02-11"}
       produces:
         - "application/json"
       responses:
