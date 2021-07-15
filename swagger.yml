@@ -1305,7 +1305,7 @@ paths:
               time_minutes:
                 type: "integer"
                 example: "30"
-              price:
+              cost:
                 type: "integer"
                 example: 1300
               image_ids:
