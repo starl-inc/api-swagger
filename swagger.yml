@@ -1116,6 +1116,15 @@ paths:
       summary: "Get all favorite recipes"
       description: ""
       operationId: ""
+      parameters:
+        - name: "limit"
+          in: "query"
+          description: "表示件数"
+          type: "integer"
+        - name: "offset"
+          in: "query"
+          description: "オフセット"
+          type: "integer"
       security:
         - cookieAuth: []
       responses:
@@ -1149,6 +1158,7 @@ paths:
       summary: "Add new favorite recipe"
       description: ""
       operationId: ""
+      
       security:
         - cookieAuth: []
       produces:
