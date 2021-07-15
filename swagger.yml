@@ -1314,15 +1314,7 @@ paths:
       responses:
         "200":
           description: "successful operation"
-          schema:
-            type: "object"
-            properties:
-              recipeId:
-                type: "string"
-                example: "1234"
-              satisfaction:
-                type: "integer"
-                example: 4
+          
         "400":
           description: "Bad Request"
         "401":
