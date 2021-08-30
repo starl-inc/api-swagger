@@ -1352,6 +1352,7 @@ paths:
         - name: "transaction_id"
           in: "path"
           description: "Transaction ID"
+          required: true
           type: "integer"
         - name: "body"
           in: "body"
@@ -1461,6 +1462,7 @@ paths:
         - name: "body"
           in: "body"
           description: "Approval object to create"
+          required: true
           schema:
             type: "object"
             properties:
@@ -1505,6 +1507,7 @@ paths:
         - name: "body"
           in: "body"
           description: "Approval field to get"
+          required: true
           schema:
             type: "object"
             properties:
@@ -1554,6 +1557,7 @@ paths:
         - name: "body"
           in: "body"
           description: "Approval object to create"
+          required: true
           schema:
             type: "object"
             properties:
@@ -1596,6 +1600,7 @@ paths:
         - name: "body"
           in: "body"
           description: "Approval field to get"
+          required: true
           schema:
             type: "object"
             properties:
