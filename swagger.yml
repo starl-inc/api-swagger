@@ -58,6 +58,15 @@ paths:
         - cookieAuth: [ ]
       produces:
         - "application/json"
+      responses:
+        "200":
+          description: "Successful Operation"
+        "400":
+          description: "Bad Request"
+        "401":
+          description: "Unauthorized"
+        "404":
+          description: "Not Found"
   /admin/signout:
     post:
       tags:
@@ -70,6 +79,15 @@ paths:
         - cookieAuth: [ ]
       produces:
         - "application/json"
+      responses:
+        "200":
+          description: "Successful Operation"
+        "400":
+          description: "Bad Request"
+        "401":
+          description: "Unauthorized"
+        "404":
+          description: "Not Found"
   /admin/signup-store:
     post:
       tags:
@@ -82,6 +100,15 @@ paths:
         - cookieAuth: [ ]
       produces:
         - "application/json"
+      responses:
+        "200":
+          description: "Successful Operation"
+        "400":
+          description: "Bad Request"
+        "401":
+          description: "Unauthorized"
+        "404":
+          description: "Not Found"
   /admin/signup-shop:
     post:
       tags:
@@ -94,6 +121,15 @@ paths:
         - cookieAuth: [ ]
       produces:
         - "application/json"
+      responses:
+        "200":
+          description: "Successful Operation"
+        "400":
+          description: "Bad Request"
+        "401":
+          description: "Unauthorized"
+        "404":
+          description: "Not Found"
   /admin/signup-shop/list:
     post:
       tags:
@@ -106,6 +142,15 @@ paths:
         - cookieAuth: [ ]
       produces:
         - "application/json"
+      responses:
+        "200":
+          description: "Successful Operation"
+        "400":
+          description: "Bad Request"
+        "401":
+          description: "Unauthorized"
+        "404":
+          description: "Not Found"
 
   /store/signin:
     post:
@@ -119,6 +164,15 @@ paths:
         - cookieAuth: [ ]
       produces:
         - "application/json"
+      responses:
+        "200":
+          description: "Successful Operation"
+        "400":
+          description: "Bad Request"
+        "401":
+          description: "Unauthorized"
+        "404":
+          description: "Not Found"
   /store/signout:
     post:
       tags:
@@ -131,6 +185,15 @@ paths:
         - cookieAuth: [ ]
       produces:
         - "application/json"
+      responses:
+        "200":
+          description: "Successful Operation"
+        "400":
+          description: "Bad Request"
+        "401":
+          description: "Unauthorized"
+        "404":
+          description: "Not Found"
   /store/reset-password:
     post:
       tags:
@@ -143,6 +206,15 @@ paths:
         - cookieAuth: [ ]
       produces:
         - "application/json"
+      responses:
+        "200":
+          description: "Successful Operation"
+        "400":
+          description: "Bad Request"
+        "401":
+          description: "Unauthorized"
+        "404":
+          description: "Not Found"
   /store/reset-shop-password:
     post:
       tags:
@@ -155,6 +227,15 @@ paths:
         - cookieAuth: [ ]
       produces:
         - "application/json"
+      responses:
+        "200":
+          description: "Successful Operation"
+        "400":
+          description: "Bad Request"
+        "401":
+          description: "Unauthorized"
+        "404":
+          description: "Not Found"
 
   /shop/signin:
     post:
@@ -168,6 +249,15 @@ paths:
         - cookieAuth: [ ]
       produces:
         - "application/json"
+      responses:
+        "200":
+          description: "Successful Operation"
+        "400":
+          description: "Bad Request"
+        "401":
+          description: "Unauthorized"
+        "404":
+          description: "Not Found"
   /shop/signout:
     post:
       tags:
@@ -180,6 +270,15 @@ paths:
         - cookieAuth: [ ]
       produces:
         - "application/json"
+      responses:
+        "200":
+          description: "Successful Operation"
+        "400":
+          description: "Bad Request"
+        "401":
+          description: "Unauthorized"
+        "404":
+          description: "Not Found"
 
   /user/signup:
     post:
@@ -193,6 +292,15 @@ paths:
         - cookieAuth: [ ]
       produces:
         - "application/json"
+      responses:
+        "200":
+          description: "Successful Operation"
+        "400":
+          description: "Bad Request"
+        "401":
+          description: "Unauthorized"
+        "404":
+          description: "Not Found"
   /user/confirm:
     post:
       tags:
@@ -205,6 +313,15 @@ paths:
         - cookieAuth: [ ]
       produces:
         - "application/json"
+      responses:
+        "200":
+          description: "Successful Operation"
+        "400":
+          description: "Bad Request"
+        "401":
+          description: "Unauthorized"
+        "404":
+          description: "Not Found"
   /user/reset-password:
     post:
       tags:
@@ -217,6 +334,15 @@ paths:
         - cookieAuth: [ ]
       produces:
         - "application/json"
+      responses:
+        "200":
+          description: "Successful Operation"
+        "400":
+          description: "Bad Request"
+        "401":
+          description: "Unauthorized"
+        "404":
+          description: "Not Found"
   /user/signin:
     post:
       tags:
@@ -229,6 +355,15 @@ paths:
         - cookieAuth: [ ]
       produces:
         - "application/json"
+      responses:
+        "200":
+          description: "Successful Operation"
+        "400":
+          description: "Bad Request"
+        "401":
+          description: "Unauthorized"
+        "404":
+          description: "Not Found"
   /user/signout:
     post:
       tags:
@@ -241,6 +376,15 @@ paths:
         - cookieAuth: [ ]
       produces:
         - "application/json"
+      responses:
+        "200":
+          description: "Successful Operation"
+        "400":
+          description: "Bad Request"
+        "401":
+          description: "Unauthorized"
+        "404":
+          description: "Not Found"
 
   # -------------------- Admin/Store --------------------
   /admin/store/list:
