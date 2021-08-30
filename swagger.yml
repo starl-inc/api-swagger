@@ -1,8 +1,8 @@
-swagger: "2.0"
+openapi: "3.0.0"
 info:
-  description: "This is API Document of Starl-Backend"
   version: "1.0.0"
   title: "Starl-Backend API Document"
+  description: "This is API Document of Starl-Backend"
   contact:
     email: "developer.starl.co.jp@gmail.com"
 host: "hostName"
