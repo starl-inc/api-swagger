@@ -9,30 +9,39 @@ host: "hostName"
 basePath: "/v1"
 
 tags:
-  - name: "Authentication"
-    description: "Authentication"
+  - name: "Admin/Authentication"
+    description: "Authentication by admin"
   - name: "Admin/Store"
     description: "Access to Store information by admin"
-  - name: "Store"
-    description: "Access to Store information by store"
   - name: "Admin/Shop"
     description: "Access to Shop information by admin"
+
+  - name: "Store/Authentication"
+    description: "Authentication by store"
+  - name: "Store"
+    description: "Access to Store information by store"
   - name: "Store/Shop"
     description: "Access to Shop information by store"
-  - name: "Shop"
-    description: "Access to Shop information by shop"
-  - name: "User/Shop"
-    description: "Access to Shop information by user"
-  - name: "User"
-    description: "Access to User information by user"
-  - name: "Shop/Transaction"
-    description: "Access to Transaction information by shop"
-  - name: "User/Transaction"
-    description: "Access to Transaction information by user"
   - name: "Store/Approval"
     description: "Access to Approval information by store"
+
+  - name: "Shop/Authentication"
+    description: "Authentication by shop"
+  - name: "Shop"
+    description: "Access to Shop information by shop"
+  - name: "Shop/Transaction"
+    description: "Access to Transaction information by shop"
   - name: "Shop/Approval"
     description: "Access to Approval information by shop"
+
+  - name: "User/Authentication"
+    description: "Authentication by user"
+  - name: "User"
+    description: "Access to User information by user"
+  - name: "User/Shop"
+    description: "Access to Shop information by user"
+  - name: "User/Transaction"
+    description: "Access to Transaction information by user"
 
 schemes:
   - "https"
@@ -45,11 +54,11 @@ securityDefinitions:
     name: "sessionId"
 
 paths:
-  # -------------------- Authentication --------------------
+  # -------------------- Admin/Authentication --------------------
   /admin/signin:
     post:
       tags:
-        - "Authentication"
+        - "Admin/Authentication"
       summary: "Admin sign in"
       description: ""
       # TODO: Admin-Authentication
@@ -69,7 +78,7 @@ paths:
   /admin/signout:
     post:
       tags:
-        - "Authentication"
+        - "Admin/Authentication"
       summary: "Admin sign out"
       description: ""
       # TODO: Admin-Authentication
@@ -89,7 +98,7 @@ paths:
   /admin/signup-store:
     post:
       tags:
-        - "Authentication"
+        - "Admin/Authentication"
       summary: "Admin sign up store"
       description: ""
       # TODO: Admin-Authentication
@@ -109,7 +118,7 @@ paths:
   /admin/signup-shop:
     post:
       tags:
-        - "Authentication"
+        - "Admin/Authentication"
       summary: "Admin sign up shop"
       description: ""
       # TODO: Admin-Authentication
@@ -129,233 +138,10 @@ paths:
   /admin/signup-shop/list:
     post:
       tags:
-        - "Authentication"
+        - "Admin/Authentication"
       summary: "Admin sign up shops"
       description: ""
       # TODO: Admin-Authentication
-      security:
-        - cookieAuth: [ ]
-      produces:
-        - "application/json"
-      responses:
-        "200":
-          description: "Successful Operation"
-        "400":
-          description: "Bad Request"
-        "401":
-          description: "Unauthorized"
-        "404":
-          description: "Not Found"
-
-  /store/signin:
-    post:
-      tags:
-        - "Authentication"
-      summary: "Store sign in"
-      description: ""
-      # TODO: Store-Authentication
-      security:
-        - cookieAuth: [ ]
-      produces:
-        - "application/json"
-      responses:
-        "200":
-          description: "Successful Operation"
-        "400":
-          description: "Bad Request"
-        "401":
-          description: "Unauthorized"
-        "404":
-          description: "Not Found"
-  /store/signout:
-    post:
-      tags:
-        - "Authentication"
-      summary: "Store sign out"
-      description: ""
-      # TODO: Store-Authentication
-      security:
-        - cookieAuth: [ ]
-      produces:
-        - "application/json"
-      responses:
-        "200":
-          description: "Successful Operation"
-        "400":
-          description: "Bad Request"
-        "401":
-          description: "Unauthorized"
-        "404":
-          description: "Not Found"
-  /store/reset-password:
-    post:
-      tags:
-        - "Authentication"
-      summary: "Store reset password"
-      description: ""
-      # TODO: Store-Authentication
-      security:
-        - cookieAuth: [ ]
-      produces:
-        - "application/json"
-      responses:
-        "200":
-          description: "Successful Operation"
-        "400":
-          description: "Bad Request"
-        "401":
-          description: "Unauthorized"
-        "404":
-          description: "Not Found"
-  /store/reset-shop-password:
-    post:
-      tags:
-        - "Authentication"
-      summary: "Store reset shop password"
-      description: ""
-      # TODO: Store-Authentication
-      security:
-        - cookieAuth: [ ]
-      produces:
-        - "application/json"
-      responses:
-        "200":
-          description: "Successful Operation"
-        "400":
-          description: "Bad Request"
-        "401":
-          description: "Unauthorized"
-        "404":
-          description: "Not Found"
-
-  /shop/signin:
-    post:
-      tags:
-        - "Authentication"
-      summary: "Shop sign in"
-      description: ""
-      # TODO: Shop-Authentication
-      security:
-        - cookieAuth: [ ]
-      produces:
-        - "application/json"
-      responses:
-        "200":
-          description: "Successful Operation"
-        "400":
-          description: "Bad Request"
-        "401":
-          description: "Unauthorized"
-        "404":
-          description: "Not Found"
-  /shop/signout:
-    post:
-      tags:
-        - "Authentication"
-      summary: "Shop sign out"
-      description: ""
-      # TODO: Shop-Authentication
-      security:
-        - cookieAuth: [ ]
-      produces:
-        - "application/json"
-      responses:
-        "200":
-          description: "Successful Operation"
-        "400":
-          description: "Bad Request"
-        "401":
-          description: "Unauthorized"
-        "404":
-          description: "Not Found"
-
-  /user/signup:
-    post:
-      tags:
-        - "Authentication"
-      summary: "User sign up"
-      description: ""
-      # TODO: User-Authentication
-      security:
-        - cookieAuth: [ ]
-      produces:
-        - "application/json"
-      responses:
-        "200":
-          description: "Successful Operation"
-        "400":
-          description: "Bad Request"
-        "401":
-          description: "Unauthorized"
-        "404":
-          description: "Not Found"
-  /user/confirm:
-    post:
-      tags:
-        - "Authentication"
-      summary: "User confirm account"
-      description: ""
-      # TODO: User-Authentication
-      security:
-        - cookieAuth: [ ]
-      produces:
-        - "application/json"
-      responses:
-        "200":
-          description: "Successful Operation"
-        "400":
-          description: "Bad Request"
-        "401":
-          description: "Unauthorized"
-        "404":
-          description: "Not Found"
-  /user/reset-password:
-    post:
-      tags:
-        - "Authentication"
-      summary: "User reset password"
-      description: ""
-      # TODO: User-Authentication
-      security:
-        - cookieAuth: [ ]
-      produces:
-        - "application/json"
-      responses:
-        "200":
-          description: "Successful Operation"
-        "400":
-          description: "Bad Request"
-        "401":
-          description: "Unauthorized"
-        "404":
-          description: "Not Found"
-  /user/signin:
-    post:
-      tags:
-        - "Authentication"
-      summary: "User sign in"
-      description: ""
-      # TODO: User-Authentication
-      security:
-        - cookieAuth: [ ]
-      produces:
-        - "application/json"
-      responses:
-        "200":
-          description: "Successful Operation"
-        "400":
-          description: "Bad Request"
-        "401":
-          description: "Unauthorized"
-        "404":
-          description: "Not Found"
-  /user/signout:
-    post:
-      tags:
-        - "Authentication"
-      summary: "User sign out"
-      description: ""
-      # TODO: User-Authentication
       security:
         - cookieAuth: [ ]
       produces:
@@ -518,6 +304,114 @@ paths:
         "404":
           description: "Store Not Found"
 
+  # -------------------- Admin/Shop --------------------
+  /admin/shop/{shop_id}:
+    delete:
+      tags:
+        - "Admin/Shop"
+      summary: "Delete Shop by admin"
+      description: ""
+      # TODO: Admin-Authentication
+      security:
+        - cookieAuth: [ ]
+      produces:
+        - "application/json"
+      parameters:
+        - name: "shop_id"
+          in: "path"
+          description: "Shop ID"
+          required: true
+          type: "string"
+      responses:
+        "200":
+          description: "Successful Operation"
+        "401":
+          description: "Unauthorized"
+        "404":
+          description: "Shop Not Found"
+
+  # -------------------- Store/Authentication --------------------
+  /store/signin:
+    post:
+      tags:
+        - "Store/Authentication"
+      summary: "Store sign in"
+      description: ""
+      # TODO: Store-Authentication
+      security:
+        - cookieAuth: [ ]
+      produces:
+        - "application/json"
+      responses:
+        "200":
+          description: "Successful Operation"
+        "400":
+          description: "Bad Request"
+        "401":
+          description: "Unauthorized"
+        "404":
+          description: "Not Found"
+  /store/signout:
+    post:
+      tags:
+        - "Store/Authentication"
+      summary: "Store sign out"
+      description: ""
+      # TODO: Store-Authentication
+      security:
+        - cookieAuth: [ ]
+      produces:
+        - "application/json"
+      responses:
+        "200":
+          description: "Successful Operation"
+        "400":
+          description: "Bad Request"
+        "401":
+          description: "Unauthorized"
+        "404":
+          description: "Not Found"
+  /store/reset-password:
+    post:
+      tags:
+        - "Store/Authentication"
+      summary: "Store reset password"
+      description: ""
+      # TODO: Store-Authentication
+      security:
+        - cookieAuth: [ ]
+      produces:
+        - "application/json"
+      responses:
+        "200":
+          description: "Successful Operation"
+        "400":
+          description: "Bad Request"
+        "401":
+          description: "Unauthorized"
+        "404":
+          description: "Not Found"
+  /store/reset-shop-password:
+    post:
+      tags:
+        - "Store/Authentication"
+      summary: "Store reset shop password"
+      description: ""
+      # TODO: Store-Authentication
+      security:
+        - cookieAuth: [ ]
+      produces:
+        - "application/json"
+      responses:
+        "200":
+          description: "Successful Operation"
+        "400":
+          description: "Bad Request"
+        "401":
+          description: "Unauthorized"
+        "404":
+          description: "Not Found"
+
   # -------------------- Store --------------------
   /store:
     get:
@@ -627,32 +521,6 @@ paths:
           description: "Bad Request"
         "401":
           description: "Unauthorized"
-
-  # -------------------- Admin/Shop --------------------
-  /admin/shop/{shop_id}:
-    delete:
-      tags:
-        - "Admin/Shop"
-      summary: "Delete Shop by admin"
-      description: ""
-      # TODO: Admin-Authentication
-      security:
-        - cookieAuth: [ ]
-      produces:
-        - "application/json"
-      parameters:
-        - name: "shop_id"
-          in: "path"
-          description: "Shop ID"
-          required: true
-          type: "string"
-      responses:
-        "200":
-          description: "Successful Operation"
-        "401":
-          description: "Unauthorized"
-        "404":
-          description: "Shop Not Found"
 
   # -------------------- Store/Shop --------------------
   /store/shop/list:
@@ -860,6 +728,143 @@ paths:
         "404":
           description: "Shop Not Found"
 
+  # -------------------- Store/Approval --------------------
+  /store/approval:
+    post:
+      tags:
+        - "Store/Approval"
+      summary: "Create Approval list by store"
+      description: ""
+      # TODO: Store-Authentication
+      security:
+        - cookieAuth: [ ]
+      produces:
+        - "application/json"
+      parameters:
+        - name: "body"
+          in: "body"
+          description: "Approval object to create"
+          required: true
+          schema:
+            type: "object"
+            properties:
+              year_month:
+                type: "integer"
+                example: 202107
+      responses:
+        "200":
+          description: "Successful Operation"
+          schema:
+            type: "array"
+            items:
+              type: "object"
+              properties:
+                id:
+                  type: "integer"
+                  example: 1
+                shop_id:
+                  type: "string"
+                  example: "efgh5678"
+                year_month:
+                  type: "integer"
+                  example: 202107
+                approved_by:
+                  type: "string"
+                  example: "Store-abcd1234"
+        "400":
+          description: "Bad Request"
+        "401":
+          description: "Unauthorized"
+    get:
+      tags:
+        - "Store/Approval"
+      summary: "Read Approval list by store"
+      description: ""
+      # TODO: Store-Authentication
+      security:
+        - cookieAuth: [ ]
+      produces:
+        - "application/json"
+      parameters:
+        - name: "body"
+          in: "body"
+          description: "Approval field to get"
+          required: true
+          schema:
+            type: "object"
+            properties:
+              year_month:
+                type: "integer"
+                example: 202107
+      responses:
+        "200":
+          description: "Successful Operation"
+          schema:
+            type: "array"
+            items:
+              type: "object"
+              properties:
+                id:
+                  type: "integer"
+                  example: 1
+                shop_id:
+                  type: "string"
+                  example: "efgh5678"
+                year_month:
+                  type: "integer"
+                  example: 202107
+                approvaed_by:
+                  type: "string"
+                  example: "Store-abcd1234"
+        "400":
+          description: "Bad Request"
+        "401":
+          description: "Unauthorized"
+        "404":
+          description: "Not Found"
+
+  # -------------------- Shop/Authentication --------------------
+  /shop/signin:
+    post:
+      tags:
+        - "Shop/Authentication"
+      summary: "Shop sign in"
+      description: ""
+      # TODO: Shop-Authentication
+      security:
+        - cookieAuth: [ ]
+      produces:
+        - "application/json"
+      responses:
+        "200":
+          description: "Successful Operation"
+        "400":
+          description: "Bad Request"
+        "401":
+          description: "Unauthorized"
+        "404":
+          description: "Not Found"
+  /shop/signout:
+    post:
+      tags:
+        - "Shop/Authentication"
+      summary: "Shop sign out"
+      description: ""
+      # TODO: Shop-Authentication
+      security:
+        - cookieAuth: [ ]
+      produces:
+        - "application/json"
+      responses:
+        "200":
+          description: "Successful Operation"
+        "400":
+          description: "Bad Request"
+        "401":
+          description: "Unauthorized"
+        "404":
+          description: "Not Found"
+
   # -------------------- Shop --------------------
   /shop:
     get:
@@ -1035,201 +1040,6 @@ paths:
         "401":
           description: "Unauthorized"
 
-  # -------------------- User/Shop --------------------
-  /user/shop/list:
-    get:
-      tags:
-        - "User/Shop"
-      summary: "Read nearby shops by user"
-      description: ""
-      # TODO: User-Authentication
-      security:
-        - cookieAuth: [ ]
-      produces:
-        - "application/json"
-      parameters:
-        - name: "body"
-          in: "body"
-          description: "Current Location"
-          required: true
-          schema:
-            type: "object"
-            properties:
-              latitude:
-                type: "float"
-                example: 123.456789
-              longitude:
-                type: "float"
-                example: 123.456789
-      responses:
-        "200":
-          description: "Successful Operation"
-          schema:
-            type: "array"
-            items:
-              type: "object"
-              properties:
-                store:
-                  type: "object"
-                  properties:
-                    id:
-                      type: "string"
-                      example: "abcd1234"
-                    name:
-                      type: "string"
-                      example: "マクドナルド"
-                shop:
-                  type: "object"
-                  properties:
-                    id:
-                      type: "string"
-                      example: "efgh5678"
-                    name:
-                      type: "string"
-                      example: "渋谷店"
-                    address:
-                      type: "string"
-                      example: "東京都渋谷区神南１－２３－１３"
-                    opening_hours:
-                      type: "string"
-                      # example: "5:00〜20:00"
-                      example: >-
-                        <table class="businessHours">
-                          <thead>
-                            <tr>
-                              <th></th>
-                              <th>店内</th>
-                              <th>ドライブスルー</th>
-                              <th>朝マック</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            <tr>
-                              <th>平日</th>
-                              <td>7:00〜20:00</td>
-                              <td>—</td>
-                              <td rowspan="3">5:00〜10:30</td>
-                            </tr>
-                            <tr>
-                              <th>土曜</th>
-                              <td>7:00〜20:00</td>
-                              <td>—</td>
-                            </tr>
-                            <tr>
-                              <th>休日</th>
-                              <td>7:00〜20:00</td>
-                              <td>—</td>
-                            </tr>
-                          </tbody>
-                        </table>
-        "400":
-          description: "Bad Request"
-        "401":
-          description: "Unauthorized"
-        "404":
-          description: "Shop Not Found"
-
-  # -------------------- User --------------------
-  /user:
-    get:
-      tags:
-        - "User"
-      summary: "Read User"
-      description: ""
-      # TODO: User-Authentication
-      security:
-        - cookieAuth: [ ]
-      produces:
-        - "application/json"
-      responses:
-        "200":
-          description: "Successful Operation"
-          schema:
-            type: "object"
-            properties:
-              email:
-                type: "string"
-                example: "gawapei333@gmail.com"
-              status:
-                type: "string"
-                example: "CONFIRMED"
-              nicname:
-                type: "string"
-                example: "gawapei"
-              icon_url:
-                type: "string"
-                example: "https://www.example.com/gawapei333"
-              amount:
-                type: "integer"
-                example: 1234
-        "400":
-          description: "Bad Request"
-        "401":
-          description: "Unauthorized"
-        "404":
-          description: "Not Found"
-    put:
-      tags:
-        - "User"
-      summary: "Update User"
-      description: ""
-      # TODO: User-Authentication
-      security:
-        - cookieAuth: [ ]
-      produces:
-        - "application/json"
-      parameters:
-        - name: "body"
-          in: "body"
-          description: "User object to update"
-          required: true
-          schema:
-            type: "object"
-            properties:
-              email:
-                type: "string"
-                example: "gawapei333@gmail.com"
-              status:
-                type: "string"
-                example: "CONFIRMED"
-              nicname:
-                type: "string"
-                example: "gawapei"
-              iconURL:
-                type: "string"
-                example: "https://www.example.com/gawapei333"
-              amount:
-                type: "integer"
-                example: 1234
-      responses:
-        "200":
-          description: "Successful Operation"
-        "400":
-          description: "Bad Request"
-        "401":
-          description: "Unauthorized"
-        "404":
-          description: "Not Found"
-    delete:
-      tags:
-        - "User"
-      summary: "Delete User"
-      description: ""
-      # TODO: User-Authentication
-      security:
-        - cookieAuth: [ ]
-      produces:
-        - "application/json"
-      responses:
-        "200":
-          description: "Successful Operation"
-        "400":
-          description: "Bad Request"
-        "401":
-          description: "Unauthorized"
-        "404":
-          description: "Not Found"
-
   # -------------------- Shop/Transaction --------------------
   /shop/transaction:
     post:
@@ -1400,147 +1210,6 @@ paths:
         "404":
           description: "Not Found"
 
-  # -------------------- User/Transaction --------------------
-  /user/transaction/list:
-    get:
-      tags:
-        - "User/Transaction"
-      summary: "Read Transaction list by user"
-      description: ""
-      # TODO: User-Authentication
-      security:
-        - cookieAuth: [ ]
-      produces:
-        - "application/json"
-      responses:
-        "200":
-          description: "Successful Operation"
-          schema:
-            type: "array"
-            items:
-              type: "object"
-              properties:
-                id:
-                  type: "integer"
-                  example: 1
-                user_id:
-                  type: "string"
-                  example: "starl2021"
-                shop_id:
-                  type: "string"
-                  example: "efgh5678"
-                price:
-                  type: "integer"
-                  example: 1000
-                usedPoints:
-                  type: "integer"
-                  example: 100
-                earnedPoints:
-                  type: "integer"
-                  example: 9
-                newAmount:
-                  type: "integer"
-                  example: 1009
-        "401":
-          description: "Unauthorized"
-        "404":
-          description: "Not Found"
-
-  # -------------------- Store/Approval --------------------
-  /store/approval:
-    post:
-      tags:
-        - "Store/Approval"
-      summary: "Create Approval list by store"
-      description: ""
-      # TODO: Store-Authentication
-      security:
-        - cookieAuth: [ ]
-      produces:
-        - "application/json"
-      parameters:
-        - name: "body"
-          in: "body"
-          description: "Approval object to create"
-          required: true
-          schema:
-            type: "object"
-            properties:
-              year_month:
-                type: "integer"
-                example: 202107
-      responses:
-        "200":
-          description: "Successful Operation"
-          schema:
-            type: "array"
-            items:
-              type: "object"
-              properties:
-                id:
-                  type: "integer"
-                  example: 1
-                shop_id:
-                  type: "string"
-                  example: "efgh5678"
-                year_month:
-                  type: "integer"
-                  example: 202107
-                approved_by:
-                  type: "string"
-                  example: "Store-abcd1234"
-        "400":
-          description: "Bad Request"
-        "401":
-          description: "Unauthorized"
-    get:
-      tags:
-        - "Store/Approval"
-      summary: "Read Approval list by store"
-      description: ""
-      # TODO: Store-Authentication
-      security:
-        - cookieAuth: [ ]
-      produces:
-        - "application/json"
-      parameters:
-        - name: "body"
-          in: "body"
-          description: "Approval field to get"
-          required: true
-          schema:
-            type: "object"
-            properties:
-              year_month:
-                type: "integer"
-                example: 202107
-      responses:
-        "200":
-          description: "Successful Operation"
-          schema:
-            type: "array"
-            items:
-              type: "object"
-              properties:
-                id:
-                  type: "integer"
-                  example: 1
-                shop_id:
-                  type: "string"
-                  example: "efgh5678"
-                year_month:
-                  type: "integer"
-                  example: 202107
-                approvaed_by:
-                  type: "string"
-                  example: "Store-abcd1234"
-        "400":
-          description: "Bad Request"
-        "401":
-          description: "Unauthorized"
-        "404":
-          description: "Not Found"
-
   # -------------------- Shop/Approval --------------------
   /shop/approval:
     post:
@@ -1633,3 +1302,347 @@ paths:
           description: "Unauthorized"
         "404":
           description: "Not Found"
+
+  # -------------------- User/Authentication --------------------
+  /user/signup:
+    post:
+      tags:
+        - "User/Authentication"
+      summary: "User sign up"
+      description: ""
+      # TODO: User-Authentication
+      security:
+        - cookieAuth: [ ]
+      produces:
+        - "application/json"
+      responses:
+        "200":
+          description: "Successful Operation"
+        "400":
+          description: "Bad Request"
+        "401":
+          description: "Unauthorized"
+        "404":
+          description: "Not Found"
+  /user/confirm:
+    post:
+      tags:
+        - "User/Authentication"
+      summary: "User confirm account"
+      description: ""
+      # TODO: User-Authentication
+      security:
+        - cookieAuth: [ ]
+      produces:
+        - "application/json"
+      responses:
+        "200":
+          description: "Successful Operation"
+        "400":
+          description: "Bad Request"
+        "401":
+          description: "Unauthorized"
+        "404":
+          description: "Not Found"
+  /user/reset-password:
+    post:
+      tags:
+        - "User/Authentication"
+      summary: "User reset password"
+      description: ""
+      # TODO: User-Authentication
+      security:
+        - cookieAuth: [ ]
+      produces:
+        - "application/json"
+      responses:
+        "200":
+          description: "Successful Operation"
+        "400":
+          description: "Bad Request"
+        "401":
+          description: "Unauthorized"
+        "404":
+          description: "Not Found"
+  /user/signin:
+    post:
+      tags:
+        - "User/Authentication"
+      summary: "User sign in"
+      description: ""
+      # TODO: User-Authentication
+      security:
+        - cookieAuth: [ ]
+      produces:
+        - "application/json"
+      responses:
+        "200":
+          description: "Successful Operation"
+        "400":
+          description: "Bad Request"
+        "401":
+          description: "Unauthorized"
+        "404":
+          description: "Not Found"
+  /user/signout:
+    post:
+      tags:
+        - "User/Authentication"
+      summary: "User sign out"
+      description: ""
+      # TODO: User-Authentication
+      security:
+        - cookieAuth: [ ]
+      produces:
+        - "application/json"
+      responses:
+        "200":
+          description: "Successful Operation"
+        "400":
+          description: "Bad Request"
+        "401":
+          description: "Unauthorized"
+        "404":
+          description: "Not Found"
+
+  # -------------------- User --------------------
+  /user:
+    get:
+      tags:
+        - "User"
+      summary: "Read User"
+      description: ""
+      # TODO: User-Authentication
+      security:
+        - cookieAuth: [ ]
+      produces:
+        - "application/json"
+      responses:
+        "200":
+          description: "Successful Operation"
+          schema:
+            type: "object"
+            properties:
+              email:
+                type: "string"
+                example: "gawapei333@gmail.com"
+              status:
+                type: "string"
+                example: "CONFIRMED"
+              nicname:
+                type: "string"
+                example: "gawapei"
+              icon_url:
+                type: "string"
+                example: "https://www.example.com/gawapei333"
+              amount:
+                type: "integer"
+                example: 1234
+        "400":
+          description: "Bad Request"
+        "401":
+          description: "Unauthorized"
+        "404":
+          description: "Not Found"
+    put:
+      tags:
+        - "User"
+      summary: "Update User"
+      description: ""
+      # TODO: User-Authentication
+      security:
+        - cookieAuth: [ ]
+      produces:
+        - "application/json"
+      parameters:
+        - name: "body"
+          in: "body"
+          description: "User object to update"
+          required: true
+          schema:
+            type: "object"
+            properties:
+              email:
+                type: "string"
+                example: "gawapei333@gmail.com"
+              status:
+                type: "string"
+                example: "CONFIRMED"
+              nicname:
+                type: "string"
+                example: "gawapei"
+              iconURL:
+                type: "string"
+                example: "https://www.example.com/gawapei333"
+              amount:
+                type: "integer"
+                example: 1234
+      responses:
+        "200":
+          description: "Successful Operation"
+        "400":
+          description: "Bad Request"
+        "401":
+          description: "Unauthorized"
+        "404":
+          description: "Not Found"
+    delete:
+      tags:
+        - "User"
+      summary: "Delete User"
+      description: ""
+      # TODO: User-Authentication
+      security:
+        - cookieAuth: [ ]
+      produces:
+        - "application/json"
+      responses:
+        "200":
+          description: "Successful Operation"
+        "400":
+          description: "Bad Request"
+        "401":
+          description: "Unauthorized"
+        "404":
+          description: "Not Found"
+
+  # -------------------- User/Shop --------------------
+  /user/shop/list:
+    get:
+      tags:
+        - "User/Shop"
+      summary: "Read nearby shops by user"
+      description: ""
+      # TODO: User-Authentication
+      security:
+        - cookieAuth: [ ]
+      produces:
+        - "application/json"
+      parameters:
+        - name: "body"
+          in: "body"
+          description: "Current Location"
+          required: true
+          schema:
+            type: "object"
+            properties:
+              latitude:
+                type: "float"
+                example: 123.456789
+              longitude:
+                type: "float"
+                example: 123.456789
+      responses:
+        "200":
+          description: "Successful Operation"
+          schema:
+            type: "array"
+            items:
+              type: "object"
+              properties:
+                store:
+                  type: "object"
+                  properties:
+                    id:
+                      type: "string"
+                      example: "abcd1234"
+                    name:
+                      type: "string"
+                      example: "マクドナルド"
+                shop:
+                  type: "object"
+                  properties:
+                    id:
+                      type: "string"
+                      example: "efgh5678"
+                    name:
+                      type: "string"
+                      example: "渋谷店"
+                    address:
+                      type: "string"
+                      example: "東京都渋谷区神南１－２３－１３"
+                    opening_hours:
+                      type: "string"
+                      # example: "5:00〜20:00"
+                      example: >-
+                        <table class="businessHours">
+                          <thead>
+                            <tr>
+                              <th></th>
+                              <th>店内</th>
+                              <th>ドライブスルー</th>
+                              <th>朝マック</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <th>平日</th>
+                              <td>7:00〜20:00</td>
+                              <td>—</td>
+                              <td rowspan="3">5:00〜10:30</td>
+                            </tr>
+                            <tr>
+                              <th>土曜</th>
+                              <td>7:00〜20:00</td>
+                              <td>—</td>
+                            </tr>
+                            <tr>
+                              <th>休日</th>
+                              <td>7:00〜20:00</td>
+                              <td>—</td>
+                            </tr>
+                          </tbody>
+                        </table>
+        "400":
+          description: "Bad Request"
+        "401":
+          description: "Unauthorized"
+        "404":
+          description: "Shop Not Found"
+
+  # -------------------- User/Transaction --------------------
+  /user/transaction/list:
+    get:
+      tags:
+        - "User/Transaction"
+      summary: "Read Transaction list by user"
+      description: ""
+      # TODO: User-Authentication
+      security:
+        - cookieAuth: [ ]
+      produces:
+        - "application/json"
+      responses:
+        "200":
+          description: "Successful Operation"
+          schema:
+            type: "array"
+            items:
+              type: "object"
+              properties:
+                id:
+                  type: "integer"
+                  example: 1
+                user_id:
+                  type: "string"
+                  example: "starl2021"
+                shop_id:
+                  type: "string"
+                  example: "efgh5678"
+                price:
+                  type: "integer"
+                  example: 1000
+                usedPoints:
+                  type: "integer"
+                  example: 100
+                earnedPoints:
+                  type: "integer"
+                  example: 9
+                newAmount:
+                  type: "integer"
+                  example: 1009
+        "401":
+          description: "Unauthorized"
+        "404":
+          description: "Not Found"
+
