@@ -52,7 +52,6 @@ paths:
         - "Authentication"
       summary: "Admin sign in"
       description: ""
-      operationId: ""
       # TODO: Admin-Authentication
       security:
         - cookieAuth: [ ]
@@ -73,7 +72,6 @@ paths:
         - "Authentication"
       summary: "Admin sign out"
       description: ""
-      operationId: ""
       # TODO: Admin-Authentication
       security:
         - cookieAuth: [ ]
@@ -94,7 +92,6 @@ paths:
         - "Authentication"
       summary: "Admin sign up store"
       description: ""
-      operationId: ""
       # TODO: Admin-Authentication
       security:
         - cookieAuth: [ ]
@@ -115,7 +112,6 @@ paths:
         - "Authentication"
       summary: "Admin sign up shop"
       description: ""
-      operationId: ""
       # TODO: Admin-Authentication
       security:
         - cookieAuth: [ ]
@@ -136,7 +132,6 @@ paths:
         - "Authentication"
       summary: "Admin sign up shops"
       description: ""
-      operationId: ""
       # TODO: Admin-Authentication
       security:
         - cookieAuth: [ ]
@@ -158,7 +153,6 @@ paths:
         - "Authentication"
       summary: "Store sign in"
       description: ""
-      operationId: ""
       # TODO: Store-Authentication
       security:
         - cookieAuth: [ ]
@@ -179,7 +173,6 @@ paths:
         - "Authentication"
       summary: "Store sign out"
       description: ""
-      operationId: ""
       # TODO: Store-Authentication
       security:
         - cookieAuth: [ ]
@@ -200,7 +193,6 @@ paths:
         - "Authentication"
       summary: "Store reset password"
       description: ""
-      operationId: ""
       # TODO: Store-Authentication
       security:
         - cookieAuth: [ ]
@@ -221,7 +213,6 @@ paths:
         - "Authentication"
       summary: "Store reset shop password"
       description: ""
-      operationId: ""
       # TODO: Store-Authentication
       security:
         - cookieAuth: [ ]
@@ -243,7 +234,6 @@ paths:
         - "Authentication"
       summary: "Shop sign in"
       description: ""
-      operationId: ""
       # TODO: Shop-Authentication
       security:
         - cookieAuth: [ ]
@@ -264,7 +254,6 @@ paths:
         - "Authentication"
       summary: "Shop sign out"
       description: ""
-      operationId: ""
       # TODO: Shop-Authentication
       security:
         - cookieAuth: [ ]
@@ -286,7 +275,6 @@ paths:
         - "Authentication"
       summary: "User sign up"
       description: ""
-      operationId: ""
       # TODO: User-Authentication
       security:
         - cookieAuth: [ ]
@@ -307,7 +295,6 @@ paths:
         - "Authentication"
       summary: "User confirm account"
       description: ""
-      operationId: ""
       # TODO: User-Authentication
       security:
         - cookieAuth: [ ]
@@ -328,7 +315,6 @@ paths:
         - "Authentication"
       summary: "User reset password"
       description: ""
-      operationId: ""
       # TODO: User-Authentication
       security:
         - cookieAuth: [ ]
@@ -349,7 +335,6 @@ paths:
         - "Authentication"
       summary: "User sign in"
       description: ""
-      operationId: ""
       # TODO: User-Authentication
       security:
         - cookieAuth: [ ]
@@ -370,7 +355,6 @@ paths:
         - "Authentication"
       summary: "User sign out"
       description: ""
-      operationId: ""
       # TODO: User-Authentication
       security:
         - cookieAuth: [ ]
@@ -393,7 +377,6 @@ paths:
         - "Admin/Store"
       summary: "Read all stores by admin"
       description: ""
-      operationId: ""
       # TODO: Admin-Authentication
       security:
         - cookieAuth: [ ]
@@ -470,7 +453,6 @@ paths:
         - "Admin/Store"
       summary: "Update Store by admin"
       description: ""
-      operationId: ""
       # TODO: Admin-Authentication
       security:
         - cookieAuth: []
@@ -515,7 +497,6 @@ paths:
         - "Admin/Store"
       summary: "Delete Store by admin"
       description: ""
-      operationId: ""
       # TODO: Admin-Authentication
       security:
         - cookieAuth: []
@@ -544,7 +525,6 @@ paths:
         - "Store"
       summary: "Read Store"
       description: ""
-      operationId: ""
       # TODO: Store-Authentication
       security:
         - cookieAuth: []
@@ -615,7 +595,6 @@ paths:
         - "Store"
       summary: "Update Store"
       description: ""
-      operationId: ""
       # TODO: Store-Authentication
       security:
         - cookieAuth: [ ]
@@ -656,7 +635,6 @@ paths:
         - "Admin/Shop"
       summary: "Delete Shop by admin"
       description: ""
-      operationId: ""
       # TODO: Admin-Authentication
       security:
         - cookieAuth: [ ]
@@ -683,7 +661,6 @@ paths:
         - "Store/Shop"
       summary: "Read Shop list by store"
       description: ""
-      operationId: ""
       # TODO: Store-Authentication
       security:
         - cookieAuth: [ ]
@@ -749,7 +726,6 @@ paths:
         - "Store/Shop"
       summary: "Update Store by store"
       description: ""
-      operationId: ""
       # TODO: Store-Authentication
       security:
         - cookieAuth: [ ]
@@ -865,7 +841,6 @@ paths:
         - "Store/Shop"
       summary: "Delete Shop by store"
       description: ""
-      operationId: ""
       # TODO: Store-Authentication
       security:
         - cookieAuth: [ ]
@@ -892,7 +867,6 @@ paths:
         - "Shop"
       summary: "Read Shop"
       description: ""
-      operationId: ""
       # TODO: Shop-Authentication
       security:
         - cookieAuth: []
@@ -955,7 +929,6 @@ paths:
         - "Shop"
       summary: "Update Shop"
       description: ""
-      operationId: ""
       # TODO: Shop-Authentication
       security:
         - cookieAuth: [ ]
@@ -1069,7 +1042,6 @@ paths:
         - "User/Shop"
       summary: "Read nearby shops by user"
       description: ""
-      operationId: ""
       # TODO: User-Authentication
       security:
         - cookieAuth: [ ]
@@ -1164,14 +1136,11 @@ paths:
         - "User"
       summary: "Read User"
       description: ""
-      operationId: ""
       # TODO: User-Authentication
       security:
         - cookieAuth: [ ]
       produces:
         - "application/json"
-      parameters:
-        - name: "body"
       responses:
         "200":
           description: "Successful Operation"
@@ -1204,7 +1173,6 @@ paths:
         - "User"
       summary: "Update User"
       description: ""
-      operationId: ""
       # TODO: User-Authentication
       security:
         - cookieAuth: [ ]
@@ -1247,7 +1215,6 @@ paths:
         - "User"
       summary: "Delete User"
       description: ""
-      operationId: ""
       # TODO: User-Authentication
       security:
         - cookieAuth: [ ]
@@ -1270,7 +1237,6 @@ paths:
         - "Shop/Transaction"
       summary: "Create Transaction by shop"
       description: ""
-      operationId: ""
       # TODO: Shop-Authentication
       security:
         - cookieAuth: [ ]
@@ -1333,7 +1299,6 @@ paths:
         - "Shop/Transaction"
       summary: "Read Transaction list by shop"
       description: ""
-      operationId: ""
       # TODO: Shop-Authentication
       security:
         - cookieAuth: [ ]
@@ -1378,7 +1343,6 @@ paths:
         - "Shop/Transaction"
       summary: "Update Transaction by shop"
       description: ""
-      operationId: ""
       # TODO: Shop-Authentication
       security:
         - cookieAuth: [ ]
@@ -1386,7 +1350,7 @@ paths:
         - "application/json"
       parameters:
         - name: "transaction_id"
-          in: "query"
+          in: "path"
           description: "Transaction ID"
           type: "integer"
         - name: "body"
@@ -1442,7 +1406,6 @@ paths:
         - "User/Transaction"
       summary: "Read Transaction list by user"
       description: ""
-      operationId: ""
       # TODO: User-Authentication
       security:
         - cookieAuth: [ ]
@@ -1489,7 +1452,6 @@ paths:
         - "Store/Approval"
       summary: "Create Approval list by store"
       description: ""
-      operationId: ""
       # TODO: Store-Authentication
       security:
         - cookieAuth: [ ]
@@ -1534,7 +1496,6 @@ paths:
         - "Store/Approval"
       summary: "Read Approval list by store"
       description: ""
-      operationId: ""
       # TODO: Store-Authentication
       security:
         - cookieAuth: [ ]
@@ -1584,7 +1545,6 @@ paths:
         - "Shop/Approval"
       summary: "Create Approval list by shop"
       description: ""
-      operationId: ""
       # TODO: Shop-Authentication
       security:
         - cookieAuth: [ ]
@@ -1627,7 +1587,6 @@ paths:
         - "Shop/Approval"
       summary: "Read Approval list by shop"
       description: ""
-      operationId: ""
       # TODO: Shop-Authentication
       security:
         - cookieAuth: [ ]
