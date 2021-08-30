@@ -5,53 +5,9 @@ info:
   description: "This is API Document of Starl-Backend"
   contact:
     email: "developer.starl.co.jp@gmail.com"
-host: "hostName"
-basePath: "/v1"
 
-tags:
-  - name: "Admin/Authentication"
-    description: "Authentication by admin"
-  - name: "Admin/Store"
-    description: "Access to Store information by admin"
-  - name: "Admin/Shop"
-    description: "Access to Shop information by admin"
-
-  - name: "Store/Authentication"
-    description: "Authentication by store"
-  - name: "Store"
-    description: "Access to Store information by store"
-  - name: "Store/Shop"
-    description: "Access to Shop information by store"
-  - name: "Store/Approval"
-    description: "Access to Approval information by store"
-
-  - name: "Shop/Authentication"
-    description: "Authentication by shop"
-  - name: "Shop"
-    description: "Access to Shop information by shop"
-  - name: "Shop/Transaction"
-    description: "Access to Transaction information by shop"
-  - name: "Shop/Approval"
-    description: "Access to Approval information by shop"
-
-  - name: "User/Authentication"
-    description: "Authentication by user"
-  - name: "User"
-    description: "Access to User information by user"
-  - name: "User/Shop"
-    description: "Access to Shop information by user"
-  - name: "User/Transaction"
-    description: "Access to Transaction information by user"
-
-schemes:
-  - "https"
-
-components:
-  securitySchemes:
-    bearerAuth:
-      type: http
-      scheme: bearer
-      bearerFormat: JWT
+servers:
+  - url: https://api.example.com/v1
 
 security:
   - bearerAuth: []
@@ -1648,4 +1604,46 @@ paths:
           description: "Unauthorized"
         "404":
           description: "Not Found"
+
+tags:
+  - name: "Admin/Authentication"
+    description: "Authentication by admin"
+  - name: "Admin/Store"
+    description: "Access to Store information by admin"
+  - name: "Admin/Shop"
+    description: "Access to Shop information by admin"
+
+  - name: "Store/Authentication"
+    description: "Authentication by store"
+  - name: "Store"
+    description: "Access to Store information by store"
+  - name: "Store/Shop"
+    description: "Access to Shop information by store"
+  - name: "Store/Approval"
+    description: "Access to Approval information by store"
+
+  - name: "Shop/Authentication"
+    description: "Authentication by shop"
+  - name: "Shop"
+    description: "Access to Shop information by shop"
+  - name: "Shop/Transaction"
+    description: "Access to Transaction information by shop"
+  - name: "Shop/Approval"
+    description: "Access to Approval information by shop"
+
+  - name: "User/Authentication"
+    description: "Authentication by user"
+  - name: "User"
+    description: "Access to User information by user"
+  - name: "User/Shop"
+    description: "Access to Shop information by user"
+  - name: "User/Transaction"
+    description: "Access to Transaction information by user"
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
 
