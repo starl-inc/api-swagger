@@ -447,7 +447,8 @@ paths:
                 items:
                   $ref: '#/components/schemas/Approval'
                 example:
-                  $ref: '#/components/examples/ApprovalByStore'
+                  ApprovalByStore:
+                    $ref: '#/components/examples/ApprovalByStore'
         "400":
           description: "Bad Request"
         "401":
@@ -481,7 +482,8 @@ paths:
               items:
                 $ref: '#/components/schemas/Approval'
               example:
-                $ref: '#/components/examples/ApprovalByStore'
+                ApprovalByStore:
+                  $ref: '#/components/examples/ApprovalByStore'
         "400":
           description: "Bad Request"
         "401":
@@ -721,7 +723,8 @@ paths:
               schema:
                 $ref: '#/components/schemas/Approval'
                 example:
-                  $ref: '#/components/examples/ApprovalByShop'
+                  ApprovalByShop:
+                    $ref: '#/components/examples/ApprovalByShop'
         "400":
           description: "Bad Request"
         "401":
@@ -752,7 +755,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Approval'
-                example:
+              example:
+                ApprovalByShop:
                   $ref: '#/components/examples/ApprovalByShop'
         "400":
           description: "Bad Request"
@@ -1156,7 +1160,7 @@ components:
         approvedBy:
           type: string
 
-  examples:
+  example:
     ApprovalByStore:
       id: 1
       shopId: efgh5678
