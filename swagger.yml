@@ -1168,18 +1168,6 @@ components:
         approvedBy:
           type: string
 
-  examples:
-    ApprovalByStore:
-      id: 1
-      shopId: efgh5678
-      yearMonth: 202107
-      approvedBy: Store-abcd1234
-    ApprovalByShop:
-      id: 2
-      shopId: efgh5678
-      yearMonth: 202108
-      approvedBy: Shop-efgh5678
-
   securitySchemes:
     BearerAuth:
       type: http
