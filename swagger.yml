@@ -1160,7 +1160,7 @@ components:
         approvedBy:
           type: string
 
-  example:
+  examples:
     ApprovalByStore:
       value:
         id: 1
