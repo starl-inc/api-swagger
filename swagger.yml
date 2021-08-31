@@ -2,7 +2,7 @@ openapi: "3.0.0"
 info:
   title: "Starl-Backend API Document"
   description: "This is API Document of Starl-Backend"
-  version: "1.0.0"
+  version: "1.0.1"
 
 servers:
   - url: https://api.example.com/v1
@@ -446,6 +446,11 @@ paths:
                 type: "array"
                 items:
                   $ref: '#/components/schemas/Approval'
+                example:
+                  - id: 1
+                    shopId: efgh5678
+                    yearMonth: 202107
+                    approvedBy: Store-abcd1234
         "400":
           description: "Bad Request"
         "401":
@@ -478,6 +483,11 @@ paths:
                 type: "array"
                 items:
                   $ref: '#/components/schemas/Approval'
+                example:
+                  - id: 1
+                    shopId: efgh5678
+                    yearMonth: 202107
+                    approvedBy: Store-abcd1234
         "400":
           description: "Bad Request"
         "401":
@@ -1157,6 +1167,18 @@ components:
           type: integer
         approvedBy:
           type: string
+
+  examples:
+    ApprovalByStore:
+      id: 1
+      shopId: efgh5678
+      yearMonth: 202107
+      approvedBy: Store-abcd1234
+    ApprovalByShop:
+      id: 2
+      shopId: efgh5678
+      yearMonth: 202108
+      approvedBy: Shop-efgh5678
 
   securitySchemes:
     BearerAuth:
