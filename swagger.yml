@@ -446,11 +446,6 @@ paths:
                 type: "array"
                 items:
                   $ref: '#/components/schemas/Approval'
-                example:
-                  - id: 1
-                    shopId: efgh5678
-                    yearMonth: 202107
-                    approvedBy: Store-abcd1234
         "400":
           description: "Bad Request"
         "401":
@@ -483,11 +478,6 @@ paths:
                 type: "array"
                 items:
                   $ref: '#/components/schemas/Approval'
-                example:
-                  - id: 1
-                    shopId: efgh5678
-                    yearMonth: 202107
-                    approvedBy: Store-abcd1234
         "400":
           description: "Bad Request"
         "401":
