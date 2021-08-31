@@ -1,16 +1,14 @@
 openapi: "3.0.0"
 info:
-  version: "1.0.0"
   title: "Starl-Backend API Document"
   description: "This is API Document of Starl-Backend"
-  contact:
-    email: "developer.starl.co.jp@gmail.com"
+  version: "1.0.0"
 
 servers:
   - url: https://api.example.com/v1
 
 security:
-  - bearerAuth: []
+  - BearerAuth: []
 
 paths:
   # -------------------- Admin/Authentication --------------------
@@ -22,9 +20,7 @@ paths:
       description: ""
       # TODO: Admin-Authentication
       security:
-        - bearerAuth: []
-      produces:
-        - "application/json"
+        - BearerAuth: []
       responses:
         "200":
           description: "Successful Operation"
@@ -42,9 +38,7 @@ paths:
       description: ""
       # TODO: Admin-Authentication
       security:
-        - bearerAuth: []
-      produces:
-        - "application/json"
+        - BearerAuth: []
       responses:
         "200":
           description: "Successful Operation"
@@ -62,9 +56,7 @@ paths:
       description: ""
       # TODO: Admin-Authentication
       security:
-        - bearerAuth: []
-      produces:
-        - "application/json"
+        - BearerAuth: []
       responses:
         "200":
           description: "Successful Operation"
@@ -82,9 +74,7 @@ paths:
       description: ""
       # TODO: Admin-Authentication
       security:
-        - bearerAuth: []
-      produces:
-        - "application/json"
+        - BearerAuth: []
       responses:
         "200":
           description: "Successful Operation"
@@ -102,9 +92,7 @@ paths:
       description: ""
       # TODO: Admin-Authentication
       security:
-        - bearerAuth: []
-      produces:
-        - "application/json"
+        - BearerAuth: []
       responses:
         "200":
           description: "Successful Operation"
@@ -124,75 +112,37 @@ paths:
       description: ""
       # TODO: Admin-Authentication
       security:
-        - bearerAuth: []
-      produces:
-        - "application/json"
+        - BearerAuth: []
       responses:
         "200":
           description: "Successful Operation"
-          schema:
-            type: "array"
-            items:
-              type: "object"
-              properties:
-                id:
-                  type: "string"
-                  example: "abcd1234"
-                name:
-                  type: "string"
-                  example: "岡本太郎"
-                shops:
-                  type: "array"
-                  items:
-                    type: "object"
-                    properties:
-                      shop_id:
-                        type: "integer"
-                        example: 1
-                      name:
-                        type: "string"
-                        example: "渋谷店"
-                      address:
-                        type: "string"
-                        example: "東京都渋谷区神南１－２３－１３"
-                      opening_hours:
-                        type: "string"
-                        # example: "5:00〜20:00"
-                        example: >-
-                          <table class="businessHours">
-                            <thead>
-                              <tr>
-                                <th></th>
-                                <th>店内</th>
-                                <th>ドライブスルー</th>
-                                <th>朝マック</th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              <tr>
-                                <th>平日</th>
-                                <td>7:00〜20:00</td>
-                                <td>—</td>
-                                <td rowspan="3">5:00〜10:30</td>
-                              </tr>
-                              <tr>
-                                <th>土曜</th>
-                                <td>7:00〜20:00</td>
-                                <td>—</td>
-                              </tr>
-                              <tr>
-                                <th>休日</th>
-                                <td>7:00〜20:00</td>
-                                <td>—</td>
-                              </tr>
-                            </tbody>
-                          </table>
+          content:
+            application/json:
+              schema:
+                type: "array"
+                items:
+                  type: "object"
+                  properties:
+                    id:
+                      type: "string"
+                    status:
+                      type: "string"
+                    storeName:
+                      type: "string"
+                    shops:
+                      type: "array"
+                      items:
+                        $ref: '#/components/schemas/Shop'
+                  example:
+                    id: "abcd1234"
+                    status: "CONFIRMED"
+                    storeName: "岡本太郎"
         "401":
           description: "Unauthorized"
         "404":
           description: "Store Not Found"
 
-  /admin/store/{store_id}:
+  /admin/store/{storeId}:
     put:
       tags:
         - "Admin/Store"
@@ -200,37 +150,32 @@ paths:
       description: ""
       # TODO: Admin-Authentication
       security:
-        - cookieAuth: []
-      produces:
-        - "application/json"
+        - BearerAuth: []
       parameters:
-        - name: "store_id"
-          in: "path"
+        - in: "path"
+          name: "storeId"
           description: "Store ID"
           required: true
-          type: "string"
-        - name: "body"
-          in: "body"
-          description: "Store object to update"
-          required: true
           schema:
-            type: "object"
-            properties:
-              name:
-                type: "string"
-                example: "マクドナルド"
+            type: "string"
+      requestBody:
+        description: "Store object to update"
+        required: true
+        content:
+          application/json:
+            schema:
+              type: "object"
+              properties:
+                storeName:
+                  type: "string"
+                  example: "マクドナルド"
       responses:
         "200":
           description: "Successful Operation"
-          schema:
-            type: "object"
-            properties:
-              id:
-                type: "string"
-                example: "abcd1234"
-              name:
-                type: "string"
-                example: "マクドナルド"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Store'
         "400":
           description: "Bad Request"
         "401":
@@ -244,15 +189,14 @@ paths:
       description: ""
       # TODO: Admin-Authentication
       security:
-        - cookieAuth: []
-      produces:
-        - "application/json"
+        - BearerAuth: []
       parameters:
-        - name: "store_id"
+        - name: "storeId"
           in: "path"
           description: "Store ID"
           required: true
-          type: "string"
+          schema:
+            type: "string"
       responses:
         "200":
           description: "Successful Operation"
@@ -264,7 +208,7 @@ paths:
           description: "Store Not Found"
 
   # -------------------- Admin/Shop --------------------
-  /admin/shop/{shop_id}:
+  /admin/shop/{shopId}:
     delete:
       tags:
         - "Admin/Shop"
@@ -272,15 +216,14 @@ paths:
       description: ""
       # TODO: Admin-Authentication
       security:
-        - bearerAuth: []
-      produces:
-        - "application/json"
+        - BearerAuth: []
       parameters:
-        - name: "shop_id"
-          in: "path"
+        - in: "path"
+          name: "shopId"
           description: "Shop ID"
           required: true
-          type: "string"
+          schema:
+            type: "string"
       responses:
         "200":
           description: "Successful Operation"
@@ -298,9 +241,7 @@ paths:
       description: ""
       # TODO: Store-Authentication
       security:
-        - bearerAuth: []
-      produces:
-        - "application/json"
+        - BearerAuth: []
       responses:
         "200":
           description: "Successful Operation"
@@ -318,9 +259,7 @@ paths:
       description: ""
       # TODO: Store-Authentication
       security:
-        - bearerAuth: []
-      produces:
-        - "application/json"
+        - BearerAuth: []
       responses:
         "200":
           description: "Successful Operation"
@@ -338,9 +277,7 @@ paths:
       description: ""
       # TODO: Store-Authentication
       security:
-        - bearerAuth: []
-      produces:
-        - "application/json"
+        - BearerAuth: []
       responses:
         "200":
           description: "Successful Operation"
@@ -354,13 +291,11 @@ paths:
     post:
       tags:
         - "Store/Authentication"
-      summary: "Store reset shop password"
+      summary: "Reset shop password by store"
       description: ""
       # TODO: Store-Authentication
       security:
-        - bearerAuth: []
-      produces:
-        - "application/json"
+        - BearerAuth: []
       responses:
         "200":
           description: "Successful Operation"
@@ -380,9 +315,7 @@ paths:
       description: ""
       # TODO: Store-Authentication
       security:
-        - cookieAuth: []
-      produces:
-        - "application/json"
+        - BearerAuth: []
       responses:
         "200":
           description: "Successful Operation"
@@ -391,56 +324,18 @@ paths:
             properties:
               id:
                 type: "string"
-                example: "abcd1234"
-              name:
+              status:
                 type: "string"
-                example: "マクドナルド"
+              storeName:
+                type: "string"
               shops:
                 type: "array"
                 items:
-                  type: "object"
-                  properties:
-                    shop_id:
-                      type: "string"
-                      example: "efgh5678"
-                    name:
-                      type: "string"
-                      example: "渋谷店"
-                    address:
-                      type: "string"
-                      example: "東京都渋谷区神南１－２３－１３"
-                    opening_hours:
-                      type: "string"
-                      # example: "5:00〜20:00"
-                      example: >-
-                        <table class="businessHours">
-                          <thead>
-                            <tr>
-                              <th></th>
-                              <th>店内</th>
-                              <th>ドライブスルー</th>
-                              <th>朝マック</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            <tr>
-                              <th>平日</th>
-                              <td>7:00〜20:00</td>
-                              <td>—</td>
-                              <td rowspan="3">5:00〜10:30</td>
-                            </tr>
-                            <tr>
-                              <th>土曜</th>
-                              <td>7:00〜20:00</td>
-                              <td>—</td>
-                            </tr>
-                            <tr>
-                              <th>休日</th>
-                              <td>7:00〜20:00</td>
-                              <td>—</td>
-                            </tr>
-                          </tbody>
-                        </table>
+                  $ref: '#/components/schemas/Shop'
+              example:
+                id: "abcd1234"
+                status: "CONFIRMED"
+                storeName: "岡本太郎"
         "401":
           description: "Unauthorized"
     put:
@@ -450,67 +345,60 @@ paths:
       description: ""
       # TODO: Store-Authentication
       security:
-        - bearerAuth: []
-      produces:
-        - "application/json"
-      parameters:
-        - name: "body"
-          in: "body"
-          description: "Store object to update"
-          required: true
-          schema:
-            type: "object"
-            properties:
-              name:
-                type: "string"
-                example: "マクドナルド"
+        - BearerAuth: []
+      requestBody:
+        description: "Store object to update"
+        required: true
+        content:
+          application/json:
+              schema:
+                type: "object"
+                properties:
+                  storeName:
+                    type: "string"
+                    example: "マクドナルド"
       responses:
         "200":
           description: "Successful Operation"
           schema:
-            type: "object"
-            properties:
-              id:
-                type: "string"
-                example: "abcd1234"
-              name:
-                type: "string"
-                example: "マクドナルド"
+            $ref: '#/components/schemas/Store'
         "400":
           description: "Bad Request"
         "401":
           description: "Unauthorized"
 
   # -------------------- Store/Shop --------------------
-  /store/shop/list:
-    get:
+  /store/shop/{shopId}:
+    put:
       tags:
         - "Store/Shop"
-      summary: "Read Shop list by store"
+      summary: "Update Store by store"
       description: ""
       # TODO: Store-Authentication
       security:
-        - bearerAuth: []
-      produces:
-        - "application/json"
-      responses:
-        "200":
-          description: "Successful Operation"
+        - BearerAuth: []
+      parameters:
+        - in: "path"
+          name: "shopId"
+          description: "Shop ID"
+          required: true
           schema:
-            type: "array"
-            items:
+            type: "string"
+      requestBody:
+        description: "Shop object to update"
+        required: true
+        content:
+          application/json:
+            schema:
               type: "object"
               properties:
-                id:
-                  type: "string"
-                  example: "efgh5678"
-                name:
+                shopName:
                   type: "string"
                   example: "渋谷店"
                 address:
                   type: "string"
                   example: "東京都渋谷区神南１－２３－１３"
-                opening_hours:
+                openingHours:
                   type: "string"
                   # example: "5:00〜20:00"
                   example: >-
@@ -542,123 +430,13 @@ paths:
                         </tr>
                       </tbody>
                     </table>
-        "400":
-          description: "Bad Request"
-        "401":
-          description: "Unauthorized"
-
-  /store/shop/{shop_id}:
-    put:
-      tags:
-        - "Store/Shop"
-      summary: "Update Store by store"
-      description: ""
-      # TODO: Store-Authentication
-      security:
-        - bearerAuth: []
-      produces:
-        - "application/json"
-      parameters:
-        - name: "shop_id"
-          in: "path"
-          description: "Shop ID"
-          required: true
-          type: "string"
-        - name: "body"
-          in: "body"
-          description: "Shop object to update"
-          required: true
-          schema:
-            type: "object"
-            properties:
-              name:
-                type: "string"
-                example: "渋谷店"
-              address:
-                type: "string"
-                example: "東京都渋谷区神南１－２３－１３"
-              opening_hours:
-                type: "string"
-                # example: "5:00〜20:00"
-                example: >-
-                  <table class="businessHours">
-                    <thead>
-                      <tr>
-                        <th></th>
-                        <th>店内</th>
-                        <th>ドライブスルー</th>
-                        <th>朝マック</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <th>平日</th>
-                        <td>7:00〜20:00</td>
-                        <td>—</td>
-                        <td rowspan="3">5:00〜10:30</td>
-                      </tr>
-                      <tr>
-                        <th>土曜</th>
-                        <td>7:00〜20:00</td>
-                        <td>—</td>
-                      </tr>
-                      <tr>
-                        <th>休日</th>
-                        <td>7:00〜20:00</td>
-                        <td>—</td>
-                      </tr>
-                    </tbody>
-                  </table>
       responses:
         "200":
           description: "Successful Operation"
-          schema:
-            type: "object"
-            properties:
-              id:
-                type: "string"
-                example: "efgh5678"
-              store_id:
-                type: "string"
-                example: "abcd1234"
-              name:
-                type: "string"
-                example: "渋谷店"
-              address:
-                type: "string"
-                example: "東京都渋谷区神南１－２３－１３"
-              opening_hours:
-                type: "string"
-                # example: "5:00〜20:00"
-                example: >-
-                  <table class="businessHours">
-                    <thead>
-                      <tr>
-                        <th></th>
-                        <th>店内</th>
-                        <th>ドライブスルー</th>
-                        <th>朝マック</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <th>平日</th>
-                        <td>7:00〜20:00</td>
-                        <td>—</td>
-                        <td rowspan="3">5:00〜10:30</td>
-                      </tr>
-                      <tr>
-                        <th>土曜</th>
-                        <td>7:00〜20:00</td>
-                        <td>—</td>
-                      </tr>
-                      <tr>
-                        <th>休日</th>
-                        <td>7:00〜20:00</td>
-                        <td>—</td>
-                      </tr>
-                    </tbody>
-                  </table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Shop'
         "400":
           description: "Bad Request"
         "401":
@@ -670,15 +448,14 @@ paths:
       description: ""
       # TODO: Store-Authentication
       security:
-        - bearerAuth: []
-      produces:
-        - "application/json"
+        - BearerAuth: []
       parameters:
-        - name: "shop_id"
-          in: "path"
+        - in: "path"
+          name: "shopId"
           description: "Shop ID"
           required: true
-          type: "string"
+          schema:
+            type: "string"
       responses:
         "200":
           description: "Successful Operation"
@@ -692,44 +469,31 @@ paths:
     post:
       tags:
         - "Store/Approval"
-      summary: "Create Approval list by store"
+      summary: "Create Approval of all shops by store"
       description: ""
       # TODO: Store-Authentication
       security:
-        - bearerAuth: []
-      produces:
-        - "application/json"
-      parameters:
-        - name: "body"
-          in: "body"
-          description: "Approval object to create"
-          required: true
-          schema:
-            type: "object"
-            properties:
-              year_month:
-                type: "integer"
-                example: 202107
+        - BearerAuth: []
+      requestBody:
+        description: "Approval object to create"
+        required: true
+        content:
+          application/json:
+            schema:
+              type: "object"
+              properties:
+                yearMonth:
+                  type: "integer"
+                  example: 202107
       responses:
         "200":
           description: "Successful Operation"
-          schema:
-            type: "array"
-            items:
-              type: "object"
-              properties:
-                id:
-                  type: "integer"
-                  example: 1
-                shop_id:
-                  type: "string"
-                  example: "efgh5678"
-                year_month:
-                  type: "integer"
-                  example: 202107
-                approved_by:
-                  type: "string"
-                  example: "Store-abcd1234"
+          content:
+            application/json:
+              schema:
+                type: "array"
+                items:
+                  $ref: '#/components/schemas/Approval'
         "400":
           description: "Bad Request"
         "401":
@@ -737,44 +501,31 @@ paths:
     get:
       tags:
         - "Store/Approval"
-      summary: "Read Approval list by store"
+      summary: "Read Approval of all shops by store"
       description: ""
       # TODO: Store-Authentication
       security:
-        - bearerAuth: []
-      produces:
-        - "application/json"
-      parameters:
-        - name: "body"
-          in: "body"
-          description: "Approval field to get"
-          required: true
-          schema:
-            type: "object"
-            properties:
-              year_month:
-                type: "integer"
-                example: 202107
+        - BearerAuth: []
+      requestBody:
+        description: "Approval field to get"
+        required: true
+        content:
+          application/json:
+            schema:
+              type: "object"
+              properties:
+                yearMonth:
+                  type: "integer"
+                  example: 202107
       responses:
         "200":
           description: "Successful Operation"
-          schema:
-            type: "array"
-            items:
-              type: "object"
-              properties:
-                id:
-                  type: "integer"
-                  example: 1
-                shop_id:
-                  type: "string"
-                  example: "efgh5678"
-                year_month:
-                  type: "integer"
-                  example: 202107
-                approvaed_by:
-                  type: "string"
-                  example: "Store-abcd1234"
+          content:
+            application/json:
+              schema:
+              type: "array"
+              items:
+                $ref: '#/components/schemas/Approval'
         "400":
           description: "Bad Request"
         "401":
@@ -791,9 +542,7 @@ paths:
       description: ""
       # TODO: Shop-Authentication
       security:
-        - bearerAuth: []
-      produces:
-        - "application/json"
+        - BearerAuth: []
       responses:
         "200":
           description: "Successful Operation"
@@ -811,9 +560,7 @@ paths:
       description: ""
       # TODO: Shop-Authentication
       security:
-        - bearerAuth: []
-      produces:
-        - "application/json"
+        - BearerAuth: []
       responses:
         "200":
           description: "Successful Operation"
@@ -833,59 +580,14 @@ paths:
       description: ""
       # TODO: Shop-Authentication
       security:
-        - cookieAuth: []
-      produces:
-        - "application/json"
+        - BearerAuth: []
       responses:
         "200":
           description: "Successful Operation"
-          schema:
-            type: "object"
-            properties:
-              id:
-                type: "string"
-                example: "efgh5678"
-              store_id:
-                type: "string"
-                example: "abcd1234"
-              name:
-                type: "string"
-                example: "渋谷店"
-              address:
-                type: "string"
-                example: "東京都渋谷区神南１－２３－１３"
-              opening_hours:
-                type: "string"
-                # example: "5:00〜20:00"
-                example: >-
-                  <table class="businessHours">
-                    <thead>
-                      <tr>
-                        <th></th>
-                        <th>店内</th>
-                        <th>ドライブスルー</th>
-                        <th>朝マック</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <th>平日</th>
-                        <td>7:00〜20:00</td>
-                        <td>—</td>
-                        <td rowspan="3">5:00〜10:30</td>
-                      </tr>
-                      <tr>
-                        <th>土曜</th>
-                        <td>7:00〜20:00</td>
-                        <td>—</td>
-                      </tr>
-                      <tr>
-                        <th>休日</th>
-                        <td>7:00〜20:00</td>
-                        <td>—</td>
-                      </tr>
-                    </tbody>
-                  </table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Shop'
         "401":
           description: "Unauthorized"
     put:
@@ -895,27 +597,26 @@ paths:
       description: ""
       # TODO: Shop-Authentication
       security:
-        - bearerAuth: []
-      produces:
-        - "application/json"
-      parameters:
-        - name: "body"
-          in: "body"
-          description: "Shop object to update"
-          required: true
-          schema:
-            type: "object"
-            properties:
-              name:
-                type: "string"
-                example: "渋谷店"
-              address:
-                type: "string"
-                example: "東京都渋谷区神南１－２３－１３"
-              opening_hours:
-                type: "string"
-                # example: "5:00〜20:00"
-                example: >-
+        - BearerAuth: []
+      requestBody:
+        description: "Shop object to update"
+        required: true
+        content:
+          application/json:
+            schema:
+              type: "object"
+              properties:
+                shopName:
+                  type: "string"
+                address:
+                  type: "string"
+                openingHours:
+                  type: "string"
+              example:
+                shopName: "渋谷店"
+                address: "東京都渋谷区神南１－２３－１３"
+                # openingHours: "5:00〜20:00"
+                openingHours: >-
                   <table class="businessHours">
                     <thead>
                       <tr>
@@ -947,53 +648,10 @@ paths:
       responses:
         "200":
           description: "Successful Operation"
-          schema:
-            type: "object"
-            properties:
-              id:
-                type: "string"
-                example: "efgh5678"
-              store_id:
-                type: "string"
-                example: "abcd1234"
-              name:
-                type: "string"
-                example: "渋谷店"
-              address:
-                type: "string"
-                example: "東京都渋谷区神南１－２３－１３"
-              opening_hours:
-                type: "string"
-                # example: "5:00〜20:00"
-                example: >-
-                  <table class="businessHours">
-                    <thead>
-                      <tr>
-                        <th></th>
-                        <th>店内</th>
-                        <th>ドライブスルー</th>
-                        <th>朝マック</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <th>平日</th>
-                        <td>7:00〜20:00</td>
-                        <td>—</td>
-                        <td rowspan="3">5:00〜10:30</td>
-                      </tr>
-                      <tr>
-                        <th>土曜</th>
-                        <td>7:00〜20:00</td>
-                        <td>—</td>
-                      </tr>
-                      <tr>
-                        <th>休日</th>
-                        <td>7:00〜20:00</td>
-                        <td>—</td>
-                      </tr>
-                    </tbody>
-                  </table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Shop'
         "400":
           description: "Bad Request"
         "401":
@@ -1008,56 +666,35 @@ paths:
       description: ""
       # TODO: Shop-Authentication
       security:
-        - bearerAuth: []
-      produces:
-        - "application/json"
-      parameters:
-        - name: "body"
-          in: "body"
-          description: "Transaction object to create"
-          required: true
-          schema:
-            type: "object"
-            properties:
-              user_id:
-                type: "string"
-                example: "starl2021"
-              shop_id:
-                type: "string"
-                example: "efgh5678"
-              price:
-                type: "integer"
-                example: 1000
-              usedPoints:
-                type: "integer"
-                example: 100
+        - BearerAuth: []
+      requestBody:
+        description: "Transaction object to create"
+        required: true
+        content:
+          application/json:
+            schema:
+              type: "object"
+              properties:
+                userId:
+                  type: "string"
+                shopId:
+                  type: "string"
+                price:
+                  type: "integer"
+                usedPoints:
+                  type: "integer"
+              example:
+                userId: "starl2021"
+                shopId: "efgh5678"
+                price: 1000
+                usedPoints: 100
       responses:
         "200":
           description: "Successful Operation"
-          schema:
-            type: "object"
-            properties:
-              id:
-                type: "integer"
-                example: 1
-              user_id:
-                type: "string"
-                example: "starl2021"
-              shop_id:
-                type: "string"
-                example: "efgh5678"
-              price:
-                type: "integer"
-                example: 1000
-              usedPoints:
-                type: "integer"
-                example: 100
-              earnedPoints:
-                type: "integer"
-                example: 9
-              newAmount:
-                type: "integer"
-                example: 1009
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Transaction'
         "400":
           description: "Bad Request"
         "401":
@@ -1070,43 +707,21 @@ paths:
       description: ""
       # TODO: Shop-Authentication
       security:
-        - bearerAuth: []
-      produces:
-        - "application/json"
+        - BearerAuth: []
       responses:
         "200":
           description: "Successful Operation"
-          schema:
-            type: "array"
-            items:
-              type: "object"
-              properties:
-                id:
-                  type: "integer"
-                  example: 1
-                user_id:
-                  type: "string"
-                  example: "starl2021"
-                shop_id:
-                  type: "string"
-                  example: "efgh5678"
-                price:
-                  type: "integer"
-                  example: 1000
-                usedPoints:
-                  type: "integer"
-                  example: 100
-                earnedPoints:
-                  type: "integer"
-                  example: 9
-                newAmount:
-                  type: "integer"
-                  example: 1009
+          content:
+            application/json:
+              schema:
+                type: "array"
+                items:
+                  $ref: '#/components/schemas/Transaction'
         "401":
           description: "Unauthorized"
         "404":
           description: "Not Found"
-  /shop/transaction/{transaction_id}:
+  /shop/transaction/{transactionId}:
     put:
       tags:
         - "Shop/Transaction"
@@ -1114,54 +729,35 @@ paths:
       description: ""
       # TODO: Shop-Authentication
       security:
-        - bearerAuth: []
-      produces:
-        - "application/json"
+        - BearerAuth: []
       parameters:
-        - name: "transaction_id"
-          in: "path"
+        - in: "path"
+          name: "transactionId"
           description: "Transaction ID"
           required: true
-          type: "integer"
-        - name: "body"
-          in: "body"
-          description: "Transaction object to update"
           schema:
-            type: "object"
-            properties:
-              price:
-                type: "integer"
-                example: 1000
-              usedPoints:
-                type: "integer"
-                example: 100
+            type: "integer"
+      requestBody:
+        description: "Transaction object to update"
+        required: true
+        content:
+          application/json:
+            schema:
+              type: "object"
+              properties:
+                price:
+                  type: "integer"
+                  example: 1000
+                usedPoints:
+                  type: "integer"
+                  example: 100
       responses:
         "200":
           description: "Successful Operation"
-          schema:
-            type: "object"
-            properties:
-              id:
-                type: "integer"
-                example: 1
-              user_id:
-                type: "string"
-                example: "starl2021"
-              shop_id:
-                type: "string"
-                example: "efgh5678"
-              price:
-                type: "integer"
-                example: 1000
-              usedPoints:
-                type: "integer"
-                example: 100
-              earnedPoints:
-                type: "integer"
-                example: 9
-              newAmount:
-                type: "integer"
-                example: 1009
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Transaction'
         "400":
           description: "Bad Request"
         "401":
@@ -1178,38 +774,25 @@ paths:
       description: ""
       # TODO: Shop-Authentication
       security:
-        - bearerAuth: []
-      produces:
-        - "application/json"
-      parameters:
-        - name: "body"
-          in: "body"
-          description: "Approval object to create"
-          required: true
-          schema:
-            type: "object"
-            properties:
-              year_month:
-                type: "integer"
-                example: 202107
+        - BearerAuth: []
+      requestBody:
+        description: "Approval object to create"
+        required: true
+        content:
+          application/json:
+            schema:
+              type: "object"
+              properties:
+                yearMonth:
+                  type: "integer"
+                  example: 202107
       responses:
         "200":
           description: "Successful Operation"
-          schema:
-            type: "object"
-            properties:
-              id:
-                type: "integer"
-                example: 1
-              shop_id:
-                type: "string"
-                example: "efgh5678"
-              year_month:
-                type: "integer"
-                example: 202107
-              approved_by:
-                type: "string"
-                example: "Shop-efgh5678"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Approval'
         "400":
           description: "Bad Request"
         "401":
@@ -1221,40 +804,27 @@ paths:
       description: ""
       # TODO: Shop-Authentication
       security:
-        - bearerAuth: []
-      produces:
-        - "application/json"
-      parameters:
-        - name: "body"
-          in: "body"
-          description: "Approval field to get"
-          required: true
-          schema:
-            type: "object"
-            properties:
-              year_month:
-                type: "integer"
-                example: 202107
+        - BearerAuth: []
+      requestBody:
+        description: "Approval field to get"
+        required: true
+        content:
+          application/json:
+            schema:
+              type: "object"
+              properties:
+                yearMonth:
+                  type: "integer"
+                  example: 202107
       responses:
         "200":
           description: "Successful Operation"
-          schema:
-            type: "array"
-            items:
-              type: "object"
-              properties:
-                id:
-                  type: "integer"
-                  example: 1
-                shop_id:
-                  type: "string"
-                  example: "efgh5678"
-                year_month:
-                  type: "integer"
-                  example: 202107
-                approvaed_by:
-                  type: "string"
-                  example: "Store-abcd1234"
+          content:
+            application/json:
+              schema:
+                type: "array"
+                items:
+                  $ref: '#/components/schemas/Approval'
         "400":
           description: "Bad Request"
         "401":
@@ -1271,9 +841,7 @@ paths:
       description: ""
       # TODO: User-Authentication
       security:
-        - bearerAuth: []
-      produces:
-        - "application/json"
+        - BearerAuth: []
       responses:
         "200":
           description: "Successful Operation"
@@ -1291,9 +859,7 @@ paths:
       description: ""
       # TODO: User-Authentication
       security:
-        - bearerAuth: []
-      produces:
-        - "application/json"
+        - BearerAuth: []
       responses:
         "200":
           description: "Successful Operation"
@@ -1311,9 +877,7 @@ paths:
       description: ""
       # TODO: User-Authentication
       security:
-        - bearerAuth: []
-      produces:
-        - "application/json"
+        - BearerAuth: []
       responses:
         "200":
           description: "Successful Operation"
@@ -1331,9 +895,7 @@ paths:
       description: ""
       # TODO: User-Authentication
       security:
-        - bearerAuth: []
-      produces:
-        - "application/json"
+        - BearerAuth: []
       responses:
         "200":
           description: "Successful Operation"
@@ -1351,9 +913,7 @@ paths:
       description: ""
       # TODO: User-Authentication
       security:
-        - bearerAuth: []
-      produces:
-        - "application/json"
+        - BearerAuth: []
       responses:
         "200":
           description: "Successful Operation"
@@ -1373,69 +933,34 @@ paths:
       description: ""
       # TODO: User-Authentication
       security:
-        - bearerAuth: []
-      produces:
-        - "application/json"
+        - BearerAuth: []
       responses:
         "200":
           description: "Successful Operation"
-          schema:
-            type: "object"
-            properties:
-              email:
-                type: "string"
-                example: "gawapei333@gmail.com"
-              status:
-                type: "string"
-                example: "CONFIRMED"
-              nicname:
-                type: "string"
-                example: "gawapei"
-              icon_url:
-                type: "string"
-                example: "https://www.example.com/gawapei333"
-              amount:
-                type: "integer"
-                example: 1234
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
         "400":
           description: "Bad Request"
         "401":
           description: "Unauthorized"
         "404":
           description: "Not Found"
+  /user/upload-icon-img:
     put:
       tags:
         - "User"
-      summary: "Update User"
+      summary: "Upload user icon image"
       description: ""
       # TODO: User-Authentication
       security:
-        - bearerAuth: []
-      produces:
-        - "application/json"
-      parameters:
-        - name: "body"
-          in: "body"
-          description: "User object to update"
-          required: true
-          schema:
-            type: "object"
-            properties:
-              email:
-                type: "string"
-                example: "gawapei333@gmail.com"
-              status:
-                type: "string"
-                example: "CONFIRMED"
-              nicname:
-                type: "string"
-                example: "gawapei"
-              iconURL:
-                type: "string"
-                example: "https://www.example.com/gawapei333"
-              amount:
-                type: "integer"
-                example: 1234
+        - BearerAuth: []
+      requestBody:
+        description: "User icon image data to update"
+        required: true
+        content:
+          image/png:
       responses:
         "200":
           description: "Successful Operation"
@@ -1445,6 +970,37 @@ paths:
           description: "Unauthorized"
         "404":
           description: "Not Found"
+  /user/update-nicname:
+    put:
+      tags:
+        - "User"
+      summary: "Update nicname"
+      description: ""
+      # TODO: User-Authentication
+      security:
+        - BearerAuth: [ ]
+      requestBody:
+        description: "Nicname to update"
+        required: true
+        content:
+          application/json:
+            schema:
+              type: "object"
+              properties:
+                nicname:
+                  type: "string"
+              example:
+                nicname: "starlくん"
+      responses:
+        "200":
+          description: "Successful Operation"
+        "400":
+          description: "Bad Request"
+        "401":
+          description: "Unauthorized"
+        "404":
+          description: "Not Found"
+  /user/{userId}:
     delete:
       tags:
         - "User"
@@ -1452,9 +1008,7 @@ paths:
       description: ""
       # TODO: User-Authentication
       security:
-        - bearerAuth: []
-      produces:
-        - "application/json"
+        - BearerAuth: []
       responses:
         "200":
           description: "Successful Operation"
@@ -1474,84 +1028,43 @@ paths:
       description: ""
       # TODO: User-Authentication
       security:
-        - bearerAuth: []
-      produces:
-        - "application/json"
-      parameters:
-        - name: "body"
-          in: "body"
-          description: "Current Location"
-          required: true
-          schema:
-            type: "object"
-            properties:
-              latitude:
-                type: "float"
-                example: 123.456789
-              longitude:
-                type: "float"
-                example: 123.456789
+        - BearerAuth: []
+      requestBody:
+        description: "Current Location"
+        required: true
+        content:
+          application/json:
+            schema:
+              type: "object"
+              properties:
+                latitude:
+                  type: "float"
+                  example: 123.456789
+                longitude:
+                  type: "float"
+                  example: 123.456789
       responses:
         "200":
           description: "Successful Operation"
-          schema:
-            type: "array"
-            items:
-              type: "object"
-              properties:
-                store:
+          content:
+            application/json:
+              schema:
+                type: "array"
+                items:
                   type: "object"
                   properties:
-                    id:
-                      type: "string"
-                      example: "abcd1234"
-                    name:
-                      type: "string"
-                      example: "マクドナルド"
-                shop:
-                  type: "object"
-                  properties:
-                    id:
-                      type: "string"
-                      example: "efgh5678"
-                    name:
-                      type: "string"
-                      example: "渋谷店"
-                    address:
-                      type: "string"
-                      example: "東京都渋谷区神南１－２３－１３"
-                    opening_hours:
-                      type: "string"
-                      # example: "5:00〜20:00"
-                      example: >-
-                        <table class="businessHours">
-                          <thead>
-                            <tr>
-                              <th></th>
-                              <th>店内</th>
-                              <th>ドライブスルー</th>
-                              <th>朝マック</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            <tr>
-                              <th>平日</th>
-                              <td>7:00〜20:00</td>
-                              <td>—</td>
-                              <td rowspan="3">5:00〜10:30</td>
-                            </tr>
-                            <tr>
-                              <th>土曜</th>
-                              <td>7:00〜20:00</td>
-                              <td>—</td>
-                            </tr>
-                            <tr>
-                              <th>休日</th>
-                              <td>7:00〜20:00</td>
-                              <td>—</td>
-                            </tr>
-                          </tbody>
-                        </table>
+                    store:
+                      type: "object"
+                      properties:
+                        id:
+                          type: "string"
+                        shopName:
+                          type: "string"
+                      example:
+                        id: "abcd1234"
+                        shopName: "マクドナルド"
+                    shop:
+                      $ref: '#/components/schemas/Shop'
         "400":
           description: "Bad Request"
         "401":
@@ -1568,38 +1081,16 @@ paths:
       description: ""
       # TODO: User-Authentication
       security:
-        - bearerAuth: []
-      produces:
-        - "application/json"
+        - BearerAuth: []
       responses:
         "200":
           description: "Successful Operation"
-          schema:
-            type: "array"
-            items:
-              type: "object"
-              properties:
-                id:
-                  type: "integer"
-                  example: 1
-                user_id:
-                  type: "string"
-                  example: "starl2021"
-                shop_id:
-                  type: "string"
-                  example: "efgh5678"
-                price:
-                  type: "integer"
-                  example: 1000
-                usedPoints:
-                  type: "integer"
-                  example: 100
-                earnedPoints:
-                  type: "integer"
-                  example: 9
-                newAmount:
-                  type: "integer"
-                  example: 1009
+          content:
+            application/json:
+              schema:
+              type: "array"
+              items:
+                $ref: '#/components/schemas/Transaction'
         "401":
           description: "Unauthorized"
         "404":
@@ -1641,8 +1132,138 @@ tags:
     description: "Access to Transaction information by user"
 
 components:
+  schemas:
+    Store:
+      type: object
+      properties:
+        id:
+          type: string
+        status:
+          type: string
+        storeName:
+          type: string
+      example:
+        id: abcd1234
+        status: CONFIRMED
+        storeName: マクドナルド
+    Shop:
+      type: object
+      properties:
+        id:
+          type: string
+        status:
+          type: string
+        shopName:
+          type: string
+        address:
+          type: string
+        openingHours:
+          type: string
+      example:
+        id: efgh5678
+        status: FORCE_CHANGE_PASSWORD
+        shopName: 渋谷店
+        address: 東京都渋谷区神南１－２３－１３
+        openingHours: >-
+          <table class="businessHours">
+            <thead>
+              <tr>
+                <th></th>
+                <th>店内</th>
+                <th>ドライブスルー</th>
+                <th>朝マック</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th>平日</th>
+                <td>7:00〜20:00</td>
+                <td>—</td>
+                <td rowspan="3">5:00〜10:30</td>
+              </tr>
+              <tr>
+                <th>土曜</th>
+                <td>7:00〜20:00</td>
+                <td>—</td>
+              </tr>
+              <tr>
+                <th>休日</th>
+                <td>7:00〜20:00</td>
+                <td>—</td>
+              </tr>
+            </tbody>
+          </table>
+
+
+    User:
+      type: object
+      properties:
+        id:
+          type: string
+        email:
+          type: string
+        status:
+          type: string
+        nicname:
+          type: string
+        iconURL:
+          type: string
+        amount:
+          type: integer
+      example:
+        id: starl2021
+        email: starl2021@gmail.com
+        status: CONFIRMED
+        nicname: starlくん
+        iconURL: https://www.example.com/starl2021
+        amount: 1234
+    Transaction:
+      type: object
+      properties:
+        id:
+          type: integer
+        userId:
+          type: string
+        shopId:
+          type: string
+        price:
+          type: integer
+        usedPoints:
+          type: integer
+        earnedPoints:
+          type: integer
+        newAmount:
+          type: integer
+        createdAt:
+          type: string
+      example:
+        id: 1
+        userId: starl2021
+        shopId: efgh5678
+        price: 1000
+        usedPoints: 100
+        earnedPoints: 9
+        newAmount: 1009
+        createdAt: 2021-08-27T00:00:00
+    Approval:
+      type: object
+      properties:
+        id:
+          type: integer
+        shopId:
+          type: string
+        yearMonth:
+          type: integer
+        approvedBy:
+          type: string
+      example:
+        id: 1
+        shopId: efgh5678
+        yearMonth: 202107
+        approvedBy: Store-abcd1234
+
   securitySchemes:
-    bearerAuth:
+    BearerAuth:
       type: http
       scheme: bearer
       bearerFormat: JWT
