@@ -1,8 +1,8 @@
-openapi: "3.0.0"
+openapi: 3.0.0
 info:
-  title: "Starl-Backend API Document"
-  description: "This is API Document of Starl-Backend"
-  version: "1.0.1"
+  title: Starl-Backend API Document
+  description: This is API Document of Starl-Backend
+  version: 1.0.2
 
 servers:
   - url: https://api.example.com/v1
@@ -15,435 +15,435 @@ paths:
   /admin/signin:
     post:
       tags:
-        - "Admin/Authentication"
-      summary: "Admin sign in"
-      description: ""
+        - Admin/Authentication
+      summary: Admin sign in
+      description:
       # TODO: Admin-Authentication
       security:
         - BearerAuth: []
       responses:
-        "200":
-          description: "Successful Operation"
-        "400":
-          description: "Bad Request"
-        "401":
-          description: "Unauthorized"
-        "404":
-          description: "Not Found"
+        '200':
+          description: Successful Operation
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not Found
   /admin/signout:
     post:
       tags:
-        - "Admin/Authentication"
-      summary: "Admin sign out"
-      description: ""
+        - Admin/Authentication
+      summary: Admin sign out
+      description: 
       # TODO: Admin-Authentication
       security:
         - BearerAuth: []
       responses:
-        "200":
-          description: "Successful Operation"
-        "400":
-          description: "Bad Request"
-        "401":
-          description: "Unauthorized"
-        "404":
-          description: "Not Found"
+        '200':
+          description: Successful Operation
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not Found
   /admin/signup-store:
     post:
       tags:
-        - "Admin/Authentication"
-      summary: "Admin sign up store"
-      description: ""
+        - Admin/Authentication
+      summary: Admin sign up store
+      description: 
       # TODO: Admin-Authentication
       security:
         - BearerAuth: []
       responses:
-        "200":
-          description: "Successful Operation"
-        "400":
-          description: "Bad Request"
-        "401":
-          description: "Unauthorized"
-        "404":
-          description: "Not Found"
+        '200':
+          description: Successful Operation
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not Found
   /admin/signup-shop:
     post:
       tags:
-        - "Admin/Authentication"
-      summary: "Admin sign up shop"
-      description: ""
+        - Admin/Authentication
+      summary: Admin sign up shop
+      description: 
       # TODO: Admin-Authentication
       security:
         - BearerAuth: []
       responses:
-        "200":
-          description: "Successful Operation"
-        "400":
-          description: "Bad Request"
-        "401":
-          description: "Unauthorized"
-        "404":
-          description: "Not Found"
+        '200':
+          description: Successful Operation
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not Found
   /admin/signup-shop/list:
     post:
       tags:
-        - "Admin/Authentication"
-      summary: "Admin sign up shops"
-      description: ""
+        - Admin/Authentication
+      summary: Admin sign up shops
+      description: 
       # TODO: Admin-Authentication
       security:
         - BearerAuth: []
       responses:
-        "200":
-          description: "Successful Operation"
-        "400":
-          description: "Bad Request"
-        "401":
-          description: "Unauthorized"
-        "404":
-          description: "Not Found"
+        '200':
+          description: Successful Operation
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not Found
 
   # -------------------- Admin/Store --------------------
   /admin/store/list:
     get:
       tags:
-        - "Admin/Store"
-      summary: "Read all stores by admin"
-      description: ""
+        - Admin/Store
+      summary: Read all stores by admin
+      description: 
       # TODO: Admin-Authentication
       security:
         - BearerAuth: []
       responses:
-        "200":
-          description: "Successful Operation"
+        '200':
+          description: Successful Operation
           content:
             application/json:
               schema:
-                type: "array"
+                type: array
                 items:
                   $ref: '#/components/schemas/Store'
-        "401":
-          description: "Unauthorized"
-        "404":
-          description: "Store Not Found"
+        '401':
+          description: Unauthorized
+        '404':
+          description: Store Not Found
 
   /admin/store/{storeId}:
     put:
       tags:
-        - "Admin/Store"
-      summary: "Update Store by admin"
-      description: ""
+        - Admin/Store
+      summary: Update Store by admin
+      description: 
       # TODO: Admin-Authentication
       security:
         - BearerAuth: []
       parameters:
-        - in: "path"
-          name: "storeId"
-          description: "Store ID"
+        - in: path
+          name: storeId
+          description: Store ID
           required: true
           schema:
-            type: "string"
+            type: string
       requestBody:
-        description: "Store object to update"
+        description: Store object to update
         required: true
         content:
           application/json:
             schema:
-              type: "object"
+              type: object
               properties:
                 storeName:
-                  type: "string"
-                  example: "マクドナルド"
+                  type: string
+                  example: マクドナルド
       responses:
-        "200":
-          description: "Successful Operation"
+        '200':
+          description: Successful Operation
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Store'
-        "400":
-          description: "Bad Request"
-        "401":
-          description: "Unauthorized"
-        "404":
-          description: "Store Not Found"
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '404':
+          description: Store Not Found
     delete:
       tags:
-        - "Admin/Store"
-      summary: "Delete Store by admin"
-      description: ""
+        - Admin/Store
+      summary: Delete Store by admin
+      description: 
       # TODO: Admin-Authentication
       security:
         - BearerAuth: []
       parameters:
-        - name: "storeId"
-          in: "path"
-          description: "Store ID"
+        - name: storeId
+          in: path
+          description: Store ID
           required: true
           schema:
-            type: "string"
+            type: string
       responses:
-        "200":
-          description: "Successful Operation"
-        "400":
-          description: "Bad Request"
-        "401":
-          description: "Unauthorized"
-        "404":
-          description: "Store Not Found"
+        '200':
+          description: Successful Operation
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '404':
+          description: Store Not Found
 
   # -------------------- Admin/Shop --------------------
   /admin/shop/{shopId}:
     delete:
       tags:
-        - "Admin/Shop"
-      summary: "Delete Shop by admin"
-      description: ""
+        - Admin/Shop
+      summary: Delete Shop by admin
+      description: 
       # TODO: Admin-Authentication
       security:
         - BearerAuth: []
       parameters:
-        - in: "path"
-          name: "shopId"
-          description: "Shop ID"
+        - in: path
+          name: shopId
+          description: Shop ID
           required: true
           schema:
-            type: "string"
+            type: string
       responses:
-        "200":
-          description: "Successful Operation"
-        "401":
-          description: "Unauthorized"
-        "404":
-          description: "Shop Not Found"
+        '200':
+          description: Successful Operation
+        '401':
+          description: Unauthorized
+        '404':
+          description: Shop Not Found
 
   # -------------------- Store/Authentication --------------------
   /store/signin:
     post:
       tags:
-        - "Store/Authentication"
-      summary: "Store sign in"
-      description: ""
+        - Store/Authentication
+      summary: Store sign in
+      description: 
       # TODO: Store-Authentication
       security:
         - BearerAuth: []
       responses:
-        "200":
-          description: "Successful Operation"
-        "400":
-          description: "Bad Request"
-        "401":
-          description: "Unauthorized"
-        "404":
-          description: "Not Found"
+        '200':
+          description: Successful Operation
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not Found
   /store/signout:
     post:
       tags:
-        - "Store/Authentication"
-      summary: "Store sign out"
-      description: ""
+        - Store/Authentication
+      summary: Store sign out
+      description: 
       # TODO: Store-Authentication
       security:
         - BearerAuth: []
       responses:
-        "200":
-          description: "Successful Operation"
-        "400":
-          description: "Bad Request"
-        "401":
-          description: "Unauthorized"
-        "404":
-          description: "Not Found"
+        '200':
+          description: Successful Operation
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not Found
   /store/reset-password:
     post:
       tags:
-        - "Store/Authentication"
-      summary: "Store reset password"
-      description: ""
+        - Store/Authentication
+      summary: Store reset password
+      description: 
       # TODO: Store-Authentication
       security:
         - BearerAuth: []
       responses:
-        "200":
-          description: "Successful Operation"
-        "400":
-          description: "Bad Request"
-        "401":
-          description: "Unauthorized"
-        "404":
-          description: "Not Found"
+        '200':
+          description: Successful Operation
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not Found
   /store/reset-shop-password:
     post:
       tags:
-        - "Store/Authentication"
-      summary: "Reset shop password by store"
-      description: ""
+        - Store/Authentication
+      summary: Reset shop password by store
+      description: 
       # TODO: Store-Authentication
       security:
         - BearerAuth: []
       responses:
-        "200":
-          description: "Successful Operation"
-        "400":
-          description: "Bad Request"
-        "401":
-          description: "Unauthorized"
-        "404":
-          description: "Not Found"
+        '200':
+          description: Successful Operation
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not Found
 
   # -------------------- Store --------------------
   /store:
     get:
       tags:
-        - "Store"
-      summary: "Read Store"
-      description: ""
+        - Store
+      summary: Read Store
+      description: 
       # TODO: Store-Authentication
       security:
         - BearerAuth: []
       responses:
-        "200":
-          description: "Successful Operation"
+        '200':
+          description: Successful Operation
           content:
             application/json:
               schema:
-                type: "object"
+                type: object
                 properties:
                   store:
                     $ref: '#/components/schemas/Store'
                   shops:
-                    type: "array"
+                    type: array
                     items:
                       $ref: '#/components/schemas/Shop'
-        "401":
-          description: "Unauthorized"
+        '401':
+          description: Unauthorized
     put:
       tags:
-        - "Store"
-      summary: "Update Store"
-      description: ""
+        - Store
+      summary: Update Store
+      description: 
       # TODO: Store-Authentication
       security:
         - BearerAuth: []
       requestBody:
-        description: "Store object to update"
+        description: Store object to update
         required: true
         content:
           application/json:
               schema:
-                type: "object"
+                type: object
                 properties:
                   storeName:
-                    type: "string"
-                    example: "マクドナルド"
+                    type: string
+                    example: マクドナルド
       responses:
-        "200":
-          description: "Successful Operation"
+        '200':
+          description: Successful Operation
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Store'
-        "400":
-          description: "Bad Request"
-        "401":
-          description: "Unauthorized"
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
 
   # -------------------- Store/Shop --------------------
   /store/shop/{shopId}:
     put:
       tags:
-        - "Store/Shop"
-      summary: "Update Store by store"
-      description: ""
+        - Store/Shop
+      summary: Update Store by store
+      description: 
       # TODO: Store-Authentication
       security:
         - BearerAuth: []
       parameters:
-        - in: "path"
-          name: "shopId"
-          description: "Shop ID"
+        - in: path
+          name: shopId
+          description: Shop ID
           required: true
           schema:
-            type: "string"
+            type: string
       requestBody:
-        description: "Shop object to update"
+        description: Shop object to update
         required: true
         content:
           application/json:
             schema:
-              type: "object"
+              type: object
               properties:
                 shopName:
-                  type: "string"
-                  example: "渋谷店"
+                  type: string
+                  example: 渋谷店
                 address:
-                  type: "string"
-                  example: "東京都渋谷区神南１－２３－１３"
+                  type: string
+                  example: 東京都渋谷区神南１－２３－１３
                 openingHours:
-                  type: "string"
-                  example: "5:00〜20:00"
+                  type: string
+                  example: 5:00〜20:00
       responses:
-        "200":
-          description: "Successful Operation"
+        '200':
+          description: Successful Operation
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Shop'
-        "400":
-          description: "Bad Request"
-        "401":
-          description: "Unauthorized"
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
     delete:
       tags:
-        - "Store/Shop"
-      summary: "Delete Shop by store"
-      description: ""
+        - Store/Shop
+      summary: Delete Shop by store
+      description: 
       # TODO: Store-Authentication
       security:
         - BearerAuth: []
       parameters:
-        - in: "path"
-          name: "shopId"
-          description: "Shop ID"
+        - in: path
+          name: shopId
+          description: Shop ID
           required: true
           schema:
-            type: "string"
+            type: string
       responses:
-        "200":
-          description: "Successful Operation"
-        "401":
-          description: "Unauthorized"
-        "404":
-          description: "Shop Not Found"
+        '200':
+          description: Successful Operation
+        '401':
+          description: Unauthorized
+        '404':
+          description: Shop Not Found
 
   # -------------------- Store/Approval --------------------
   /store/approval:
     post:
       tags:
-        - "Store/Approval"
-      summary: "Create Approval of all shops by store"
-      description: ""
+        - Store/Approval
+      summary: Create Approval of all shops by store
+      description: 
       # TODO: Store-Authentication
       security:
         - BearerAuth: []
       requestBody:
-        description: "Approval object to create"
+        description: Approval object to create
         required: true
         content:
           application/json:
             schema:
-              type: "object"
+              type: object
               properties:
                 yearMonth:
-                  type: "integer"
+                  type: integer
                   example: 202107
       responses:
-        "200":
-          description: "Successful Operation"
+        '200':
+          description: Successful Operation
           content:
             application/json:
               schema:
-                type: "array"
+                type: array
                 items:
                   $ref: '#/components/schemas/Approval'
                 example:
@@ -451,36 +451,36 @@ paths:
                     shopId: efgh5678
                     yearMonth: 202107
                     approvedBy: Store-abcd1234
-        "400":
-          description: "Bad Request"
-        "401":
-          description: "Unauthorized"
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
     get:
       tags:
-        - "Store/Approval"
-      summary: "Read Approval of all shops by store"
-      description: ""
+        - Store/Approval
+      summary: Read Approval of all shops by store
+      description: 
       # TODO: Store-Authentication
       security:
         - BearerAuth: []
       requestBody:
-        description: "Approval field to get"
+        description: Approval field to get
         required: true
         content:
           application/json:
             schema:
-              type: "object"
+              type: object
               properties:
                 yearMonth:
-                  type: "integer"
+                  type: integer
                   example: 202107
       responses:
-        "200":
-          description: "Successful Operation"
+        '200':
+          description: Successful Operation
           content:
             application/json:
               schema:
-                type: "array"
+                type: array
                 items:
                   $ref: '#/components/schemas/Approval'
                 example:
@@ -488,240 +488,240 @@ paths:
                     shopId: efgh5678
                     yearMonth: 202107
                     approvedBy: Store-abcd1234
-        "400":
-          description: "Bad Request"
-        "401":
-          description: "Unauthorized"
-        "404":
-          description: "Not Found"
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not Found
 
   # -------------------- Shop/Authentication --------------------
   /shop/signin:
     post:
       tags:
-        - "Shop/Authentication"
-      summary: "Shop sign in"
-      description: ""
+        - Shop/Authentication
+      summary: Shop sign in
+      description: 
       # TODO: Shop-Authentication
       security:
         - BearerAuth: []
       responses:
-        "200":
-          description: "Successful Operation"
-        "400":
-          description: "Bad Request"
-        "401":
-          description: "Unauthorized"
-        "404":
-          description: "Not Found"
+        '200':
+          description: Successful Operation
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not Found
   /shop/signout:
     post:
       tags:
-        - "Shop/Authentication"
-      summary: "Shop sign out"
-      description: ""
+        - Shop/Authentication
+      summary: Shop sign out
+      description: 
       # TODO: Shop-Authentication
       security:
         - BearerAuth: []
       responses:
-        "200":
-          description: "Successful Operation"
-        "400":
-          description: "Bad Request"
-        "401":
-          description: "Unauthorized"
-        "404":
-          description: "Not Found"
+        '200':
+          description: Successful Operation
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not Found
 
   # -------------------- Shop --------------------
   /shop:
     get:
       tags:
-        - "Shop"
-      summary: "Read Shop"
-      description: ""
+        - Shop
+      summary: Read Shop
+      description: 
       # TODO: Shop-Authentication
       security:
         - BearerAuth: []
       responses:
-        "200":
-          description: "Successful Operation"
+        '200':
+          description: Successful Operation
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Shop'
-        "401":
-          description: "Unauthorized"
+        '401':
+          description: Unauthorized
     put:
       tags:
-        - "Shop"
-      summary: "Update Shop"
-      description: ""
+        - Shop
+      summary: Update Shop
+      description: 
       # TODO: Shop-Authentication
       security:
         - BearerAuth: []
       requestBody:
-        description: "Shop object to update"
+        description: Shop object to update
         required: true
         content:
           application/json:
             schema:
-              type: "object"
+              type: object
               properties:
                 shopName:
-                  type: "string"
+                  type: string
                 address:
-                  type: "string"
+                  type: string
                 openingHours:
-                  type: "string"
+                  type: string
               example:
-                shopName: "渋谷店"
-                address: "東京都渋谷区神南１－２３－１３"
-                openingHours: "5:00〜20:00"
+                shopName: 渋谷店
+                address: 東京都渋谷区神南１－２３－１３
+                openingHours: 5:00〜20:00
       responses:
-        "200":
-          description: "Successful Operation"
+        '200':
+          description: Successful Operation
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Shop'
-        "400":
-          description: "Bad Request"
-        "401":
-          description: "Unauthorized"
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
 
   # -------------------- Shop/Transaction --------------------
   /shop/transaction:
     post:
       tags:
-        - "Shop/Transaction"
-      summary: "Create Transaction by shop"
-      description: ""
+        - Shop/Transaction
+      summary: Create Transaction by shop
+      description: 
       # TODO: Shop-Authentication
       security:
         - BearerAuth: []
       requestBody:
-        description: "Transaction object to create"
+        description: Transaction object to create
         required: true
         content:
           application/json:
             schema:
-              type: "object"
+              type: object
               properties:
                 userId:
-                  type: "string"
+                  type: string
                 shopId:
-                  type: "string"
+                  type: string
                 price:
-                  type: "integer"
+                  type: integer
                 usedPoints:
-                  type: "integer"
+                  type: integer
               example:
-                userId: "starl2021"
-                shopId: "efgh5678"
+                userId: starl2021
+                shopId: efgh5678
                 price: 1000
                 usedPoints: 100
       responses:
-        "200":
-          description: "Successful Operation"
+        '200':
+          description: Successful Operation
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Transaction'
-        "400":
-          description: "Bad Request"
-        "401":
-          description: "Unauthorized"
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
   /shop/transaction/list:
     get:
       tags:
-        - "Shop/Transaction"
-      summary: "Read Transaction list by shop"
-      description: ""
+        - Shop/Transaction
+      summary: Read Transaction list by shop
+      description: 
       # TODO: Shop-Authentication
       security:
         - BearerAuth: []
       responses:
-        "200":
-          description: "Successful Operation"
+        '200':
+          description: Successful Operation
           content:
             application/json:
               schema:
-                type: "array"
+                type: array
                 items:
                   $ref: '#/components/schemas/Transaction'
-        "401":
-          description: "Unauthorized"
-        "404":
-          description: "Not Found"
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not Found
   /shop/transaction/{transactionId}:
     put:
       tags:
-        - "Shop/Transaction"
-      summary: "Update Transaction by shop"
-      description: ""
+        - Shop/Transaction
+      summary: Update Transaction by shop
+      description: 
       # TODO: Shop-Authentication
       security:
         - BearerAuth: []
       parameters:
-        - in: "path"
-          name: "transactionId"
-          description: "Transaction ID"
+        - in: path
+          name: transactionId
+          description: Transaction ID
           required: true
           schema:
-            type: "integer"
+            type: integer
       requestBody:
-        description: "Transaction object to update"
+        description: Transaction object to update
         required: true
         content:
           application/json:
             schema:
-              type: "object"
+              type: object
               properties:
                 price:
-                  type: "integer"
+                  type: integer
                   example: 1000
                 usedPoints:
-                  type: "integer"
+                  type: integer
                   example: 100
       responses:
-        "200":
-          description: "Successful Operation"
+        '200':
+          description: Successful Operation
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Transaction'
-        "400":
-          description: "Bad Request"
-        "401":
-          description: "Unauthorized"
-        "404":
-          description: "Not Found"
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not Found
 
   # -------------------- Shop/Approval --------------------
   /shop/approval:
     post:
       tags:
-        - "Shop/Approval"
-      summary: "Create Approval list by shop"
-      description: ""
+        - Shop/Approval
+      summary: Create Approval list by shop
+      description: 
       # TODO: Shop-Authentication
       security:
         - BearerAuth: []
       requestBody:
-        description: "Approval object to create"
+        description: Approval object to create
         required: true
         content:
           application/json:
             schema:
-              type: "object"
+              type: object
               properties:
                 yearMonth:
-                  type: "integer"
+                  type: integer
                   example: 202108
       responses:
-        "200":
-          description: "Successful Operation"
+        '200':
+          description: Successful Operation
           content:
             application/json:
               schema:
@@ -731,32 +731,32 @@ paths:
                 shopId: efgh5678
                 yearMonth: 202108
                 approvedBy: Shop-efgh5678
-        "400":
-          description: "Bad Request"
-        "401":
-          description: "Unauthorized"
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
     get:
       tags:
-        - "Shop/Approval"
-      summary: "Read Approval by shop"
-      description: ""
+        - Shop/Approval
+      summary: Read Approval by shop
+      description: 
       # TODO: Shop-Authentication
       security:
         - BearerAuth: []
       requestBody:
-        description: "Approval field to get"
+        description: Approval field to get
         required: true
         content:
           application/json:
             schema:
-              type: "object"
+              type: object
               properties:
                 yearMonth:
-                  type: "integer"
+                  type: integer
                   example: 202108
       responses:
-        "200":
-          description: "Successful Operation"
+        '200':
+          description: Successful Operation
           content:
             application/json:
               schema:
@@ -766,311 +766,311 @@ paths:
                 shopId: efgh5678
                 yearMonth: 202108
                 approvedBy: Shop-efgh5678
-        "400":
-          description: "Bad Request"
-        "401":
-          description: "Unauthorized"
-        "404":
-          description: "Not Found"
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not Found
 
   # -------------------- User/Authentication --------------------
   /user/signup:
     post:
       tags:
-        - "User/Authentication"
-      summary: "User sign up"
-      description: ""
+        - User/Authentication
+      summary: User sign up
+      description: 
       # TODO: User-Authentication
       security:
         - BearerAuth: []
       responses:
-        "200":
-          description: "Successful Operation"
-        "400":
-          description: "Bad Request"
-        "401":
-          description: "Unauthorized"
-        "404":
-          description: "Not Found"
+        '200':
+          description: Successful Operation
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not Found
   /user/confirm:
     post:
       tags:
-        - "User/Authentication"
-      summary: "User confirm account"
-      description: ""
+        - User/Authentication
+      summary: User confirm account
+      description: 
       # TODO: User-Authentication
       security:
         - BearerAuth: []
       responses:
-        "200":
-          description: "Successful Operation"
-        "400":
-          description: "Bad Request"
-        "401":
-          description: "Unauthorized"
-        "404":
-          description: "Not Found"
+        '200':
+          description: Successful Operation
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not Found
   /user/reset-password:
     post:
       tags:
-        - "User/Authentication"
-      summary: "User reset password"
-      description: ""
+        - User/Authentication
+      summary: User reset password
+      description: 
       # TODO: User-Authentication
       security:
         - BearerAuth: []
       responses:
-        "200":
-          description: "Successful Operation"
-        "400":
-          description: "Bad Request"
-        "401":
-          description: "Unauthorized"
-        "404":
-          description: "Not Found"
+        '200':
+          description: Successful Operation
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not Found
   /user/signin:
     post:
       tags:
-        - "User/Authentication"
-      summary: "User sign in"
-      description: ""
+        - User/Authentication
+      summary: User sign in
+      description: 
       # TODO: User-Authentication
       security:
         - BearerAuth: []
       responses:
-        "200":
-          description: "Successful Operation"
-        "400":
-          description: "Bad Request"
-        "401":
-          description: "Unauthorized"
-        "404":
-          description: "Not Found"
+        '200':
+          description: Successful Operation
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not Found
   /user/signout:
     post:
       tags:
-        - "User/Authentication"
-      summary: "User sign out"
-      description: ""
+        - User/Authentication
+      summary: User sign out
+      description: 
       # TODO: User-Authentication
       security:
         - BearerAuth: []
       responses:
-        "200":
-          description: "Successful Operation"
-        "400":
-          description: "Bad Request"
-        "401":
-          description: "Unauthorized"
-        "404":
-          description: "Not Found"
+        '200':
+          description: Successful Operation
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not Found
 
   # -------------------- User --------------------
   /user:
     get:
       tags:
-        - "User"
-      summary: "Read User"
-      description: ""
+        - User
+      summary: Read User
+      description: 
       # TODO: User-Authentication
       security:
         - BearerAuth: []
       responses:
-        "200":
-          description: "Successful Operation"
+        '200':
+          description: Successful Operation
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/User'
-        "400":
-          description: "Bad Request"
-        "401":
-          description: "Unauthorized"
-        "404":
-          description: "Not Found"
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not Found
   /user/upload-icon-img:
     put:
       tags:
-        - "User"
-      summary: "Upload user icon image"
-      description: ""
+        - User
+      summary: Upload user icon image
+      description: 
       # TODO: User-Authentication
       security:
         - BearerAuth: []
       requestBody:
-        description: "User icon image data to update"
+        description: User icon image data to update
         required: true
         content:
           image/png:
       responses:
-        "200":
-          description: "Successful Operation"
-        "400":
-          description: "Bad Request"
-        "401":
-          description: "Unauthorized"
-        "404":
-          description: "Not Found"
+        '200':
+          description: Successful Operation
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not Found
   /user/update-nicname:
     put:
       tags:
-        - "User"
-      summary: "Update nicname"
-      description: ""
+        - User
+      summary: Update nicname
+      description: 
       # TODO: User-Authentication
       security:
         - BearerAuth: [ ]
       requestBody:
-        description: "Nicname to update"
+        description: Nicname to update
         required: true
         content:
           application/json:
             schema:
-              type: "object"
+              type: object
               properties:
                 nicname:
-                  type: "string"
+                  type: string
               example:
-                nicname: "starlくん"
+                nicname: starlくん
       responses:
-        "200":
-          description: "Successful Operation"
-        "400":
-          description: "Bad Request"
-        "401":
-          description: "Unauthorized"
-        "404":
-          description: "Not Found"
+        '200':
+          description: Successful Operation
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not Found
   /user/{userId}:
     delete:
       tags:
-        - "User"
-      summary: "Delete User"
-      description: ""
+        - User
+      summary: Delete User
+      description: 
       # TODO: User-Authentication
       security:
         - BearerAuth: []
       responses:
-        "200":
-          description: "Successful Operation"
-        "400":
-          description: "Bad Request"
-        "401":
-          description: "Unauthorized"
-        "404":
-          description: "Not Found"
+        '200':
+          description: Successful Operation
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not Found
 
   # -------------------- User/Shop --------------------
   /user/shop/list:
     get:
       tags:
-        - "User/Shop"
-      summary: "Read nearby shops by user"
-      description: ""
+        - User/Shop
+      summary: Read nearby shops by user
+      description: 
       # TODO: User-Authentication
       security:
         - BearerAuth: []
       requestBody:
-        description: "Current Location"
+        description: Current Location
         required: true
         content:
           application/json:
             schema:
-              type: "object"
+              type: object
               properties:
                 latitude:
-                  type: "float"
+                  type: float
                   example: 123.456789
                 longitude:
-                  type: "float"
+                  type: float
                   example: 123.456789
       responses:
-        "200":
-          description: "Successful Operation"
+        '200':
+          description: Successful Operation
           content:
             application/json:
               schema:
-                type: "array"
+                type: array
                 items:
-                  type: "object"
+                  type: object
                   properties:
                     store:
-                      type: "object"
+                      type: object
                       properties:
                         id:
-                          type: "string"
+                          type: string
                         shopName:
-                          type: "string"
+                          type: string
                       example:
-                        id: "abcd1234"
-                        shopName: "マクドナルド"
+                        id: abcd1234
+                        shopName: マクドナルド
                     shop:
                       $ref: '#/components/schemas/Shop'
-        "400":
-          description: "Bad Request"
-        "401":
-          description: "Unauthorized"
-        "404":
-          description: "Shop Not Found"
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '404':
+          description: Shop Not Found
 
   # -------------------- User/Transaction --------------------
   /user/transaction/list:
     get:
       tags:
-        - "User/Transaction"
-      summary: "Read Transaction list by user"
-      description: ""
+        - User/Transaction
+      summary: Read Transaction list by user
+      description: 
       # TODO: User-Authentication
       security:
         - BearerAuth: []
       responses:
-        "200":
-          description: "Successful Operation"
+        '200':
+          description: Successful Operation
           content:
             application/json:
               schema:
-                type: "array"
+                type: array
                 items:
                   $ref: '#/components/schemas/Transaction'
-        "401":
-          description: "Unauthorized"
-        "404":
-          description: "Not Found"
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not Found
 
 tags:
-  - name: "Admin/Authentication"
-    description: "Authentication by admin"
-  - name: "Admin/Store"
-    description: "Access to Store information by admin"
-  - name: "Admin/Shop"
-    description: "Access to Shop information by admin"
+  - name: Admin/Authentication
+    description: Authentication by admin
+  - name: Admin/Store
+    description: Access to Store information by admin
+  - name: Admin/Shop
+    description: Access to Shop information by admin
 
-  - name: "Store/Authentication"
-    description: "Authentication by store"
-  - name: "Store"
-    description: "Access to Store information by store"
-  - name: "Store/Shop"
-    description: "Access to Shop information by store"
-  - name: "Store/Approval"
-    description: "Access to Approval information by store"
+  - name: Store/Authentication
+    description: Authentication by store
+  - name: Store
+    description: Access to Store information by store
+  - name: Store/Shop
+    description: Access to Shop information by store
+  - name: Store/Approval
+    description: Access to Approval information by store
 
-  - name: "Shop/Authentication"
-    description: "Authentication by shop"
-  - name: "Shop"
-    description: "Access to Shop information by shop"
-  - name: "Shop/Transaction"
-    description: "Access to Transaction information by shop"
-  - name: "Shop/Approval"
-    description: "Access to Approval information by shop"
+  - name: Shop/Authentication
+    description: Authentication by shop
+  - name: Shop
+    description: Access to Shop information by shop
+  - name: Shop/Transaction
+    description: Access to Transaction information by shop
+  - name: Shop/Approval
+    description: Access to Approval information by shop
 
-  - name: "User/Authentication"
-    description: "Authentication by user"
-  - name: "User"
-    description: "Access to User information by user"
-  - name: "User/Shop"
-    description: "Access to Shop information by user"
-  - name: "User/Transaction"
-    description: "Access to Transaction information by user"
+  - name: User/Authentication
+    description: Authentication by user
+  - name: User
+    description: Access to User information by user
+  - name: User/Shop
+    description: Access to Shop information by user
+  - name: User/Transaction
+    description: Access to Transaction information by user
 
 components:
   schemas:
@@ -1105,7 +1105,7 @@ components:
         status: FORCE_CHANGE_PASSWORD
         shopName: 渋谷店
         address: 東京都渋谷区神南１－２３－１３
-        openingHours: "5:00〜20:00"
+        openingHours: 5:00〜20:00
     User:
       type: object
       properties:
@@ -1155,7 +1155,7 @@ components:
         usedPoints: 100
         earnedPoints: 9
         newAmount: 1009
-        createdAt: "2021-08-27T00:00:00"
+        createdAt: 2021-08-27T00:00:00
     Approval:
       type: object
       properties:
