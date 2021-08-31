@@ -447,7 +447,10 @@ paths:
                 items:
                   $ref: '#/components/schemas/Approval'
                   example:
-                    $ref: '#/components/examples/ApprovalByStore'
+                    id: 1
+                    shopId: efgh5678
+                    yearMonth: 202107
+                    approvedBy: Store-abcd1234
         "400":
           description: "Bad Request"
         "401":
@@ -480,8 +483,11 @@ paths:
               type: "array"
               items:
                 $ref: '#/components/schemas/Approval'
-              example:
-                - $ref: '#/components/examples/ApprovalByStore'
+                example:
+                  id: 1
+                  shopId: efgh5678
+                  yearMonth: 202107
+                  approvedBy: Store-abcd1234
         "400":
           description: "Bad Request"
         "401":
@@ -721,7 +727,10 @@ paths:
               schema:
                 $ref: '#/components/schemas/Approval'
               example:
-                $ref: '#/components/examples/ApprovalByShop'
+                id: 2
+                shopId: efgh5678
+                yearMonth: 202108
+                approvedBy: Shop-efgh5678
         "400":
           description: "Bad Request"
         "401":
@@ -753,7 +762,10 @@ paths:
               schema:
                 $ref: '#/components/schemas/Approval'
               example:
-                $ref: '#/components/examples/ApprovalByShop'
+                id: 2
+                shopId: efgh5678
+                yearMonth: 202108
+                approvedBy: Shop-efgh5678
         "400":
           description: "Bad Request"
         "401":
