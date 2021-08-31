@@ -307,7 +307,14 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Store'
+                type: "object"
+                properties:
+                  store:
+                    $ref: '#/components/schemas/Store'
+                  shops:
+                    type: "array"
+                    items:
+                      $ref: '#/components/schemas/Shop'
         "401":
           description: "Unauthorized"
     put:
@@ -439,6 +446,8 @@ paths:
                 type: "array"
                 items:
                   $ref: '#/components/schemas/Approval'
+                example:
+                  $ref: '#/components/examples/ApprovalByStore'
         "400":
           description: "Bad Request"
         "401":
@@ -471,6 +480,8 @@ paths:
               type: "array"
               items:
                 $ref: '#/components/schemas/Approval'
+              example:
+                $ref: '#/components/examples/ApprovalByStore'
         "400":
           description: "Bad Request"
         "401":
@@ -701,7 +712,7 @@ paths:
               properties:
                 yearMonth:
                   type: "integer"
-                  example: 202107
+                  example: 202108
       responses:
         "200":
           description: "Successful Operation"
@@ -709,6 +720,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Approval'
+                example:
+                  $ref: '#/components/examples/ApprovalByShop'
         "400":
           description: "Bad Request"
         "401":
@@ -716,7 +729,7 @@ paths:
     get:
       tags:
         - "Shop/Approval"
-      summary: "Read Approval list by shop"
+      summary: "Read Approval by shop"
       description: ""
       # TODO: Shop-Authentication
       security:
@@ -731,16 +744,16 @@ paths:
               properties:
                 yearMonth:
                   type: "integer"
-                  example: 202107
+                  example: 202108
       responses:
         "200":
           description: "Successful Operation"
           content:
             application/json:
               schema:
-                type: "array"
-                items:
-                  $ref: '#/components/schemas/Approval'
+                $ref: '#/components/schemas/Approval'
+                example:
+                  $ref: '#/components/examples/ApprovalByShop'
         "400":
           description: "Bad Request"
         "401":
@@ -1130,7 +1143,7 @@ components:
         usedPoints: 100
         earnedPoints: 9
         newAmount: 1009
-        createdAt: 2021-08-27T00:00:00
+        createdAt: "2021-08-27T00:00:00"
     Approval:
       type: object
       properties:
@@ -1142,11 +1155,18 @@ components:
           type: integer
         approvedBy:
           type: string
-      example:
-        id: 1
-        shopId: efgh5678
-        yearMonth: 202107
-        approvedBy: Store-abcd1234
+
+  examples:
+    ApprovalByStore:
+      id: 1
+      shopId: efgh5678
+      yearMonth: 202107
+      approvedBy: Store-abcd1234
+    ApprovalByShop:
+      id: 2
+      shopId: efgh5678
+      yearMonth: 202108
+      approvedBy: Shop-efgh5678
 
   securitySchemes:
     BearerAuth:
