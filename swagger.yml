@@ -446,7 +446,7 @@ paths:
                 type: "array"
                 items:
                   $ref: '#/components/schemas/Approval'
-                example:
+                examples:
                   ApprovalByStore:
                     $ref: '#/components/examples/ApprovalByStore'
         "400":
@@ -481,7 +481,7 @@ paths:
               type: "array"
               items:
                 $ref: '#/components/schemas/Approval'
-              example:
+              examples:
                 ApprovalByStore:
                   $ref: '#/components/examples/ApprovalByStore'
         "400":
@@ -722,7 +722,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Approval'
-                example:
+                examples:
                   ApprovalByShop:
                     $ref: '#/components/examples/ApprovalByShop'
         "400":
@@ -755,7 +755,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Approval'
-              example:
+              examples:
                 ApprovalByShop:
                   $ref: '#/components/examples/ApprovalByShop'
         "400":
