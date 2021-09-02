@@ -5,7 +5,7 @@ info:
   version: 1.0.0
 
 servers:
-  - url: https://api.example.com/v1
+  - url: https://api.starl.co.jp/v1
 
 security:
   - BearerAuth: []
@@ -19,7 +19,7 @@ paths:
       summary: Admin sign in
       description:
       security:
-        - BearerAuth: [admin]
+        - BearerAuth: []
       responses:
         '200':
           description: Successful Operation
@@ -36,7 +36,7 @@ paths:
       summary: Admin sign out
       description: 
       security:
-        - BearerAuth: [admin]
+        - BearerAuth: []
       responses:
         '200':
           description: Successful Operation
@@ -55,7 +55,7 @@ paths:
       summary: Sign up store by admin
       description:
       security:
-        - BearerAuth: [admin]
+        - BearerAuth: []
       responses:
         '200':
           description: Successful Operation
@@ -72,7 +72,7 @@ paths:
       summary: Read all stores by admin
       description: 
       security:
-        - BearerAuth: [admin]
+        - BearerAuth: []
       responses:
         '200':
           description: Successful Operation
@@ -93,7 +93,7 @@ paths:
       summary: Update Store by admin
       description: 
       security:
-        - BearerAuth: [admin]
+        - BearerAuth: []
       parameters:
         - in: path
           name: storeId
@@ -131,7 +131,7 @@ paths:
       summary: Delete Store by admin
       description: 
       security:
-        - BearerAuth: [admin]
+        - BearerAuth: []
       parameters:
         - name: storeId
           in: path
@@ -157,7 +157,7 @@ paths:
       summary: Sign up shop by admin
       description:
       security:
-        - BearerAuth: [admin]
+        - BearerAuth: []
       responses:
         '200':
           description: Successful Operation
@@ -174,7 +174,7 @@ paths:
       summary: Sign up shops by admin
       description:
       security:
-        - BearerAuth: [admin]
+        - BearerAuth: []
       responses:
         '200':
           description: Successful Operation
@@ -191,7 +191,7 @@ paths:
       summary: Delete Shop by admin
       description: 
       security:
-        - BearerAuth: [admin]
+        - BearerAuth: []
       parameters:
         - in: path
           name: shopId
@@ -215,7 +215,7 @@ paths:
       summary: Store sign in
       description: 
       security:
-        - BearerAuth: [store]
+        - BearerAuth: []
       responses:
         '200':
           description: Successful Operation
@@ -232,7 +232,7 @@ paths:
       summary: Store sign out
       description: 
       security:
-        - BearerAuth: [store]
+        - BearerAuth: []
       responses:
         '200':
           description: Successful Operation
@@ -249,7 +249,7 @@ paths:
       summary: Store reset password
       description: 
       security:
-        - BearerAuth: [store]
+        - BearerAuth: []
       responses:
         '200':
           description: Successful Operation
@@ -266,7 +266,7 @@ paths:
       summary: Reset shop password by store
       description: 
       security:
-        - BearerAuth: [store]
+        - BearerAuth: []
       responses:
         '200':
           description: Successful Operation
@@ -285,7 +285,7 @@ paths:
       summary: Read Store
       description: 
       security:
-        - BearerAuth: [store]
+        - BearerAuth: []
       responses:
         '200':
           description: Successful Operation
@@ -308,7 +308,7 @@ paths:
       summary: Update Store
       description: 
       security:
-        - BearerAuth: [store]
+        - BearerAuth: []
       requestBody:
         description: Store object to update
         required: true
@@ -340,7 +340,7 @@ paths:
       summary: Update Store by store
       description: 
       security:
-        - BearerAuth: [store]
+        - BearerAuth: []
       parameters:
         - in: path
           name: shopId
@@ -382,7 +382,7 @@ paths:
       summary: Delete Shop by store
       description: 
       security:
-        - BearerAuth: [store]
+        - BearerAuth: []
       parameters:
         - in: path
           name: shopId
@@ -406,7 +406,7 @@ paths:
       summary: Create Approval of all shops by store
       description: 
       security:
-        - BearerAuth: [store]
+        - BearerAuth: []
       requestBody:
         description: Approval object to create
         required: true
@@ -442,7 +442,7 @@ paths:
       summary: Read Approval of all shops by store
       description: 
       security:
-        - BearerAuth: [store]
+        - BearerAuth: []
       requestBody:
         description: Approval field to get
         required: true
@@ -483,7 +483,7 @@ paths:
       summary: Shop sign in
       description: 
       security:
-        - BearerAuth: [shop]
+        - BearerAuth: []
       responses:
         '200':
           description: Successful Operation
@@ -500,7 +500,7 @@ paths:
       summary: Shop sign out
       description: 
       security:
-        - BearerAuth: [shop]
+        - BearerAuth: []
       responses:
         '200':
           description: Successful Operation
@@ -519,7 +519,7 @@ paths:
       summary: Read Shop
       description: 
       security:
-        - BearerAuth: [shop]
+        - BearerAuth: []
       responses:
         '200':
           description: Successful Operation
@@ -535,7 +535,7 @@ paths:
       summary: Update Shop
       description: 
       security:
-        - BearerAuth: [shop]
+        - BearerAuth: []
       requestBody:
         description: Shop object to update
         required: true
@@ -574,7 +574,7 @@ paths:
       summary: Create Transaction by shop
       description: 
       security:
-        - BearerAuth: [shop]
+        - BearerAuth: []
       requestBody:
         description: Transaction object to create
         required: true
@@ -614,7 +614,7 @@ paths:
       summary: Read Transaction list by shop
       description: 
       security:
-        - BearerAuth: [shop]
+        - BearerAuth: []
       parameters:
         - in: query
           name: limit
@@ -640,7 +640,7 @@ paths:
       summary: Update Transaction by shop
       description: 
       security:
-        - BearerAuth: [shop]
+        - BearerAuth: []
       parameters:
         - in: path
           name: transactionId
@@ -684,7 +684,7 @@ paths:
       summary: Create Approval list by shop
       description: 
       security:
-        - BearerAuth: [shop]
+        - BearerAuth: []
       requestBody:
         description: Approval object to create
         required: true
@@ -718,7 +718,7 @@ paths:
       summary: Read Approval by shop
       description: 
       security:
-        - BearerAuth: [shop]
+        - BearerAuth: []
       requestBody:
         description: Approval field to get
         required: true
@@ -757,7 +757,7 @@ paths:
       summary: User sign up
       description: 
       security:
-        - BearerAuth: [user]
+        - BearerAuth: []
       responses:
         '200':
           description: Successful Operation
@@ -774,7 +774,7 @@ paths:
       summary: User confirm account
       description: 
       security:
-        - BearerAuth: [user]
+        - BearerAuth: []
       responses:
         '200':
           description: Successful Operation
@@ -791,7 +791,7 @@ paths:
       summary: User reset password
       description: 
       security:
-        - BearerAuth: [user]
+        - BearerAuth: []
       responses:
         '200':
           description: Successful Operation
@@ -808,7 +808,7 @@ paths:
       summary: User sign in
       description: 
       security:
-        - BearerAuth: [user]
+        - BearerAuth: []
       responses:
         '200':
           description: Successful Operation
@@ -825,7 +825,7 @@ paths:
       summary: User sign out
       description: 
       security:
-        - BearerAuth: [user]
+        - BearerAuth: []
       responses:
         '200':
           description: Successful Operation
@@ -844,7 +844,7 @@ paths:
       summary: Read User
       description: 
       security:
-        - BearerAuth: [user]
+        - BearerAuth: []
       responses:
         '200':
           description: Successful Operation
@@ -865,7 +865,7 @@ paths:
       summary: Upload user icon image
       description: 
       security:
-        - BearerAuth: [user]
+        - BearerAuth: []
       requestBody:
         description: User icon image data to update
         required: true
@@ -887,7 +887,7 @@ paths:
       summary: Update nicname
       description: 
       security:
-        - BearerAuth: [user]
+        - BearerAuth: []
       requestBody:
         description: Nicname to update
         required: true
@@ -916,7 +916,7 @@ paths:
       summary: Delete User
       description: 
       security:
-        - BearerAuth: [user]
+        - BearerAuth: []
       responses:
         '200':
           description: Successful Operation
@@ -935,7 +935,7 @@ paths:
       summary: Read nearby shops by user
       description: 
       security:
-        - BearerAuth: [user]
+        - BearerAuth: []
       requestBody:
         description: Current Location
         required: true
@@ -990,7 +990,7 @@ paths:
       summary: Read Transaction list by user
       description: 
       security:
-        - BearerAuth: [user]
+        - BearerAuth: []
       parameters:
         - in: query
           name: limit
