@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   title: Starl-Backend API Document
   description: This is API Document of Starl-Backend
-  version: 1.0.1
+  version: 1.0.2
 
 servers:
   - url: https://api.starl.co.jp/v1
@@ -610,6 +610,42 @@ paths:
       tags:
         - Store
       summary: Update Store by store
+      security:
+        - BearerAuth: [ ]
+      requestBody:
+        description: Store object to update
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: string
+                  example: nikuyokocho
+                storeName:
+                  type: string
+                  example: 渋谷 肉横丁
+      responses:
+        '200':
+          description: Successful Operarion
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    example: nikuyokocho
+                  storeName:
+                    type: string
+                    example: 渋谷 肉横丁
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+
+
 
   /store/transaction/list:
     get:
