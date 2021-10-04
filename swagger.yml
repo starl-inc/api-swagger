@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   title: Starl-Backend API Document
   description: This is API Document of Starl-Backend
-  version: 1.0.0
+  version: 1.0.1
 
 servers:
   - url: https://api.starl.co.jp/v1
@@ -567,7 +567,41 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/responses/ReadStore'
+                type: object
+                properties:
+                  id:
+                    type: string
+                    example: nikuyokocho
+                  storeName:
+                    type: string
+                    example: 肉横丁
+                  yearMonth:
+                    type: integer
+                    example: 202107
+                  totalSales:
+                    type: integer
+                    example: 1234567
+                  totalEarnedPoints:
+                    type: integer
+                    example: 12345
+                  totalUsedPoints:
+                    type: integer
+                    example: 3000
+                  approval:
+                    type: boolean
+                    example: true
+                  shops:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          example: sdf87gyu
+                        shopName:
+                          type: string
+                          example: 肉太郎
+
         '400':
           description: Bad Request
         '401':
@@ -1572,41 +1606,6 @@ components:
           example: sdf87gyu
 
   responses:
-    ReadStore:
-      type: object
-      properties:
-        id:
-          type: string
-          example: nikuyokocho
-        storeName:
-          type: string
-          example: 肉横丁
-        yearMonth:
-          type: integer
-          example: 202107
-        totalSales:
-          type: integer
-          example: 1234567
-        totalEarnedPoints:
-          type: integer
-          example: 12345
-        totalUsedPoints:
-          type: integer
-          example: 3000
-        approval:
-          type: boolean
-          example: true
-        shops:
-          type: array
-          items:
-            type: object
-            properties:
-              id:
-                type: string
-                example: sdf87gyu
-              shopName:
-                type: string
-                example: 肉太郎
     Transaction:
       type: object
       properties:
