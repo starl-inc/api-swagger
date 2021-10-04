@@ -622,6 +622,9 @@ paths:
 
   /store/shop/{shopId}:
     get:
+      tags:
+        - Store
+      summary: Shop info
     put:
       tags:
         - Store
@@ -668,7 +671,7 @@ paths:
   /store/approval:
     post:
       tags:
-        - Store/Approval
+        - Store
       summary: Create Approval of all shops by store
       description: 
       security:
@@ -704,7 +707,7 @@ paths:
           description: Unauthorized
     get:
       tags:
-        - Store/Approval
+        - Store
       summary: Read Approval of all shops by store
       description: 
       security:
