@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   title: Starl-Backend API Document
   description: This is API Document of Starl-Backend
-  version: 1.0.7
+  version: 1.0.8
 
 servers:
   - url: https://api.starl.co.jp/v1
@@ -544,7 +544,7 @@ paths:
     get:
       tags:
         - Store
-      summary: Read Store
+      summary: Read store by store
       security:
         - BearerAuth: []
       parameters:
@@ -609,7 +609,7 @@ paths:
     put:
       tags:
         - Store
-      summary: Update Store by store
+      summary: Update store by store
       security:
         - BearerAuth: [ ]
       requestBody:
@@ -649,7 +649,7 @@ paths:
     post:
       tags:
         - Store
-      summary: Create Approval for all shops by store
+      summary: Create approval for all shops by store
       security:
         - BearerAuth: [ ]
       requestBody:
@@ -694,7 +694,7 @@ paths:
     get:
       tags:
         - Store
-      summary: Transaction list
+      summary: Read transaction list of the store
       security:
         - BearerAuth: [ ]
       parameters:
@@ -747,7 +747,7 @@ paths:
     get:
       tags:
         - Store
-      summary: Shop list
+      summary: Read shop list of the store
       security:
         - BearerAuth: [ ]
       parameters:
@@ -814,7 +814,7 @@ paths:
     get:
       tags:
         - Store
-      summary: Shop info
+      summary: Read shop by store
       security:
         - BearerAuth: [ ]
       responses:
@@ -851,7 +851,7 @@ paths:
     put:
       tags:
         - Store
-      summary: Update Shop info by store
+      summary: Update shop by store
       description: 
       security:
         - BearerAuth: []
