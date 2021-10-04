@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   title: Starl-Backend API Document
   description: This is API Document of Starl-Backend
-  version: 1.0.4
+  version: 1.0.5
 
 servers:
   - url: https://api.starl.co.jp/v1
@@ -770,6 +770,39 @@ paths:
       tags:
         - Store
       summary: Shop info
+      security:
+        - BearerAuth: [ ]
+      responses:
+        '200':
+          description: Successful Operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    example: sdf87gyu
+                  shopName:
+                    type: string
+                    example: 肉太郎
+                  address:
+                    type: string
+                    example: 東京都渋谷区宇田川町１３−８ ちとせ会館 ２F 渋谷肉横丁内
+                  phone:
+                    type: string
+                    example: 03-6427-8994
+                  openingHours:
+                    type: string
+                    example: |
+                      月～日、祝日、祝前日: 17:00～翌0:00
+                      定休日：不定休
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '404':
+          description: Shop not found
     put:
       tags:
         - Store
