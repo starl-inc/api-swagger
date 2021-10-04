@@ -7,64 +7,362 @@ info:
 servers:
   - url: https://api.starl.co.jp/v1
 
-security:
-  - BearerAuth: []
-
 paths:
-  # -------------------- Admin/Authentication --------------------
+  # -------------------- AuthAdmin --------------------
   /admin/signin:
     post:
       tags:
-        - Admin/Authentication
+        - AuthAdmin
       summary: Admin sign in
-      description:
-      security:
-        - BearerAuth: []
+      requestBody:
+        description: Admin auth info
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AdminSignInRequest'
       responses:
         '200':
           description: Successful Operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AdminSignInResponse'
         '400':
           description: Bad Request
-        '401':
-          description: Unauthorized
-        '404':
-          description: Not Found
   /admin/signout:
     post:
       tags:
-        - Admin/Authentication
+        - AuthAdmin
       summary: Admin sign out
-      description: 
       security:
-        - BearerAuth: []
+        - BearerAuth: [ ]
+      requestBody:
+        description: RefreshToken
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RefreshToken'
       responses:
         '200':
           description: Successful Operation
         '400':
-          description: Bad Request
+            description: Bad Request (RefreshToken is missing.)
         '401':
-          description: Unauthorized
-        '404':
-          description: Not Found
+          description: Unauthorized (RefreshToken is invalid.)
 
-  # -------------------- Admin/Store --------------------
+  # -------------------- AuthStore --------------------
   /admin/store/signup:
     post:
       tags:
-        - Admin/Store
+        - AuthStore
       summary: Sign up store by admin
-      description:
       security:
         - BearerAuth: []
+      requestBody:
+        description: Store object to signup
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StoreSignUpRequest'
       responses:
         '200':
           description: Successful Operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StoreSignUpResponse'
         '400':
           description: Bad Request
         '401':
           description: Unauthorized
-        '404':
-          description: Not Found
+  /store/signin:
+    post:
+      tags:
+        - AuthStore
+      summary: Sign in store
+      requestBody:
+        description: Store auth info
+        required: true
+        content:
+          application/json:
+            schema:
+              oneOf:
+                - $ref: '#/components/schemas/StoreInitialSignInRequest'
+                - $ref: '#/components/schemas/StoreSignInRequest'
+      responses:
+        '200':
+          description: Successful Operation
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/StoreInitialSignInResponse'
+                  - $ref: '#/components/schemas/StoreSignInResponse'
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized (ID or password is invalid.)
+  /store/reset-password:
+    post:
+      tags:
+        - AuthStore
+      summary: Store reset password
+      requestBody:
+        description: Store auth info
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StoreResetPasswordRequest'
+      responses:
+        '200':
+          description: Successful Operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StoreResetPasswordResponse'
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized (ID or session is invalid.)
+  /store/signout:
+    post:
+      tags:
+        - AuthStore
+      summary: Store sign out
+      security:
+        - BearerAuth: [ ]
+      requestBody:
+        description: RefreshToken
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RefreshToken'
+      responses:
+        '200':
+          description: Successful Operation
+        '400':
+          description: Bad Request (RefreshToken is missing.)
+        '401':
+          description: Unauthorized (RefreshToken is invalid.)
+
+  # -------------------- AuthShop --------------------
+  /admin/shop/signup:
+    post:
+      tags:
+        - AuthShop
+      summary: Sign up shop by admin
+      security:
+        - BearerAuth: []
+      requestBody:
+        description: Shop object to signup
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ShopSignUpRequest'
+      responses:
+        '200':
+          description: Successful Operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ShopSignUpResponse'
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+  /shop/signin:
+    post:
+      tags:
+        - AuthShop
+      summary: Sign in shop
+      requestBody:
+        description: Shop auth info
+        required: true
+        content:
+          application/json:
+            schema:
+              oneOf:
+                - $ref: '#/components/schemas/ShopInitialSignInRequest'
+                - $ref: '#/components/schemas/ShopSignInRequest'
+      responses:
+        '200':
+          description: Successful Operation
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/ShopInitialSignInResponse'
+                  - $ref: '#/components/schemas/ShopSignInResponse'
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized (ID or password is invalid.)
+  /shop/reset-password:
+    post:
+      tags:
+        - AuthShop
+      summary: Shop reset password
+      requestBody:
+        description: Shop auth info
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ShopResetPasswordRequest'
+      responses:
+        '200':
+          description: Successful Operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ShopResetPasswordResponse'
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized (ID or session is invalid.)
+  /shop/signout:
+    post:
+      tags:
+        - AuthShop
+      summary: Shop sign out
+      security:
+        - BearerAuth: [ ]
+      requestBody:
+        description: RefreshToken
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RefreshToken'
+      responses:
+        '200':
+          description: Successful Operation
+        '400':
+          description: Bad Request (RefreshToken is missing.)
+        '401':
+          description: Unauthorized (RefreshToken is invalid.)
+
+  # -------------------- AuthUser --------------------
+  /user/signup:
+    post:
+      tags:
+        - AuthUser
+      summary: Sign up user
+      requestBody:
+        description: User object to signup
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserSignUpRequest'
+      responses:
+        '200':
+          description: Successful Operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserSignUpResponse'
+        '400':
+          description: Bad Request
+  /user/signin:
+    post:
+      tags:
+        - AuthUser
+      summary: Sign in user
+      requestBody:
+        description: User auth info
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserSignInRequest'
+      responses:
+        '200':
+          description: Successful Operation
+          content:
+            application/json:
+              schema:
+                oneOf:
+                $ref: '#/components/schemas/UserSignInResponse'
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized (ID or password is invalid.)
+  /user/register:
+    post:
+      tags:
+        - AuthUser
+      summary: User registration
+      security:
+        - BearerAuth: [ ]
+      requestBody:
+        description: User account info
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserRegisterRequest'
+      responses:
+        '200':
+          description: Successful Operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserRegisterResponse'
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+  /user/confirm:
+    post:
+      tags:
+        - AuthUser
+      summary: User confirmation
+      requestBody:
+        description: User confirmation code and new password
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserConfirmRequest'
+      responses:
+        '200':
+          description: Successful Operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserConfirmResponse'
+        '400':
+          description: Bad Request
+  /user/signout:
+    post:
+      tags:
+        - AuthUser
+      summary: User sign out
+      security:
+        - BearerAuth: [ ]
+      requestBody:
+        description: RefreshToken
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RefreshToken'
+      responses:
+        '200':
+          description: Successful Operation
+        '400':
+          description: Bad Request (RefreshToken is missing.)
+        '401':
+          description: Unauthorized (RefreshToken is invalid.)
+
+  # -------------------- Admin/Store --------------------
   /admin/store/list:
     get:
       tags:
@@ -73,6 +371,12 @@ paths:
       description: 
       security:
         - BearerAuth: []
+      parameters:
+        - in: query
+          name: limit
+          schema:
+            type: integer
+          description: The number of items to return
       responses:
         '200':
           description: Successful Operation
@@ -81,7 +385,8 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Store'
+                  schema:
+                    $ref: '#/components/schemas/Store'
         '401':
           description: Unauthorized
         '404':
@@ -150,40 +455,6 @@ paths:
           description: Store Not Found
 
   # -------------------- Admin/Shop --------------------
-  /admin/shop/signup:
-    post:
-      tags:
-        - Admin/Shop
-      summary: Sign up shop by admin
-      description:
-      security:
-        - BearerAuth: []
-      responses:
-        '200':
-          description: Successful Operation
-        '400':
-          description: Bad Request
-        '401':
-          description: Unauthorized
-        '404':
-          description: Not Found
-  /admin/shop/signup/list:
-    post:
-      tags:
-        - Admin/Shop
-      summary: Sign up shops by admin
-      description:
-      security:
-        - BearerAuth: []
-      responses:
-        '200':
-          description: Successful Operation
-        '400':
-          description: Bad Request
-        '401':
-          description: Unauthorized
-        '404':
-          description: Not Found
   /admin/shop/{shopId}:
     delete:
       tags:
@@ -206,76 +477,6 @@ paths:
           description: Unauthorized
         '404':
           description: Shop Not Found
-
-  # -------------------- Store/Authentication --------------------
-  /store/signin:
-    post:
-      tags:
-        - Store/Authentication
-      summary: Store sign in
-      description: 
-      security:
-        - BearerAuth: []
-      responses:
-        '200':
-          description: Successful Operation
-        '400':
-          description: Bad Request
-        '401':
-          description: Unauthorized
-        '404':
-          description: Not Found
-  /store/signout:
-    post:
-      tags:
-        - Store/Authentication
-      summary: Store sign out
-      description: 
-      security:
-        - BearerAuth: []
-      responses:
-        '200':
-          description: Successful Operation
-        '400':
-          description: Bad Request
-        '401':
-          description: Unauthorized
-        '404':
-          description: Not Found
-  /store/reset-password:
-    post:
-      tags:
-        - Store/Authentication
-      summary: Store reset password
-      description: 
-      security:
-        - BearerAuth: []
-      responses:
-        '200':
-          description: Successful Operation
-        '400':
-          description: Bad Request
-        '401':
-          description: Unauthorized
-        '404':
-          description: Not Found
-  /store/reset-shop-password:
-    post:
-      tags:
-        - Store/Authentication
-      summary: Reset shop password by store
-      description: 
-      security:
-        - BearerAuth: []
-      responses:
-        '200':
-          description: Successful Operation
-        '400':
-          description: Bad Request
-        '401':
-          description: Unauthorized
-        '404':
-          description: Not Found
 
   # -------------------- Store --------------------
   /store:
@@ -468,42 +669,6 @@ paths:
                     shopId: efgh5678
                     yearMonth: 202107
                     approvedBy: Store-abcd1234
-        '400':
-          description: Bad Request
-        '401':
-          description: Unauthorized
-        '404':
-          description: Not Found
-
-  # -------------------- Shop/Authentication --------------------
-  /shop/signin:
-    post:
-      tags:
-        - Shop/Authentication
-      summary: Shop sign in
-      description: 
-      security:
-        - BearerAuth: []
-      responses:
-        '200':
-          description: Successful Operation
-        '400':
-          description: Bad Request
-        '401':
-          description: Unauthorized
-        '404':
-          description: Not Found
-  /shop/signout:
-    post:
-      tags:
-        - Shop/Authentication
-      summary: Shop sign out
-      description: 
-      security:
-        - BearerAuth: []
-      responses:
-        '200':
-          description: Successful Operation
         '400':
           description: Bad Request
         '401':
@@ -749,93 +914,6 @@ paths:
         '404':
           description: Not Found
 
-  # -------------------- User/Authentication --------------------
-  /user/signup:
-    post:
-      tags:
-        - User/Authentication
-      summary: User sign up
-      description: 
-      security:
-        - BearerAuth: []
-      responses:
-        '200':
-          description: Successful Operation
-        '400':
-          description: Bad Request
-        '401':
-          description: Unauthorized
-        '404':
-          description: Not Found
-  /user/confirm:
-    post:
-      tags:
-        - User/Authentication
-      summary: User confirm account
-      description: 
-      security:
-        - BearerAuth: []
-      responses:
-        '200':
-          description: Successful Operation
-        '400':
-          description: Bad Request
-        '401':
-          description: Unauthorized
-        '404':
-          description: Not Found
-  /user/reset-password:
-    post:
-      tags:
-        - User/Authentication
-      summary: User reset password
-      description: 
-      security:
-        - BearerAuth: []
-      responses:
-        '200':
-          description: Successful Operation
-        '400':
-          description: Bad Request
-        '401':
-          description: Unauthorized
-        '404':
-          description: Not Found
-  /user/signin:
-    post:
-      tags:
-        - User/Authentication
-      summary: User sign in
-      description: 
-      security:
-        - BearerAuth: []
-      responses:
-        '200':
-          description: Successful Operation
-        '400':
-          description: Bad Request
-        '401':
-          description: Unauthorized
-        '404':
-          description: Not Found
-  /user/signout:
-    post:
-      tags:
-        - User/Authentication
-      summary: User sign out
-      description: 
-      security:
-        - BearerAuth: []
-      responses:
-        '200':
-          description: Successful Operation
-        '400':
-          description: Bad Request
-        '401':
-          description: Unauthorized
-        '404':
-          description: Not Found
-
   # -------------------- User --------------------
   /user:
     get:
@@ -880,11 +958,11 @@ paths:
           description: Unauthorized
         '404':
           description: Not Found
-  /user/update-nicname:
+  /user/update-nickname:
     put:
       tags:
         - User
-      summary: Update nicname
+      summary: Update nickname
       description: 
       security:
         - BearerAuth: []
@@ -896,10 +974,10 @@ paths:
             schema:
               type: object
               properties:
-                nicname:
+                nickname:
                   type: string
               example:
-                nicname: starlくん
+                nickname: starlくん
       responses:
         '200':
           description: Successful Operation
@@ -1011,15 +1089,20 @@ paths:
           description: Not Found
 
 tags:
-  - name: Admin/Authentication
-    description: Authentication by admin
+  - name: AuthAdmin
+    description: Authentication/Authorization of admin
+  - name: AuthStore
+    description: Authentication/Authorization of store
+  - name: AuthShop
+    description: Authentication/Authorization of shop
+  - name: AuthUser
+    description: Authentication/Authorization of user
+
   - name: Admin/Store
     description: Access to Store information by admin
   - name: Admin/Shop
     description: Access to Shop information by admin
 
-  - name: Store/Authentication
-    description: Authentication by store
   - name: Store
     description: Access to Store information by store
   - name: Store/Shop
@@ -1027,8 +1110,6 @@ tags:
   - name: Store/Approval
     description: Access to Approval information by store
 
-  - name: Shop/Authentication
-    description: Authentication by shop
   - name: Shop
     description: Access to Shop information by shop
   - name: Shop/Transaction
@@ -1036,8 +1117,6 @@ tags:
   - name: Shop/Approval
     description: Access to Approval information by shop
 
-  - name: User/Authentication
-    description: Authentication by user
   - name: User
     description: Access to User information by user
   - name: User/Shop
@@ -1047,99 +1126,463 @@ tags:
 
 components:
   schemas:
+    AdminSignInRequest:
+      type: object
+      properties:
+        id:
+          type: string
+          example: admin
+        password:
+          type: string
+          example: b03ddf3ca2e714a6548e7495e2a03f5e824eaac9837cd7f159c67b90fb4b7342
+    AdminSignInResponse:
+      type: object
+      properties:
+        idToken:
+          type: string
+          example: dmcxd329ujdmkemkd349r
+        refreshToken:
+          type: string
+          example: dn43ud8uj32nk2je
+    RefreshToken:
+      type: object
+      properties:
+        refreshToken:
+          type: string
+          example: dn43ud8uj32nk2je
+
+    StoreSignUpRequest:
+      type: object
+      properties:
+        id:
+          type: string
+          example: nikuyokocho
+        email:
+          type: string
+          example: nikuyokocho@gmail.com
+        storeName:
+          type: string
+          example: 肉横丁
+    StoreSignUpResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          example: nikuyokocho
+        email:
+          type: string
+          example: nikuyokocho@gmail.com
+        initialPassword:
+          type: string
+          example: P@ssw0rd
+        storeName:
+          type: string
+          example: 肉横丁
+        status:
+          type: string
+          example: REGISTERED
+    StoreInitialSignInRequest:
+      type: object
+      properties:
+        id:
+          type: string
+          example: nikuyokocho
+        password:
+          type: string
+          example: b03ddf3ca2e714a6548e7495e2a03f5e824eaac9837cd7f159c67b90fb4b7342
+    StoreInitialSignInResponse:
+      type: object
+      properties:
+        initialSignIn:
+          type: boolean
+          example: true
+        session:
+          type: string
+          example: AYABeEG4Uc9u9f-1S6Cyj3G5i8IAHQABAAdTZXJ2aWNlABBDb2duaXRvVXNlclBvb
+        idToken:
+          type: string
+          example: ""
+        refreshToken:
+          type: string
+          example: ""
+    StoreSignInRequest:
+      type: object
+      properties:
+        id:
+          type: string
+          example: nikuyokocho
+        password:
+          type: string
+          example: b03ddf3ca2e714a6548e7495e2a03f5e824eaac9837cd7f159c67b90fb4b7342
+    StoreSignInResponse:
+      type: object
+      properties:
+        initialSignIn:
+          type: boolean
+          example: false
+        session:
+          type: string
+          example: ""
+        idToken:
+          type: string
+          example: dmcxd329ujdmkemkd349r
+        refreshToken:
+          type: string
+          example: dn43ud8uj32nk2je
+    StoreResetPasswordRequest:
+      type: object
+      properties:
+        id:
+          type: string
+          example: nikuyokocho
+        newPassword:
+          type: string
+          example: b03ddf3ca2e714a6548e7495e2a03f5e824eaac9837cd7f159c67b90fb4b7342
+        session:
+          type: string
+          example: AYABeEG4Uc9u9f-1S6Cyj3G5i8IAHQABAAdTZXJ2aWNlABBDb2duaXRvVXNlclBvb
+    StoreResetPasswordResponse:
+      type: object
+      properties:
+        idToken:
+          type: string
+          example: dmcxd329ujdmkemkd349r
+        refreshToken:
+          type: string
+          example: dn43ud8uj32nk2je
+
+    ShopSignUpRequest:
+      type: object
+      properties:
+        storeId:
+          type: string
+          example: nikuyokocho
+        id:
+          type: string
+          example: sdf87gyu
+        email:
+          type: string
+          example: nikuyokocho@gmail.com
+        shopName:
+          type: string
+          example: 肉太郎
+        address:
+          type: string
+          example: 東京都渋谷区宇田川町１３−８ ちとせ会館 ２F 渋谷肉横丁内
+        phone:
+          type: string
+          example: 03-6427-8994
+        openingHours:
+          type: string
+          example: |
+            月～日、祝日、祝前日: 17:00～翌0:00
+            定休日：不定休
+    ShopSignUpResponse:
+      type: object
+      properties:
+        storeId:
+          type: string
+          example: nikuyokocho
+        id:
+          type: string
+          example: sdf87gyu
+        email:
+          type: string
+          example: nikuyokocho@gmail.com
+        initialPassword:
+          type: string
+          example: P@ssw0rd
+        shopName:
+          type: string
+          example: 肉太郎
+        address:
+          type: string
+          example: 東京都渋谷区宇田川町１３−８ ちとせ会館 ２F 渋谷肉横丁内
+        phone:
+          type: string
+          example: 03-6427-8994
+        openingHours:
+          type: string
+          example: |
+            月～日、祝日、祝前日: 17:00～翌0:00
+            定休日：不定休
+        status:
+          type: string
+          example: REGISTERED
+    ShopInitialSignInRequest:
+      type: object
+      properties:
+        id:
+          type: string
+          example: sdf87gyu
+        password:
+          type: string
+          example: b03ddf3ca2e714a6548e7495e2a03f5e824eaac9837cd7f159c67b90fb4b7342
+    ShopInitialSignInResponse:
+      type: object
+      properties:
+        initialSignIn:
+          type: boolean
+          example: true
+        session:
+          type: string
+          example: AYABeEG4Uc9u9f-1S6Cyj3G5i8IAHQABAAdTZXJ2aWNlABBDb2duaXRvVXNlclBvb
+        idToken:
+          type: string
+          example: ""
+        refreshToken:
+          type: string
+          example: ""
+    ShopSignInRequest:
+      type: object
+      properties:
+        id:
+          type: string
+          example: sdf87gyu
+        password:
+          type: string
+          example: b03ddf3ca2e714a6548e7495e2a03f5e824eaac9837cd7f159c67b90fb4b7342
+    ShopSignInResponse:
+      type: object
+      properties:
+        initialSignIn:
+          type: boolean
+          example: false
+        session:
+          type: string
+          example: ""
+        idToken:
+          type: string
+          example: dmcxd329ujdmkemkd349r
+        refreshToken:
+          type: string
+          example: dn43ud8uj32nk2je
+    ShopResetPasswordRequest:
+      type: object
+      properties:
+        id:
+          type: string
+          example: sdf87gyu
+        newPassword:
+          type: string
+          example: b03ddf3ca2e714a6548e7495e2a03f5e824eaac9837cd7f159c67b90fb4b7342
+        session:
+          type: string
+          example: AYABeEG4Uc9u9f-1S6Cyj3G5i8IAHQABAAdTZXJ2aWNlABBDb2duaXRvVXNlclBvb
+    ShopResetPasswordResponse:
+        type: object
+        properties:
+          idToken:
+            type: string
+            example: dmcxd329ujdmkemkd349r
+          refreshToken:
+            type: string
+            example: dn43ud8uj32nk2je
+
+    UserSignUpRequest:
+      type: object
+      properties:
+        deviceId:
+          type: string
+          example: 3K0XXXXX-83XX-HEXX-KIXX-29KH83XXXXXX
+    UserSignUpResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          example: ad89afgt
+        initialPassword:
+          type: string
+          example: P@ssw0rd
+        status:
+          type: string
+          example: UNREGISTERED
+    UserSignInRequest:
+      type: object
+      properties:
+        id:
+          type: string
+          example: ad89afgt
+        password:
+          type: string
+          example: b03ddf3ca2e714a6548e7495e2a03f5e824eaac9837cd7f159c67b90fb4b7342
+    UserSignInResponse:
+      type: object
+      properties:
+        idToken:
+          type: string
+          example: dmcxd329ujdmkemkd349r
+        refreshToken:
+          type: string
+          example: dn43ud8uj32nk2je
+    UserRegisterRequest:
+      type: object
+      properties:
+        id:
+          type: string
+          example: ad89afgt
+        email:
+          type: string
+          example: user@gmail.com
+        nickname:
+          type: string
+          example: スタールくん
+    UserRegisterResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          example: ad89afgt
+        email:
+          type: string
+          example: user@gmail.com
+        nickname:
+          type: string
+          example: スタールくん
+        status:
+          type: string
+          example: REGISTERED
+    UserConfirmRequest:
+      type: object
+      properties:
+        id:
+          type: string
+          example: ad89afgt
+        code:
+          type: string
+          example: s8xert6c
+        password:
+          type: string
+          example: b03ddf3ca2e714a6548e7495e2a03f5e824eaac9837cd7f159c67b90fb4b7342
+    UserConfirmResponse:
+        type: object
+        properties:
+          idToken:
+            type: string
+            example: dmcxd329ujdmkemkd349r
+          refreshToken:
+            type: string
+            example: dn43ud8uj32nk2je
+
     Store:
       type: object
       properties:
         id:
           type: string
-        status:
+          example: nikuyokocho
+        email:
           type: string
+          example: nikuyokocho@gmail.com
+        initialPassword:
+          type: string
+          example: P@ssw0rd
         storeName:
           type: string
-      example:
-        id: abcd1234
-        status: CONFIRMED
-        storeName: マクドナルド
+          example: 肉横丁
+        status:
+          type: string
+          example: CONFIRMED
     Shop:
       type: object
       properties:
+        storeId:
+          type: string
+          example: nikuyokocho
         id:
           type: string
-        status:
+          example: sdf87gyu
+        email:
           type: string
+          example: nikuyokocho@gmail.com
+        initialPassword:
+          type: string
+          example: P@ssw0rd
         shopName:
           type: string
+          example: 肉太郎
         address:
           type: string
+          example: 東京都渋谷区宇田川町１３−８ ちとせ会館 ２F 渋谷肉横丁内
+        phone:
+          type: string
+          example: 03-6427-8994
         openingHours:
           type: string
-      example:
-        id: efgh5678
-        status: FORCE_CHANGE_PASSWORD
-        shopName: 渋谷店
-        address: 東京都渋谷区神南１－２３－１３
-        openingHours: 5:00〜20:00
+          example: |
+            月～日、祝日、祝前日: 17:00～翌0:00
+            定休日：不定休
+        status:
+          type: string
+          example: REGISTERED
     User:
       type: object
       properties:
         id:
           type: string
+          example: ad89afgt
+        deviceId:
+          type: string
+          example: 3K0XXXXX-83XX-HEXX-KIXX-29KH83XXXXXX
+        initialPassword:
+          type: string
+          example: P@ssw0rd
         email:
           type: string
-        status:
+          example: user@gmail.com
+        nickname:
           type: string
-        nicname:
-          type: string
+          example: スタールくん
         iconURL:
           type: string
+          example: https://www.example.com/ad89afgt
         amount:
           type: integer
-      example:
-        id: starl2021
-        email: starl2021@gmail.com
-        status: CONFIRMED
-        nicname: starlくん
-        iconURL: https://www.example.com/starl2021
-        amount: 1234
+          example: 1234
+        status:
+          type: string
+          example: CONFIRMED
     Transaction:
       type: object
       properties:
         id:
           type: integer
+          example: 1
         userId:
           type: string
+          example: ad89afgt
         shopId:
           type: string
+          example: sdf87gyu
         price:
           type: integer
+          example: 1000
         usedPoints:
           type: integer
+          example: 100
         earnedPoints:
           type: integer
+          example: 9
         newAmount:
           type: integer
+          example: 1009
         createdAt:
           type: string
-      example:
-        id: 1
-        userId: starl2021
-        shopId: efgh5678
-        price: 1000
-        usedPoints: 100
-        earnedPoints: 9
-        newAmount: 1009
-        createdAt: "2021-08-27T00:00:00"
+          example: "2021-08-27T00:00:00"
     Approval:
       type: object
       properties:
         id:
           type: integer
+          example: 1
         shopId:
           type: string
+          example: sdf87gyu
         yearMonth:
           type: integer
+          example: 202109
         approvedBy:
           type: string
+          example: sdf87gyu
 
   securitySchemes:
     BearerAuth:
