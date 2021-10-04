@@ -101,6 +101,21 @@ paths:
                 oneOf:
                   - $ref: '#/components/schemas/StoreInitialSignInResponse'
                   - $ref: '#/components/schemas/StoreSignInResponse'
+              examples:
+                StoreInitialSignInResponse:
+                  summary: 初回ログイン時のレスポンス
+                  value:
+                    initialSignIn: true
+                    session: AYABeEG4Uc9u9f-1S6Cyj3G5i8IAHQABAAdTZXJ2aWNlABBDb2duaXRvVXNlclBvb
+                    idToken:
+                    refreshToken:
+                StoreSignInResponse:
+                  summary: 通常のレスポンス
+                  value:
+                    initialSignIn: false
+                    session:
+                    idToken: dmcxd329ujdmkemkd349r
+                    refreshToken: dn43ud8uj32nk2je
         '400':
           description: Bad Request
         '401':
@@ -199,6 +214,21 @@ paths:
                 oneOf:
                   - $ref: '#/components/schemas/ShopInitialSignInResponse'
                   - $ref: '#/components/schemas/ShopSignInResponse'
+              examples:
+                ShopInitialSignInResponse:
+                  summary: 初回ログイン時のレスポンス
+                  value:
+                    initialSignIn: true
+                    session: AYABeEG4Uc9u9f-1S6Cyj3G5i8IAHQABAAdTZXJ2aWNlABBDb2duaXRvVXNlclBvb
+                    idToken:
+                    refreshToken:
+                ShopSignInResponse:
+                  summary: 通常のレスポンス
+                  value:
+                    initialSignIn: false
+                    session:
+                    idToken: dmcxd329ujdmkemkd349r
+                    refreshToken: dn43ud8uj32nk2je
         '400':
           description: Bad Request
         '401':
@@ -288,7 +318,6 @@ paths:
           content:
             application/json:
               schema:
-                oneOf:
                 $ref: '#/components/schemas/UserSignInResponse'
         '400':
           description: Bad Request
