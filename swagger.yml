@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   title: Starl-Backend API Document
   description: This is API Document of Starl-Backend
-  version: 1.0.2
+  version: 1.0.3
 
 servers:
   - url: https://api.starl.co.jp/v1
@@ -645,8 +645,6 @@ paths:
         '401':
           description: Unauthorized
 
-
-
   /store/transaction/list:
     get:
       tags:
@@ -676,11 +674,29 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/responses/Transaction'
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                      example: 1
+                    shopName:
+                      type: string
+                      example: 肉太郎
+                    price:
+                      type: integer
+                      example: 2400
+                    usedPoints:
+                      type: integer
+                      example: 100
+                    createdAt:
+                      type: string
+                      example: "2021-06-01T16:23:56"
         '400':
           description: Bad Request
         '401':
           description: Unauthorized
+        '404':
+          description: Transaction not found
 
   /store/shop/list:
     get:
@@ -1640,29 +1656,6 @@ components:
         approvedBy:
           type: string
           example: sdf87gyu
-
-  responses:
-    Transaction:
-      type: object
-      properties:
-        id:
-          type: integer
-          example: 1
-        shopName:
-          type: string
-          example: 肉太郎
-        price:
-          type: integer
-          example: 2400
-        usedPoints:
-          type: integer
-          example: 100
-        earnedPoints:
-          type: integer
-          example: 23
-        createdAt:
-          type: string
-          example: "2021-06-01T16:23:56"
 
   securitySchemes:
     BearerAuth:
