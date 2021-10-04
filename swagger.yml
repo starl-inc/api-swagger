@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   title: Starl-Backend API Document
   description: This is API Document of Starl-Backend
-  version: 1.0.0
+  version: 1.0.1
 
 servers:
   - url: https://api.starl.co.jp/v1
