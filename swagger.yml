@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   title: Starl-Backend API Document
   description: This is API Document of Starl-Backend
-  version: 1.0.8
+  version: 1.0.9
 
 servers:
   - url: https://api.starl.co.jp/v1
@@ -914,17 +914,54 @@ paths:
     get:
       tags:
         - Shop
-      summary: Read Shop
-      description: 
+      summary: Read shop by shop
       security:
         - BearerAuth: []
+      parameters:
+        - in: query
+          name: yearMonth
+          schema:
+            type: integer
+            example: 202107
+          required: true
+          description: Year and month of items to return
       responses:
         '200':
           description: Successful Operation
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Shop'
+                type: object
+                properties:
+                  storeId:
+                    type: string
+                    example: nikuyokocho
+                  id:
+                    type: string
+                    example: sdf87gyu
+                  storeName:
+                    type: string
+                    example: 肉横丁
+                  shopName:
+                    type: string
+                    example: 肉太郎
+                  yearMonth:
+                    type: integer
+                    example: 202107
+                  totalSales:
+                    type: integer
+                    example: 1234567
+                  totalEarnedPoints:
+                    type: integer
+                    example: 12345
+                  totalUsedPoints:
+                    type: integer
+                    example: 3000
+                  approval:
+                    type: boolean
+                    example: true
+        '400':
+          description: Bad Request
         '401':
           description: Unauthorized
     put:
