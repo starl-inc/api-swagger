@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   title: Starl-Backend API Document
   description: This is API Document of Starl-Backend
-  version: 1.0.13
+  version: 1.0.14
 
 servers:
   - url: https://api.starl.co.jp/v1
@@ -1140,9 +1140,9 @@ paths:
     post:
       tags:
         - Shop
-      summary: Create Transaction by shop
+      summary: Create transaction by shop
       security:
-        - BearerAuth: []
+        - BearerAuth: [ ]
       requestBody:
         description: Transaction object to create
         required: true
@@ -1153,24 +1153,45 @@ paths:
               properties:
                 userId:
                   type: string
+                  example: ad89afgt
                 shopId:
                   type: string
+                  example: sdf87gyu
                 price:
                   type: integer
+                  example: 2400
                 usedPoints:
                   type: integer
-              example:
-                userId: starl2021
-                shopId: efgh5678
-                price: 1000
-                usedPoints: 100
+                  example: 100
       responses:
         '200':
           description: Successful Operation
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Transaction'
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    example: 1
+                  userId:
+                    type: string
+                    example: ad89afgt
+                  shopId:
+                    type: string
+                    example: sdf87gyu
+                  price:
+                    type: integer
+                    example: 2400
+                  usedPoints:
+                    type: integer
+                    example: 100
+                  earnedPoints:
+                    type: integer
+                    example: 23
+                  createdAt:
+                    type: string
+                    example: "2021-08-27T00:00:00"
         '400':
           description: Bad Request
         '401':
