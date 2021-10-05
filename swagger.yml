@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   title: Starl-Backend API Document
   description: This is API Document of Starl-Backend
-  version: 1.0.18
+  version: 1.0.19
 
 servers:
   - url: https://api.starl.co.jp/v1
@@ -647,7 +647,6 @@ paths:
           description: Bad Request
         '401':
           description: Unauthorized
-
   /store/approval:
     post:
       tags:
@@ -689,7 +688,6 @@ paths:
           description: Bad Request
         '401':
           description: Unauthorized
-
   /store/transaction/list:
     get:
       tags:
@@ -742,7 +740,6 @@ paths:
           description: Unauthorized
         '404':
           description: Transaction not found
-
   /store/shop/list:
     get:
       tags:
@@ -809,7 +806,6 @@ paths:
           description: Unauthorized
         '404':
           description: Shop not found
-
   /store/shop/{shopId}:
     get:
       tags:
@@ -1040,7 +1036,6 @@ paths:
           description: Bad Request
         '401':
           description: Unauthorized
-
   /shop/approval:
     post:
       tags:
@@ -1080,7 +1075,6 @@ paths:
           description: Bad Request
         '401':
           description: Unauthorized
-
   /shop/user/{userId}:
     get:
       tags:
@@ -1135,7 +1129,6 @@ paths:
           description: Bad Request
         '401':
           description: Unauthorized
-
   /shop/transaction:
     post:
       tags:
@@ -1320,7 +1313,6 @@ paths:
           description: Bad Request (RefreshToken is missing.)
         '401':
           description: Unauthorized (RefreshToken is invalid.)
-
   /user/upload-icon-img:
     put:
       tags:
@@ -1348,18 +1340,15 @@ paths:
           description: Bad Request
         '401':
           description: Unauthorized
-        '404':
-          description: Not Found
   /user/update-nickname:
     put:
       tags:
         - User
-      summary: Update nickname
-      description: 
+      summary: Update nickname by user
       security:
-        - BearerAuth: []
+        - BearerAuth: [ ]
       requestBody:
-        description: Nicname to update
+        description: New nicname
         required: true
         content:
           application/json:
@@ -1368,18 +1357,22 @@ paths:
               properties:
                 nickname:
                   type: string
-              example:
-                nickname: starlくん
+                  example: スタールちゃん
       responses:
         '200':
           description: Successful Operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  nickname:
+                    type: string
+                    example: スタールちゃん
         '400':
           description: Bad Request
         '401':
           description: Unauthorized
-        '404':
-          description: Not Found
-
   /user/shop/list:
     get:
       tags:
