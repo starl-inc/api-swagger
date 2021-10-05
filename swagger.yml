@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   title: Starl-Backend API Document
   description: This is API Document of Starl-Backend
-  version: 1.0.24
+  version: 1.0.25
 
 servers:
   - url: https://api.starl.co.jp/v1
@@ -565,9 +565,9 @@ paths:
     delete:
       tags:
         - Admin
-      summary: Delete Store by admin
+      summary: Delete store by admin
       security:
-        - BearerAuth: []
+        - BearerAuth: [ ]
       parameters:
         - name: storeId
           in: path
