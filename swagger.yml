@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   title: Starl-Backend API Document
   description: This is API Document of Starl-Backend
-  version: 1.0.17
+  version: 1.0.18
 
 servers:
   - url: https://api.starl.co.jp/v1
@@ -1320,14 +1320,14 @@ paths:
           description: Bad Request (RefreshToken is missing.)
         '401':
           description: Unauthorized (RefreshToken is invalid.)
+
   /user/upload-icon-img:
     put:
       tags:
         - User
-      summary: Upload user icon image
-      description: 
+      summary: Upload user icon image by user
       security:
-        - BearerAuth: []
+        - BearerAuth: [ ]
       requestBody:
         description: User icon image data to update
         required: true
@@ -1336,6 +1336,14 @@ paths:
       responses:
         '200':
           description: Successful Operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  iconURL:
+                    type: string
+                    example: https://www.example.com/ad89afgt
         '400':
           description: Bad Request
         '401':
