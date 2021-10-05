@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   title: Starl-Backend API Document
   description: This is API Document of Starl-Backend
-  version: 1.0.27
+  version: 1.0.0
 
 servers:
   - url: https://api.starl.co.jp/v1
@@ -36,7 +36,7 @@ paths:
         - AuthAdmin
       summary: Admin sign out
       security:
-        - BearerAuth: [ ]
+        - BearerAuth: []
       requestBody:
         description: RefreshToken
         required: true
@@ -149,7 +149,7 @@ paths:
         - AuthStore
       summary: Store sign out
       security:
-        - BearerAuth: [ ]
+        - BearerAuth: []
       requestBody:
         description: RefreshToken
         required: true
@@ -262,7 +262,7 @@ paths:
         - AuthShop
       summary: Shop sign out
       security:
-        - BearerAuth: [ ]
+        - BearerAuth: []
       requestBody:
         description: RefreshToken
         required: true
@@ -329,7 +329,7 @@ paths:
         - AuthUser
       summary: User registration
       security:
-        - BearerAuth: [ ]
+        - BearerAuth: []
       requestBody:
         description: User account info
         required: true
@@ -375,7 +375,7 @@ paths:
         - AuthUser
       summary: User sign out
       security:
-        - BearerAuth: [ ]
+        - BearerAuth: []
       requestBody:
         description: RefreshToken
         required: true
@@ -398,7 +398,7 @@ paths:
         - Admin
       summary: Read stores by admin
       security:
-        - BearerAuth: [ ]
+        - BearerAuth: []
       parameters:
         - in: query
           name: yearMonth
@@ -454,7 +454,7 @@ paths:
         - Admin
       summary: Read shops by admin
       security:
-        - BearerAuth: [ ]
+        - BearerAuth: []
       parameters:
         - in: query
           name: storeId
@@ -520,7 +520,7 @@ paths:
         - Admin
       summary: Update store by admin
       security:
-        - BearerAuth: [ ]
+        - BearerAuth: []
       parameters:
         - in: path
           name: storeId
@@ -568,7 +568,7 @@ paths:
         - Admin
       summary: Delete store by admin
       security:
-        - BearerAuth: [ ]
+        - BearerAuth: []
       parameters:
         - name: storeId
           in: path
@@ -592,7 +592,7 @@ paths:
         - Admin
       summary: Update shop by admin
       security:
-        - BearerAuth: [ ]
+        - BearerAuth: []
       parameters:
         - in: path
           name: shopId
@@ -662,7 +662,7 @@ paths:
         - Admin
       summary: Delete shop by admin
       security:
-        - BearerAuth: [ ]
+        - BearerAuth: []
       parameters:
         - in: path
           name: shopId
@@ -756,7 +756,7 @@ paths:
         - Store
       summary: Update store by store
       security:
-        - BearerAuth: [ ]
+        - BearerAuth: []
       requestBody:
         description: Store object to update
         required: true
@@ -798,7 +798,7 @@ paths:
         - Store
       summary: Create approval for all shops by store
       security:
-        - BearerAuth: [ ]
+        - BearerAuth: []
       parameters:
         - in: query
           name: yearMonth
@@ -839,7 +839,7 @@ paths:
         - Store
       summary: Read transaction list of the store
       security:
-        - BearerAuth: [ ]
+        - BearerAuth: []
       parameters:
         - in: query
           name: yearMonth
@@ -891,7 +891,7 @@ paths:
         - Store
       summary: Read shop list of the store
       security:
-        - BearerAuth: [ ]
+        - BearerAuth: []
       parameters:
         - in: query
           name: yearMonth
@@ -957,7 +957,7 @@ paths:
         - Store
       summary: Read shop by store
       security:
-        - BearerAuth: [ ]
+        - BearerAuth: []
       responses:
         '200':
           description: Successful Operation
@@ -1187,7 +1187,7 @@ paths:
         - Shop
       summary: Create Approval by shop
       security:
-        - BearerAuth: [ ]
+        - BearerAuth: []
       parameters:
         - in: query
           name: yearMonth
@@ -1226,7 +1226,7 @@ paths:
         - Shop
       summary: Read user by shop
       security:
-        - BearerAuth: [ ]
+        - BearerAuth: []
       parameters:
         - in: path
           name: userId
@@ -1280,7 +1280,7 @@ paths:
         - Shop
       summary: Create transaction by shop
       security:
-        - BearerAuth: [ ]
+        - BearerAuth: []
       requestBody:
         description: Transaction object to create
         required: true
@@ -1407,7 +1407,7 @@ paths:
       summary: Read user by user
       description: 
       security:
-        - BearerAuth: [ ]
+        - BearerAuth: []
       responses:
         '200':
           description: Successful Operation
@@ -1480,7 +1480,7 @@ paths:
         - User
       summary: Delete User
       security:
-        - BearerAuth: [ ]
+        - BearerAuth: []
       requestBody:
         description: RefreshToken
         required: true
@@ -1501,7 +1501,7 @@ paths:
         - User
       summary: Upload user icon image by user
       security:
-        - BearerAuth: [ ]
+        - BearerAuth: []
       requestBody:
         description: User icon image data to update
         required: true
@@ -1528,7 +1528,7 @@ paths:
         - User
       summary: Update nickname by user
       security:
-        - BearerAuth: [ ]
+        - BearerAuth: []
       requestBody:
         description: New nicname
         required: true
@@ -1561,7 +1561,7 @@ paths:
         - User
       summary: Read nearby shops by user
       security:
-        - BearerAuth: [ ]
+        - BearerAuth: []
       parameters:
         - in: query
           name: latitude
