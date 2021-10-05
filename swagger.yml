@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   title: Starl-Backend API Document
   description: This is API Document of Starl-Backend
-  version: 1.0.26
+  version: 1.0.27
 
 servers:
   - url: https://api.starl.co.jp/v1
@@ -585,7 +585,7 @@ paths:
         '401':
           description: Unauthorized
         '404':
-          description: Store Not Found
+          description: Store not found
   /admin/shop/{shopId}:
     put:
       tags:
@@ -660,9 +660,9 @@ paths:
     delete:
       tags:
         - Admin
-      summary: Delete Shop by admin
+      summary: Delete shop by admin
       security:
-        - BearerAuth: []
+        - BearerAuth: [ ]
       parameters:
         - in: path
           name: shopId
@@ -670,13 +670,16 @@ paths:
           required: true
           schema:
             type: string
+            example: sdf87gyu
       responses:
         '200':
           description: Successful Operation
+        '400':
+          description: Bad Request
         '401':
           description: Unauthorized
         '404':
-          description: Shop Not Found
+          description: Shop not found
 
   # -------------------- Store --------------------
   /store:
