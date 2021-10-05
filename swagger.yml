@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   title: Starl-Backend API Document
   description: This is API Document of Starl-Backend
-  version: 1.0.10
+  version: 1.0.9
 
 servers:
   - url: https://api.starl.co.jp/v1
@@ -575,9 +575,6 @@ paths:
                   storeName:
                     type: string
                     example: 肉横丁
-                  status:
-                    type: string
-                    example: CONFIRMED
                   yearMonth:
                     type: integer
                     example: 202107
@@ -643,9 +640,6 @@ paths:
                   storeName:
                     type: string
                     example: 渋谷 肉横丁
-                  status:
-                    type: string
-                    example: CONFIRMED
         '400':
           description: Bad Request
         '401':
@@ -793,7 +787,7 @@ paths:
                         定休日：不定休
                     status:
                       type: string
-                      example: CONFIRMED
+                      example: REGISTERED
                     yearMonth:
                       type: integer
                       example: 202107
@@ -951,20 +945,6 @@ paths:
                   shopName:
                     type: string
                     example: 肉太郎
-                  address:
-                    type: string
-                    example: 東京都渋谷区宇田川町１３−８ ちとせ会館 ２F 渋谷肉横丁内
-                  phone:
-                    type: string
-                    example: 03-6427-8994
-                  openingHours:
-                    type: string
-                    example: |
-                      月～日、祝日、祝前日: 17:00～翌0:00
-                      定休日：不定休
-                  status:
-                    type: string
-                    example: REGISTERED
                   yearMonth:
                     type: integer
                     example: 202107
@@ -987,10 +967,10 @@ paths:
     put:
       tags:
         - Shop
-      summary: Update shop by shop
+      summary: Update Shop
       description: 
       security:
-        - BearerAuth: [ ]
+        - BearerAuth: []
       requestBody:
         description: Shop object to update
         required: true
@@ -999,57 +979,23 @@ paths:
             schema:
               type: object
               properties:
-                storeId:
-                  type: string
-                  example: nikuyokocho
-                id:
-                  type: string
-                  example: sdf87gyu
                 shopName:
                   type: string
-                  example: 肉太郎
                 address:
                   type: string
-                  example: 東京都渋谷区宇田川町１３−８ ちとせ会館 ２F 渋谷肉横丁内
-                phone:
-                  type: string
-                  example: 03-6427-8994
                 openingHours:
                   type: string
-                  example: |
-                    月～日、祝日、祝前日: 17:00～翌0:00
-                    定休日：不定休
+              example:
+                shopName: 渋谷店
+                address: 東京都渋谷区神南１－２３－１３
+                openingHours: 5:00〜20:00
       responses:
         '200':
           description: Successful Operation
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  storeId:
-                    type: string
-                    example: nikuyokocho
-                  id:
-                    type: string
-                    example: sdf87gyu
-                  shopName:
-                    type: string
-                    example: 肉太郎
-                  address:
-                    type: string
-                    example: 東京都渋谷区宇田川町１３−８ ちとせ会館 ２F 渋谷肉横丁内
-                  phone:
-                    type: string
-                    example: 03-6427-8994
-                  openingHours:
-                    type: string
-                    example: |
-                      月～日、祝日、祝前日: 17:00～翌0:00
-                      定休日：不定休
-                  status:
-                    type: string
-                    example: REGISTERED
+                $ref: '#/components/schemas/Shop'
         '400':
           description: Bad Request
         '401':
