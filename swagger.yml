@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   title: Starl-Backend API Document
   description: This is API Document of Starl-Backend
-  version: 1.0.23
+  version: 1.0.24
 
 servers:
   - url: https://api.starl.co.jp/v1
@@ -518,9 +518,9 @@ paths:
     put:
       tags:
         - Admin
-      summary: Update Store by admin
+      summary: Update store by admin
       security:
-        - BearerAuth: []
+        - BearerAuth: [ ]
       parameters:
         - in: path
           name: storeId
@@ -545,7 +545,17 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Store'
+                type: object
+                properties:
+                  id:
+                    type: string
+                    example: nikuyokocho
+                  storeName:
+                    type: string
+                    example: 肉横丁
+                  status:
+                    type: string
+                    example: CONFIRMED
         '400':
           description: Bad Request
         '401':
