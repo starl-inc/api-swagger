@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   title: Starl-Backend API Document
   description: This is API Document of Starl-Backend
-  version: 1.0.12
+  version: 1.0.13
 
 servers:
   - url: https://api.starl.co.jp/v1
@@ -787,7 +787,7 @@ paths:
                         定休日：不定休
                     status:
                       type: string
-                      example: REGISTERED
+                      example: CONFIRMED
                     yearMonth:
                       type: integer
                       example: 202107
@@ -904,7 +904,7 @@ paths:
                       定休日：不定休
                   status:
                     type: string
-                    example: REGISTERED
+                    example: CONFIRMED
         '400':
           description: Bad Request
         '401':
@@ -950,7 +950,7 @@ paths:
                     example: 肉太郎
                   status:
                     type: string
-                    example: REGISTERED
+                    example: CONFIRMED
                   yearMonth:
                     type: integer
                     example: 202107
@@ -1035,7 +1035,7 @@ paths:
                       定休日：不定休
                   status:
                     type: string
-                    example: REGISTERED
+                    example: CONFIRMED
         '400':
           description: Bad Request
         '401':
@@ -1081,10 +1081,61 @@ paths:
         '401':
           description: Unauthorized
 
-  /shop/user:
+  /shop/user/{userId}:
     get:
       tags:
         - Shop
+      summary: Read user by shop
+      security:
+        - BearerAuth: [ ]
+      parameters:
+        - in: path
+          name: userId
+          required: true
+          schema:
+            type: string
+            example: ad89afgt
+          description: User ID of user to return
+      responses:
+        '200':
+          description: Successful Operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    example: ad89afgt
+                  nickname:
+                    type: string
+                    example: スタールくん
+                  amount:
+                    type: integer
+                    example: 1234
+                  status:
+                    type: string
+                    example: CONFIRMED
+              examples:
+                ConfirmedUser:
+                  summary: 本会員登録済みユーザー
+                  value:
+                    id: ad89afgt
+                    nickname: スタールくん
+                    amount: 1234
+                    status: CONFIRMED
+                RegisteredUser:
+                  summary: 本会員登録していないユーザー
+                  value:
+                    id: ad89afgt
+                    nickname: スタールくん
+                    amount: 1234
+                    status: UNREGISTERED
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+
   /shop/transaction:
     post:
       tags:
@@ -1746,7 +1797,7 @@ components:
             定休日：不定休
         status:
           type: string
-          example: REGISTERED
+          example: CONFIRMED
     User:
       type: object
       properties:
