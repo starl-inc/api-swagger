@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   title: Starl-Backend API Document
   description: This is API Document of Starl-Backend
-  version: 1.0.15
+  version: 1.0.16
 
 servers:
   - url: https://api.starl.co.jp/v1
@@ -1244,23 +1244,62 @@ paths:
     get:
       tags:
         - User
-      summary: Read User
+      summary: Read user by user
       description: 
       security:
-        - BearerAuth: []
+        - BearerAuth: [ ]
       responses:
         '200':
           description: Successful Operation
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User'
-        '400':
-          description: Bad Request
+                type: object
+                properties:
+                  id:
+                    type: string
+                    example: ad89afgt
+                  initialPassword:
+                    type: string
+                    example: P@ssw0rd
+                  email:
+                    type: string
+                    example: user@gmail.com
+                  nickname:
+                    type: string
+                    example: スタールくん
+                  iconURL:
+                    type: string
+                    example: https://www.example.com/ad89afgt
+                  amount:
+                    type: integer
+                    example: 1234
+                  status:
+                    type: string
+                    example: CONFIRMED
+              examples:
+                ConfirmedUser:
+                  summary: 本会員登録済みユーザー
+                  value:
+                    id: ad89afgt
+                    initialPassword: P@ssw0rd
+                    email: user@gmail.com
+                    nickname: スタールくん
+                    iconURL: https://www.example.com/ad89afgt
+                    amount: 1234
+                    status: CONFIRMED
+                RegisteredUser:
+                  summary: 本会員登録していないユーザー
+                  value:
+                    id: ad89afgt
+                    initialPassword: P@ssw0rd
+                    email:
+                    nickname:
+                    iconURL:
+                    amount: 1234
+                    status: UNREGISTERED
         '401':
           description: Unauthorized
-        '404':
-          description: Not Found
     delete:
       tags:
         - User
@@ -1867,9 +1906,6 @@ components:
         earnedPoints:
           type: integer
           example: 9
-        newAmount:
-          type: integer
-          example: 1009
         createdAt:
           type: string
           example: "2021-08-27T00:00:00"
@@ -1884,10 +1920,10 @@ components:
           example: sdf87gyu
         yearMonth:
           type: integer
-          example: 202109
+          example: 202107
         approvedBy:
           type: string
-          example: sdf87gyu
+          example: STORE
 
   securitySchemes:
     BearerAuth:
