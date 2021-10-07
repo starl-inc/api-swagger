@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   title: Starl-Backend API Document
   description: This is API Document of Starl-Backend
-  version: 1.0.2
+  version: 1.0.3
 
 servers:
   - url: https://api.starl.co.jp/v1
@@ -348,6 +348,98 @@ paths:
           description: Bad Request
         '401':
           description: Unauthorized (ID or session is invalid.)
+  /admin/shop/{shopId}/activate:
+    put:
+      tags:
+        - AuthShop
+      summary: Activate shop by admin
+      security:
+        - BearerAuth: [ ]
+      parameters:
+        - in: path
+          name: shopId
+          description: Shop ID
+          required: true
+          schema:
+            type: string
+            example: nikuyokocho-0001
+      responses:
+        '200':
+          description: Successful Operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ShopActivateResponse'
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '404':
+          description: Shop not found
+  /shop/activate:
+    put:
+      tags:
+        - AuthShop
+      summary: Activate shop by shop
+      security:
+        - BearerAuth: [ ]
+      responses:
+        '200':
+          description: Successful Operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ShopActivateResponse'
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+  /admin/shop/{shopId}/disable:
+    put:
+      tags:
+        - AuthShop
+      summary: Disable shop by admin
+      security:
+        - BearerAuth: [ ]
+      parameters:
+        - in: path
+          name: shopId
+          description: Shop ID
+          required: true
+          schema:
+            type: string
+            example: nikuyokocho-0001
+      responses:
+        '200':
+          description: Successful Operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ShopDisableResponse'
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '404':
+          description: Shop not found
+  /shop/disable:
+    put:
+      tags:
+        - AuthShop
+      summary: Disable shop by shop
+      security:
+        - BearerAuth: [ ]
+      responses:
+        '200':
+          description: Successful Operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ShopDisableResponse'
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
   /shop/signout:
     post:
       tags:
@@ -2073,6 +2165,30 @@ components:
           refreshToken:
             type: string
             example: dn43ud8uj32nk2je
+    ShopActivateResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          example: nikuyokocho-0001
+        shopName:
+          type: string
+          example: 肉太郎
+        status:
+          type: string
+          example: ACTIVATED
+    ShopDisableResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          example: nikuyokocho-0001
+        shopName:
+          type: string
+          example: 肉太郎
+        status:
+          type: string
+          example: DISABLED
 
     UserSignUpRequest:
       type: object
