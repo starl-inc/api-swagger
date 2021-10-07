@@ -607,10 +607,10 @@ paths:
                         example: nikuyokocho
                       storeName:
                         type: string
-                        example: 肉横丁
+                        example: 渋谷 肉横丁
                       status:
                         type: string
-                        example: CONFIRMED
+                        example: ACTIVATED
                       shopsCount:
                         type: integer
                         example: 3
@@ -675,13 +675,13 @@ paths:
                         example: nikuyokocho-0001
                       storeName:
                         type: string
-                        example: 肉横丁
+                        example: 渋谷 肉横丁
                       shopName:
                         type: string
-                        example: 肉太郎
+                        example: 渋谷 肉横丁 肉太郎
                       status:
                         type: string
-                        example: CONFIRMED
+                        example: ACTIVATED
                       yearMonth:
                         type: integer
                         example: 202107
@@ -726,7 +726,7 @@ paths:
               properties:
                 storeName:
                   type: string
-                  example: 肉横丁
+                  example: 渋谷 肉横丁
       responses:
         '200':
           description: Successful Operation
@@ -740,10 +740,10 @@ paths:
                     example: nikuyokocho
                   storeName:
                     type: string
-                    example: 肉横丁
+                    example: 渋谷 肉横丁
                   status:
                     type: string
-                    example: CONFIRMED
+                    example: ACTIVATED
         '400':
           description: Bad Request
         '401':
@@ -798,7 +798,7 @@ paths:
               properties:
                 shopName:
                   type: string
-                  example: 肉太郎
+                  example: 渋谷 肉横丁 肉太郎
                 address:
                   type: string
                   example: 東京都渋谷区宇田川町１３−８ ちとせ会館 ２F 渋谷肉横丁内
@@ -823,7 +823,7 @@ paths:
                     example: nikuyokocho-0001
                   shopName:
                     type: string
-                    example: 肉太郎
+                    example: 渋谷 肉横丁 肉太郎
                   address:
                     type: string
                     example: 東京都渋谷区宇田川町１３−８ ちとせ会館 ２F 渋谷肉横丁内
@@ -837,7 +837,7 @@ paths:
                       定休日：不定休
                   status:
                     type: string
-                    example: CONFIRMED
+                    example: ACTIVATED
         '400':
           description: Bad Request
         '401':
@@ -903,10 +903,10 @@ paths:
                     example: nikuyokocho
                   storeName:
                     type: string
-                    example: 肉横丁
+                    example: 渋谷 肉横丁
                   status:
                     type: string
-                    example: CONFIRMED
+                    example: ACTIVATED
                   yearMonth:
                     type: integer
                     example: 202107
@@ -932,7 +932,7 @@ paths:
                           example: nikuyokocho-0001
                         shopName:
                           type: string
-                          example: 肉太郎
+                          example: 渋谷 肉横丁 肉太郎
 
         '400':
           description: Bad Request
@@ -974,7 +974,7 @@ paths:
                     example: 渋谷 肉横丁
                   status:
                     type: string
-                    example: CONFIRMED
+                    example: ACTIVATED
         '400':
           description: Bad Request
         '401':
@@ -1056,7 +1056,7 @@ paths:
                       example: 1
                     shopName:
                       type: string
-                      example: 肉太郎
+                      example: 渋谷 肉横丁 肉太郎
                     price:
                       type: integer
                       example: 2400
@@ -1102,7 +1102,7 @@ paths:
                       example: nikuyokocho-0001
                     shopName:
                       type: string
-                      example: 肉太郎
+                      example: 渋谷 肉横丁 肉太郎
                     address:
                       type: string
                       example: 東京都渋谷区宇田川町１３−８ ちとせ会館 ２F 渋谷肉横丁内
@@ -1116,7 +1116,7 @@ paths:
                         定休日：不定休
                     status:
                       type: string
-                      example: CONFIRMED
+                      example: ACTIVATED
                     yearMonth:
                       type: integer
                       example: 202107
@@ -1158,7 +1158,7 @@ paths:
                     example: nikuyokocho-0001
                   shopName:
                     type: string
-                    example: 肉太郎
+                    example: 渋谷 肉横丁 肉太郎
                   address:
                     type: string
                     example: 東京都渋谷区宇田川町１３−８ ちとせ会館 ２F 渋谷肉横丁内
@@ -1180,7 +1180,7 @@ paths:
       tags:
         - Store
       summary: Update shop by store
-      description: 
+      description:
       security:
         - BearerAuth: []
       requestBody:
@@ -1193,7 +1193,7 @@ paths:
               properties:
                 shopName:
                   type: string
-                  example: 肉太郎
+                  example: 渋谷 肉横丁 肉太郎
                 address:
                   type: string
                   example: 東京都渋谷区宇田川町１３−８ ちとせ会館 ２F 渋谷肉横丁内
@@ -1218,7 +1218,7 @@ paths:
                     example: nikuyokocho-0001
                   shopName:
                     type: string
-                    example: 肉太郎
+                    example: 渋谷 肉横丁 肉太郎
                   address:
                     type: string
                     example: 東京都渋谷区宇田川町１３−８ ちとせ会館 ２F 渋谷肉横丁内
@@ -1232,7 +1232,7 @@ paths:
                       定休日：不定休
                   status:
                     type: string
-                    example: CONFIRMED
+                    example: ACTIVATED
         '400':
           description: Bad Request
         '401':
@@ -1272,13 +1272,13 @@ paths:
                     example: nikuyokocho-0001
                   storeName:
                     type: string
-                    example: 肉横丁
+                    example: 渋谷 肉横丁
                   shopName:
                     type: string
-                    example: 肉太郎
+                    example: 渋谷 肉横丁 肉太郎
                   status:
                     type: string
-                    example: CONFIRMED
+                    example: ACTIVATED
                   yearMonth:
                     type: integer
                     example: 202107
@@ -1302,7 +1302,7 @@ paths:
       tags:
         - Shop
       summary: Update Shop
-      description: 
+      description:
       security:
         - BearerAuth: []
       requestBody:
@@ -1321,7 +1321,7 @@ paths:
                   example: nikuyokocho-0001
                 shopName:
                   type: string
-                  example: 肉太郎
+                  example: 渋谷 肉横丁 肉太郎
                 address:
                   type: string
                   example: 東京都渋谷区宇田川町１３−８ ちとせ会館 ２F 渋谷肉横丁内
@@ -1349,7 +1349,7 @@ paths:
                     example: nikuyokocho-0001
                   shopName:
                     type: string
-                    example: 肉太郎
+                    example: 渋谷 肉横丁 肉太郎
                   address:
                     type: string
                     example: 東京都渋谷区宇田川町１３−８ ちとせ会館 ２F 渋谷肉横丁内
@@ -1363,7 +1363,7 @@ paths:
                       定休日：不定休
                   status:
                     type: string
-                    example: CONFIRMED
+                    example: ACTIVATED
         '400':
           description: Bad Request
         '401':
@@ -1441,22 +1441,22 @@ paths:
                     example: 1234
                   status:
                     type: string
-                    example: CONFIRMED
+                    example: ACTIVATED
               examples:
-                ConfirmedUser:
+                ActivatedUser:
                   summary: 本会員登録済みユーザー
                   value:
                     id: ad89afgt
                     nickname: スタールくん
                     amount: 1234
-                    status: CONFIRMED
+                    status: ACTIVATED
                 RegisteredUser:
                   summary: 本会員登録していないユーザー
                   value:
                     id: ad89afgt
                     nickname: スタールくん
                     amount: 1234
-                    status: UNREGISTERED
+                    status: REGISTERED
         '400':
           description: Bad Request
         '401':
@@ -1592,7 +1592,7 @@ paths:
       tags:
         - User
       summary: Read user by user
-      description: 
+      description:
       security:
         - BearerAuth: []
       responses:
@@ -1623,7 +1623,7 @@ paths:
                     example: 1234
                   status:
                     type: string
-                    example: CONFIRMED
+                    example: ACTIVATED
                   earnedPointsThisMonth:
                     type: integer
                     example: 100
@@ -1634,7 +1634,7 @@ paths:
                     type: integer
                     example: 4
               examples:
-                ConfirmedUser:
+                ActivatedUser:
                   summary: 本会員登録済みユーザー
                   value:
                     id: ad89afgt
@@ -1643,7 +1643,7 @@ paths:
                     nickname: スタールくん
                     iconURL: https://www.example.com/ad89afgt
                     amount: 1234
-                    status: CONFIRMED
+                    status: ACTIVATED
                     earnedPointsThisMonth: 100
                     usedPointsThisMonth: 60
                     visitedShopsThisMonth: 4
@@ -1656,7 +1656,7 @@ paths:
                     nickname:
                     iconURL:
                     amount: 1234
-                    status: UNREGISTERED
+                    status: REGISTERED
                     earnedPointsThisMonth: 100
                     usedPointsThisMonth: 0
                     visitedShopsThisMonth: 4
@@ -1794,10 +1794,10 @@ paths:
                       example: nikuyokocho-0001
                     storeName:
                       type: string
-                      example: 肉横丁
+                      example: 渋谷 肉横丁
                     shopName:
                       type: string
-                      example: 肉太郎
+                      example: 渋谷 肉横丁 肉太郎
                     address:
                       type: string
                       example: 東京都渋谷区宇田川町１３−８ ちとせ会館 ２F 渋谷肉横丁内
@@ -1811,7 +1811,7 @@ paths:
                         定休日：不定休
                     status:
                       type: string
-                      example: CONFIRMED
+                      example: ACTIVATED
         '400':
           description: Bad Request
         '401':
@@ -1844,13 +1844,13 @@ paths:
                         example: nikuyokocho-0001
                       shopName:
                         type: string
-                        example: 肉太郎
+                        example: 渋谷 肉横丁 肉太郎
                       storeId:
                         type: string
                         example: nikuyokocho
                       storeName:
                         type: string
-                        example: 肉横丁
+                        example: 渋谷 肉横丁
                       price:
                         type: integer
                         example: 2400
@@ -1925,7 +1925,7 @@ components:
           example: nikuyokocho@gmail.com
         storeName:
           type: string
-          example: 肉横丁
+          example: 渋谷 肉横丁
     StoreSignUpResponse:
       type: object
       properties:
@@ -1940,7 +1940,7 @@ components:
           example: P@ssw0rd
         storeName:
           type: string
-          example: 肉横丁
+          example: 渋谷 肉横丁
         status:
           type: string
           example: REGISTERED
@@ -2052,7 +2052,7 @@ components:
           example: nikuyokocho@gmail.com
         shopName:
           type: string
-          example: 肉太郎
+          example: 渋谷 肉横丁 肉太郎
         address:
           type: string
           example: 東京都渋谷区宇田川町１３−８ ちとせ会館 ２F 渋谷肉横丁内
@@ -2081,7 +2081,7 @@ components:
           example: P@ssw0rd
         shopName:
           type: string
-          example: 肉太郎
+          example: 渋谷 肉横丁 肉太郎
         address:
           type: string
           example: 東京都渋谷区宇田川町１３−８ ちとせ会館 ２F 渋谷肉横丁内
@@ -2173,7 +2173,7 @@ components:
           example: nikuyokocho-0001
         shopName:
           type: string
-          example: 肉太郎
+          example: 渋谷 肉横丁 肉太郎
         status:
           type: string
           example: ACTIVATED
@@ -2185,7 +2185,7 @@ components:
           example: nikuyokocho-0001
         shopName:
           type: string
-          example: 肉太郎
+          example: 渋谷 肉横丁 肉太郎
         status:
           type: string
           example: DISABLED
@@ -2289,7 +2289,7 @@ components:
           example: P@ssw0rd
         storeName:
           type: string
-          example: 肉横丁
+          example: 渋谷 肉横丁
         status:
           type: string
           example: ACTIVATED
@@ -2310,7 +2310,7 @@ components:
           example: P@ssw0rd
         shopName:
           type: string
-          example: 肉太郎
+          example: 渋谷 肉横丁 肉太郎
         address:
           type: string
           example: 東京都渋谷区宇田川町１３−８ ちとせ会館 ２F 渋谷肉横丁内
