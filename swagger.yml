@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   title: Starl-Backend API Document
   description: This is API Document of Starl-Backend
-  version: 1.0.3
+  version: 1.0.4
 
 servers:
   - url: https://api.starl.co.jp/v1
@@ -553,6 +553,62 @@ paths:
                 $ref: '#/components/schemas/UserActivateResponse'
         '400':
           description: Bad Request
+  /admin/user/{userId}/disable:
+    put:
+      tags:
+        - AuthUser
+      summary: Disable user by admin
+      security:
+        - BearerAuth: [ ]
+      parameters:
+        - in: path
+          name: userId
+          description: User ID
+          required: true
+          schema:
+            type: string
+            example: ad89afgt
+      responses:
+        '200':
+          description: Successful Operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AdminUserDisableResponse'
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '404':
+          description: User not found
+  /admin/user/{userId}/activate:
+    put:
+      tags:
+        - AuthUser
+      summary: Activate user by admin
+      security:
+        - BearerAuth: [ ]
+      parameters:
+        - in: path
+          name: userId
+          description: User ID
+          required: true
+          schema:
+            type: string
+            example: ad89afgt
+      responses:
+        '200':
+          description: Successful Operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AdminUserActivateResponse'
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '404':
+          description: User not found
   /user/signout:
     post:
       tags:
@@ -2265,6 +2321,24 @@ components:
         password:
           type: string
           example: b03ddf3ca2e714a6548e7495e2a03f5e824eaac9837cd7f159c67b90fb4b7342
+    AdminUserDisableResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          example: ad89afgt
+        status:
+          type: string
+          example: DISABLED
+    AdminUserActivateResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          example: ad89afgt
+        status:
+          type: string
+          example: ACTIVATED
     UserActivateResponse:
         type: object
         properties:
