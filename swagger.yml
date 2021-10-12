@@ -2072,9 +2072,6 @@ components:
         id:
           type: string
           example: nikuyokocho
-        storeName:
-          type: string
-          example: 渋谷 肉横丁
         status:
           type: string
           example: ACTIVATED
@@ -2084,9 +2081,6 @@ components:
         id:
           type: string
           example: nikuyokocho
-        storeName:
-          type: string
-          example: 渋谷 肉横丁
         status:
           type: string
           example: DISABLED
@@ -2224,9 +2218,6 @@ components:
         id:
           type: string
           example: nikuyokocho-0001
-        shopName:
-          type: string
-          example: 渋谷 肉横丁 肉太郎
         status:
           type: string
           example: ACTIVATED
@@ -2236,9 +2227,6 @@ components:
         id:
           type: string
           example: nikuyokocho-0001
-        shopName:
-          type: string
-          example: 渋谷 肉横丁 肉太郎
         status:
           type: string
           example: DISABLED
