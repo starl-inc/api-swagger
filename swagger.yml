@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   title: Starl-Backend API Document
   description: This is API Document of Starl-Backend
-  version: 1.0.6
+  version: 1.0.7
 
 servers:
   - url: https://api.starl.co.jp/v1
@@ -665,7 +665,7 @@ paths:
                       example: 渋谷 肉横丁
                     status:
                       type: string
-                      example: ACTIVATED
+                      example: ACTIVE
                     shopsCount:
                       type: integer
                       example: 3
@@ -735,7 +735,7 @@ paths:
                       example: 渋谷 肉横丁 肉太郎
                     status:
                       type: string
-                      example: ACTIVATED
+                      example: ACTIVE
                     yearMonth:
                       type: integer
                       example: 202107
@@ -797,7 +797,7 @@ paths:
                     example: 渋谷 肉横丁
                   status:
                     type: string
-                    example: ACTIVATED
+                    example: ACTIVE
         '400':
           description: Bad Request
         '401':
@@ -891,7 +891,7 @@ paths:
                       定休日：不定休
                   status:
                     type: string
-                    example: ACTIVATED
+                    example: ACTIVE
         '400':
           description: Bad Request
         '401':
@@ -960,7 +960,7 @@ paths:
                     example: 渋谷 肉横丁
                   status:
                     type: string
-                    example: ACTIVATED
+                    example: ACTIVE
                   yearMonth:
                     type: integer
                     example: 202107
@@ -1028,7 +1028,7 @@ paths:
                     example: 渋谷 肉横丁
                   status:
                     type: string
-                    example: ACTIVATED
+                    example: ACTIVE
         '400':
           description: Bad Request
         '401':
@@ -1170,7 +1170,7 @@ paths:
                         定休日：不定休
                     status:
                       type: string
-                      example: ACTIVATED
+                      example: ACTIVE
                     yearMonth:
                       type: integer
                       example: 202107
@@ -1286,7 +1286,7 @@ paths:
                       定休日：不定休
                   status:
                     type: string
-                    example: ACTIVATED
+                    example: ACTIVE
         '400':
           description: Bad Request
         '401':
@@ -1332,7 +1332,7 @@ paths:
                     example: 渋谷 肉横丁 肉太郎
                   status:
                     type: string
-                    example: ACTIVATED
+                    example: ACTIVE
                   yearMonth:
                     type: integer
                     example: 202107
@@ -1417,7 +1417,7 @@ paths:
                       定休日：不定休
                   status:
                     type: string
-                    example: ACTIVATED
+                    example: ACTIVE
         '400':
           description: Bad Request
         '401':
@@ -1495,7 +1495,7 @@ paths:
                     example: 1234
                   status:
                     type: string
-                    example: ACTIVATED
+                    example: ACTIVE
               examples:
                 ActivatedUser:
                   summary: 本会員登録済みユーザー
@@ -1503,7 +1503,7 @@ paths:
                     id: ad89afgt
                     nickname: スタールくん
                     amount: 1234
-                    status: ACTIVATED
+                    status: ACTIVE
                 RegisteredUser:
                   summary: 本会員登録していないユーザー
                   value:
@@ -1677,7 +1677,7 @@ paths:
                     example: 1234
                   status:
                     type: string
-                    example: ACTIVATED
+                    example: ACTIVE
                   earnedPointsThisMonth:
                     type: integer
                     example: 100
@@ -1697,7 +1697,7 @@ paths:
                     nickname: スタールくん
                     iconURL: https://www.example.com/ad89afgt
                     amount: 1234
-                    status: ACTIVATED
+                    status: ACTIVE
                     earnedPointsThisMonth: 100
                     usedPointsThisMonth: 60
                     visitedShopsThisMonth: 4
@@ -1865,7 +1865,7 @@ paths:
                         定休日：不定休
                     status:
                       type: string
-                      example: ACTIVATED
+                      example: ACTIVE
         '400':
           description: Bad Request
         '401':
@@ -2074,7 +2074,7 @@ components:
           example: nikuyokocho
         status:
           type: string
-          example: ACTIVATED
+          example: ACTIVE
     StoreDisableResponse:
       type: object
       properties:
@@ -2220,7 +2220,7 @@ components:
           example: nikuyokocho-0001
         status:
           type: string
-          example: ACTIVATED
+          example: ACTIVE
     ShopDisableResponse:
       type: object
       properties:
@@ -2323,7 +2323,7 @@ components:
           example: ad89afgt
         status:
           type: string
-          example: ACTIVATED
+          example: ACTIVE
     UserActivateResponse:
         type: object
         properties:
@@ -2351,7 +2351,7 @@ components:
           example: 渋谷 肉横丁
         status:
           type: string
-          example: ACTIVATED
+          example: ACTIVE
     Shop:
       type: object
       properties:
@@ -2383,7 +2383,7 @@ components:
             定休日：不定休
         status:
           type: string
-          example: ACTIVATED
+          example: ACTIVE
     User:
       type: object
       properties:
@@ -2410,7 +2410,7 @@ components:
           example: 1234
         status:
           type: string
-          example: ACTIVATED
+          example: ACTIVE
     Transaction:
       type: object
       properties:
