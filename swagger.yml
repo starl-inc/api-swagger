@@ -778,6 +778,8 @@ paths:
                 storeName:
                   type: string
                   example: 渋谷 肉横丁
+              required:
+                - storeName
       responses:
         '200':
           description: Successful Operation
@@ -1003,12 +1005,11 @@ paths:
             schema:
               type: object
               properties:
-                id:
-                  type: string
-                  example: nikuyokocho
                 storeName:
                   type: string
                   example: 渋谷 肉横丁
+              required:
+                - storeName
       responses:
         '200':
           description: Successful Operarion
@@ -1386,12 +1387,6 @@ paths:
             schema:
               type: object
               properties:
-                id:
-                  type: string
-                  example: nikuyokocho-0001
-                storeId:
-                  type: string
-                  example: nikuyokocho
                 shopName:
                   type: string
                   example: 渋谷 肉横丁 肉太郎
@@ -1513,15 +1508,16 @@ paths:
                 userId:
                   type: string
                   example: ad89afgt
-                shopId:
-                  type: string
-                  example: nikuyokocho-0001
                 price:
                   type: integer
                   example: 2400
                 usedPoints:
                   type: integer
                   example: 100
+              required:
+                - userId
+                - price
+                - usedPoints
       responses:
         '200':
           description: Successful Operation
@@ -1584,6 +1580,9 @@ paths:
                 usedPoints:
                   type: integer
                   example: 200
+              required:
+                - price
+                - usedPoints
       responses:
         '200':
           description: Successful Operation
@@ -1754,7 +1753,7 @@ paths:
       security:
         - BearerAuth: []
       requestBody:
-        description: New nicname
+        description: New nickname
         required: true
         content:
           application/json:
@@ -1764,6 +1763,8 @@ paths:
                 nickname:
                   type: string
                   example: スタールちゃん
+              required:
+                - nickname
       responses:
         '200':
           description: Successful Operation
