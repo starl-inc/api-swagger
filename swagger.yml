@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   title: Starl-Backend API Document
   description: This is API Document of Starl-Backend
-  version: 1.0.8
+  version: 1.0.9
 
 servers:
   - url: https://api.starl.co.jp/v1
@@ -1945,6 +1945,9 @@ components:
         password:
           type: string
           example: b03ddf3ca2e714a6548e7495e2a03f5e824eaac9837cd7f159c67b90fb4b7342
+      required:
+        - id
+        - password
     AdminSignInResponse:
       type: object
       properties:
