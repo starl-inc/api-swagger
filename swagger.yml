@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   title: Starl-Backend API Document
   description: This is API Document of Starl-Backend
-  version: 1.0.12
+  version: 1.0.13
 
 servers:
   - url: https://api.starl.co.jp/v1
@@ -145,7 +145,7 @@ paths:
         - AuthStore
       summary: Activate store by admin
       security:
-        - BearerAuth: [ ]
+        - BearerAuth: []
       parameters:
         - in: path
           name: storeId
@@ -173,7 +173,7 @@ paths:
         - AuthStore
       summary: Activate store by store
       security:
-        - BearerAuth: [ ]
+        - BearerAuth: []
       responses:
         '200':
           description: Successful Operation
@@ -191,7 +191,7 @@ paths:
         - AuthStore
       summary: Disable store by admin
       security:
-        - BearerAuth: [ ]
+        - BearerAuth: []
       parameters:
         - in: path
           name: storeId
@@ -219,7 +219,7 @@ paths:
         - AuthStore
       summary: Disable store by store
       security:
-        - BearerAuth: [ ]
+        - BearerAuth: []
       responses:
         '200':
           description: Successful Operation
@@ -346,7 +346,7 @@ paths:
         - AuthShop
       summary: Activate shop by admin
       security:
-        - BearerAuth: [ ]
+        - BearerAuth: []
       parameters:
         - in: path
           name: shopId
@@ -374,7 +374,7 @@ paths:
         - AuthShop
       summary: Activate shop by store
       security:
-        - BearerAuth: [ ]
+        - BearerAuth: []
       responses:
         '200':
           description: Successful Operation
@@ -392,7 +392,7 @@ paths:
         - AuthShop
       summary: Disable shop by admin
       security:
-        - BearerAuth: [ ]
+        - BearerAuth: []
       parameters:
         - in: path
           name: shopId
@@ -420,7 +420,7 @@ paths:
         - AuthShop
       summary: Disable shop by store
       security:
-        - BearerAuth: [ ]
+        - BearerAuth: []
       responses:
         '200':
           description: Successful Operation
@@ -551,7 +551,7 @@ paths:
         - AuthUser
       summary: Disable user by admin
       security:
-        - BearerAuth: [ ]
+        - BearerAuth: []
       parameters:
         - in: path
           name: userId
@@ -579,7 +579,7 @@ paths:
         - AuthUser
       summary: Activate user by admin
       security:
-        - BearerAuth: [ ]
+        - BearerAuth: []
       parameters:
         - in: path
           name: userId
@@ -679,79 +679,6 @@ paths:
           description: Unauthorized
         '404':
           description: Store Not Found
-  /admin/shop/list:
-    get:
-      tags:
-        - Admin
-      summary: Read shops by admin
-      security:
-        - BearerAuth: []
-      parameters:
-        - in: query
-          name: storeId
-          schema:
-            type: string
-            example: nikuyokocho
-          description: Store ID
-        - in: query
-          name: yearMonth
-          schema:
-            type: integer
-            example: 202107
-          required: true
-          description: Year and month of items to return
-      responses:
-        '200':
-          description: Successful Operation
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    id:
-                      type: string
-                      example: nikuyokocho-0001
-                    storeId:
-                      type: string
-                      example: nikuyokocho
-                    status:
-                      type: string
-                      example: ACTIVE
-                    storeName:
-                      type: string
-                      example: 渋谷 肉横丁
-                    shopName:
-                      type: string
-                      example: 渋谷 肉横丁 肉太郎
-                    address:
-                      type: string
-                      example: 東京都渋谷区宇田川町１３−８ ちとせ会館 ２F 渋谷肉横丁内
-                    phone:
-                      type: string
-                      example: 03-6427-8994
-                    openingHours:
-                      type: string
-                      example: |
-                        月～日、祝日、祝前日: 17:00～翌0:00
-                        定休日：不定休
-                    yearMonth:
-                      type: integer
-                      example: 202107
-                    totalSales:
-                      type: integer
-                      example: 1234567
-                    totalEarnedPoints:
-                      type: integer
-                      example: 12345
-                    totalUsedPoints:
-                      type: integer
-                      example: 3000
-        '401':
-          description: Unauthorized
-        '404':
-          description: Store Not Found
   /admin/store/{storeId}:
     put:
       tags:
@@ -826,6 +753,79 @@ paths:
           description: Unauthorized
         '404':
           description: Store not found
+  /admin/shop/list:
+    get:
+      tags:
+        - Admin
+      summary: Read shops by admin
+      security:
+        - BearerAuth: []
+      parameters:
+        - in: query
+          name: storeId
+          schema:
+            type: string
+            example: nikuyokocho
+          description: Store ID
+        - in: query
+          name: yearMonth
+          schema:
+            type: integer
+            example: 202107
+          required: true
+          description: Year and month of items to return
+      responses:
+        '200':
+          description: Successful Operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      example: nikuyokocho-0001
+                    storeId:
+                      type: string
+                      example: nikuyokocho
+                    status:
+                      type: string
+                      example: ACTIVE
+                    storeName:
+                      type: string
+                      example: 渋谷 肉横丁
+                    shopName:
+                      type: string
+                      example: 渋谷 肉横丁 肉太郎
+                    address:
+                      type: string
+                      example: 東京都渋谷区宇田川町１３−８ ちとせ会館 ２F 渋谷肉横丁内
+                    phone:
+                      type: string
+                      example: 03-6427-8994
+                    openingHours:
+                      type: string
+                      example: |
+                        月～日、祝日、祝前日: 17:00～翌0:00
+                        定休日：不定休
+                    yearMonth:
+                      type: integer
+                      example: 202107
+                    totalSales:
+                      type: integer
+                      example: 1234567
+                    totalEarnedPoints:
+                      type: integer
+                      example: 12345
+                    totalUsedPoints:
+                      type: integer
+                      example: 3000
+        '401':
+          description: Unauthorized
+        '404':
+          description: Store Not Found
   /admin/shop/{shopId}:
     put:
       tags:
@@ -920,6 +920,77 @@ paths:
           description: Unauthorized
         '404':
           description: Shop not found
+  /admin/user/list:
+    get:
+      tags:
+        - Admin
+      summary: Read users by admin
+      security:
+        - BearerAuth: []
+      responses:
+        '200':
+          description: Successful Operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      example: ad89afgt
+                    status:
+                      type: string
+                      example: ACTIVE
+                    email:
+                      type: string
+                      example: user@gmail.com
+                    nickname:
+                      type: string
+                      example: スタールくん
+                    iconURL:
+                      type: string
+                      example: https://www.example.com/ad89afgt
+                    amount:
+                      type: integer
+                      example: 1234
+                    totalEarnedPoints:
+                      type: integer
+                      example: 3000
+                  example:
+                    - id: ad89afgt
+                      status: REGISTERED
+                      email:
+                      nickname:
+                      iconURL:
+                      amount: 1000
+                      totalEarnedPoints: 1000
+                    - id: ad89afgt
+                      status: CONFIRMED
+                      email: user@gmail.com
+                      nickname: スタールくん
+                      iconURL:
+                      amount: 2000
+                      totalEarnedPoints: 2000
+                    - id: ad89afgt
+                      status: ACTIVE
+                      email: user@gmail.com
+                      nickname: スタールくん
+                      iconURL: https://www.example.com/ad89afgt
+                      amount: 1234
+                      totalEarnedPoints: 3000
+                    - id: ad89afgt
+                      status: DISABLED
+                      email: user@gmail.com
+                      nickname: スタールくん
+                      iconURL: https://www.example.com/ad89afgt
+                      amount: 1234
+                      totalEarnedPoints: 3000
+        '401':
+          description: Unauthorized
+        '404':
+          description: User Not Found
 
   # -------------------- Store --------------------
   /store:
