@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   title: Starl-Backend API Document
   description: This is API Document of Starl-Backend
-  version: 1.0.7
+  version: 1.0.8
 
 servers:
   - url: https://api.starl.co.jp/v1
@@ -660,12 +660,12 @@ paths:
                     id:
                       type: string
                       example: nikuyokocho
-                    storeName:
-                      type: string
-                      example: 渋谷 肉横丁
                     status:
                       type: string
                       example: ACTIVE
+                    storeName:
+                      type: string
+                      example: 渋谷 肉横丁
                     shopsCount:
                       type: integer
                       example: 3
@@ -681,9 +681,6 @@ paths:
                     totalUsedPoints:
                       type: integer
                       example: 3000
-                    approval:
-                      type: boolean
-                      example: true
         '400':
           description: Bad Request
         '401':
@@ -721,21 +718,32 @@ paths:
                 items:
                   type: object
                   properties:
-                    storeId:
-                      type: string
-                      example: nikuyokocho
                     id:
                       type: string
                       example: nikuyokocho-0001
+                    storeId:
+                      type: string
+                      example: nikuyokocho
+                    status:
+                      type: string
+                      example: ACTIVE
                     storeName:
                       type: string
                       example: 渋谷 肉横丁
                     shopName:
                       type: string
                       example: 渋谷 肉横丁 肉太郎
-                    status:
+                    address:
                       type: string
-                      example: ACTIVE
+                      example: 東京都渋谷区宇田川町１３−８ ちとせ会館 ２F 渋谷肉横丁内
+                    phone:
+                      type: string
+                      example: 03-6427-8994
+                    openingHours:
+                      type: string
+                      example: |
+                        月～日、祝日、祝前日: 17:00～翌0:00
+                        定休日：不定休
                     yearMonth:
                       type: integer
                       example: 202107
@@ -748,9 +756,6 @@ paths:
                     totalUsedPoints:
                       type: integer
                       example: 3000
-                    approval:
-                      type: boolean
-                      example: true
         '401':
           description: Unauthorized
         '404':
@@ -792,12 +797,12 @@ paths:
                   id:
                     type: string
                     example: nikuyokocho
-                  storeName:
-                    type: string
-                    example: 渋谷 肉横丁
                   status:
                     type: string
                     example: ACTIVE
+                  storeName:
+                    type: string
+                    example: 渋谷 肉横丁
         '400':
           description: Bad Request
         '401':
@@ -875,6 +880,9 @@ paths:
                   id:
                     type: string
                     example: nikuyokocho-0001
+                  status:
+                    type: string
+                    example: ACTIVE
                   shopName:
                     type: string
                     example: 渋谷 肉横丁 肉太郎
@@ -889,9 +897,6 @@ paths:
                     example: |
                       月～日、祝日、祝前日: 17:00～翌0:00
                       定休日：不定休
-                  status:
-                    type: string
-                    example: ACTIVE
         '400':
           description: Bad Request
         '401':
@@ -955,12 +960,12 @@ paths:
                   id:
                     type: string
                     example: nikuyokocho
-                  storeName:
-                    type: string
-                    example: 渋谷 肉横丁
                   status:
                     type: string
                     example: ACTIVE
+                  storeName:
+                    type: string
+                    example: 渋谷 肉横丁
                   yearMonth:
                     type: integer
                     example: 202107
@@ -973,9 +978,6 @@ paths:
                   totalUsedPoints:
                     type: integer
                     example: 3000
-                  approval:
-                    type: boolean
-                    example: true
                   shops:
                     type: array
                     items:
@@ -984,6 +986,9 @@ paths:
                         id:
                           type: string
                           example: nikuyokocho-0001
+                        status:
+                          type: string
+                          example: ACTIVE
                         shopName:
                           type: string
                           example: 渋谷 肉横丁 肉太郎
@@ -1023,53 +1028,12 @@ paths:
                   id:
                     type: string
                     example: nikuyokocho
-                  storeName:
-                    type: string
-                    example: 渋谷 肉横丁
                   status:
                     type: string
                     example: ACTIVE
-        '400':
-          description: Bad Request
-        '401':
-          description: Unauthorized
-  /store/approval:
-    post:
-      tags:
-        - Store
-      summary: Create approval for all shops by store
-      security:
-        - BearerAuth: []
-      parameters:
-        - in: query
-          name: yearMonth
-          required: true
-          schema:
-            type: integer
-            example: 202107
-          description: Year and month of approval to create
-      responses:
-        '200':
-          description: Successful Operation
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    id:
-                      type: integer
-                      example: 1
-                    shopId:
-                      type: string
-                      example: nikuyokocho-0001
-                    yearMonth:
-                      type: integer
-                      example: 202107
-                    approvedBy:
-                      type: string
-                      example: STORE
+                  storeName:
+                    type: string
+                    example: 渋谷 肉横丁
         '400':
           description: Bad Request
         '401':
@@ -1108,6 +1072,9 @@ paths:
                     id:
                       type: integer
                       example: 1
+                    shopId:
+                      type: string
+                      example: nikuyokocho-0001
                     shopName:
                       type: string
                       example: 渋谷 肉横丁 肉太郎
@@ -1119,7 +1086,7 @@ paths:
                       example: 100
                     createdAt:
                       type: string
-                      example: "2021-06-01T16:23:56"
+                      example: "2021-06-01T16:23:56+09:00"
         '400':
           description: Bad Request
         '401':
@@ -1140,7 +1107,7 @@ paths:
             type: integer
             example: 202107
           required: true
-          description: Year and month of approval status to return
+          description: Year and month of item to return
       responses:
         '200':
           description: Successful Operation
@@ -1154,6 +1121,9 @@ paths:
                     id:
                       type: string
                       example: nikuyokocho-0001
+                    status:
+                      type: string
+                      example: ACTIVE
                     shopName:
                       type: string
                       example: 渋谷 肉横丁 肉太郎
@@ -1168,9 +1138,6 @@ paths:
                       example: |
                         月～日、祝日、祝前日: 17:00～翌0:00
                         定休日：不定休
-                    status:
-                      type: string
-                      example: ACTIVE
                     yearMonth:
                       type: integer
                       example: 202107
@@ -1183,9 +1150,6 @@ paths:
                     totalUsedPoints:
                       type: integer
                       example: 3000
-                    approval:
-                      type: boolean
-                      example: true
         '400':
           description: Bad Request
         '401':
@@ -1199,6 +1163,13 @@ paths:
       summary: Read shop by store
       security:
         - BearerAuth: []
+      parameters:
+        - in: query
+          name: yearMonth
+          schema:
+            type: integer
+            example: 202107
+          description: Year and month of items to return
       responses:
         '200':
           description: Successful Operation
@@ -1210,6 +1181,9 @@ paths:
                   id:
                     type: string
                     example: nikuyokocho-0001
+                  status:
+                    type: string
+                    example: ACTIVE
                   shopName:
                     type: string
                     example: 渋谷 肉横丁 肉太郎
@@ -1224,6 +1198,51 @@ paths:
                     example: |
                       月～日、祝日、祝前日: 17:00～翌0:00
                       定休日：不定休
+                  yearMonth:
+                    type: integer
+                    example: 202107
+                  totalSales:
+                    type: integer
+                    example: 1234567
+                  totalEarnedPoints:
+                    type: integer
+                    example: 12345
+                  totalUsedPoints:
+                    type: integer
+                    example: 3000
+              examples:
+                WithoutTransactionData:
+                  summary: 会計情報なし
+                  description: yearMonthなし
+                  value:
+                    id: nikuyokocho-0001
+                    status: ACTIVE
+                    shopName: 渋谷 肉横丁 肉太郎
+                    address: 東京都渋谷区宇田川町１３−８ ちとせ会館 ２F 渋谷肉横丁内
+                    phone: 03-6427-8994
+                    openingHours: |
+                      月～日、祝日、祝前日: 17:00～翌0:00
+                      定休日：不定休
+                    yearMonth:
+                    totalSales:
+                    totalEarnedPoints:
+                    totalUsedPoints:
+                WithTransactionData:
+                  summary: 会計情報あり
+                  description: yearMonthをクエリパラメーターに含めた場合
+                  value:
+                    id: nikuyokocho-0001
+                    status: ACTIVE
+                    shopName: 渋谷 肉横丁 肉太郎
+                    address: 東京都渋谷区宇田川町１３−８ ちとせ会館 ２F 渋谷肉横丁内
+                    phone: 03-6427-8994
+                    openingHours: |
+                      月～日、祝日、祝前日: 17:00～翌0:00
+                      定休日：不定休
+                    yearMonth: 202107
+                    totalSales: 1234567
+                    totalEarnedPoints: 12345
+                    totalUsedPoints: 3000
         '400':
           description: Bad Request
         '401':
@@ -1270,6 +1289,9 @@ paths:
                   id:
                     type: string
                     example: nikuyokocho-0001
+                  status:
+                    type: string
+                    example: ACTIVE
                   shopName:
                     type: string
                     example: 渋谷 肉横丁 肉太郎
@@ -1284,9 +1306,6 @@ paths:
                     example: |
                       月～日、祝日、祝前日: 17:00～翌0:00
                       定休日：不定休
-                  status:
-                    type: string
-                    example: ACTIVE
         '400':
           description: Bad Request
         '401':
@@ -1318,21 +1337,32 @@ paths:
               schema:
                 type: object
                 properties:
-                  storeId:
-                    type: string
-                    example: nikuyokocho
                   id:
                     type: string
                     example: nikuyokocho-0001
+                  storeId:
+                    type: string
+                    example: nikuyokocho
+                  status:
+                    type: string
+                    example: ACTIVE
                   storeName:
                     type: string
                     example: 渋谷 肉横丁
                   shopName:
                     type: string
                     example: 渋谷 肉横丁 肉太郎
-                  status:
+                  address:
                     type: string
-                    example: ACTIVE
+                    example: 東京都渋谷区宇田川町１３−８ ちとせ会館 ２F 渋谷肉横丁内
+                  phone:
+                    type: string
+                    example: 03-6427-8994
+                  openingHours:
+                    type: string
+                    example: |
+                      月～日、祝日、祝前日: 17:00～翌0:00
+                      定休日：不定休
                   yearMonth:
                     type: integer
                     example: 202107
@@ -1345,9 +1375,6 @@ paths:
                   totalUsedPoints:
                     type: integer
                     example: 3000
-                  approval:
-                    type: boolean
-                    example: true
         '400':
           description: Bad Request
         '401':
@@ -1367,12 +1394,12 @@ paths:
             schema:
               type: object
               properties:
-                storeId:
-                  type: string
-                  example: nikuyokocho
                 id:
                   type: string
                   example: nikuyokocho-0001
+                storeId:
+                  type: string
+                  example: nikuyokocho
                 shopName:
                   type: string
                   example: 渋谷 肉横丁 肉太郎
@@ -1395,12 +1422,15 @@ paths:
               schema:
                 type: object
                 properties:
-                  storeId:
-                    type: string
-                    example: nikuyokocho
                   id:
                     type: string
                     example: nikuyokocho-0001
+                  storeId:
+                    type: string
+                    example: nikuyokocho
+                  status:
+                    type: string
+                    example: ACTIVE
                   shopName:
                     type: string
                     example: 渋谷 肉横丁 肉太郎
@@ -1415,48 +1445,6 @@ paths:
                     example: |
                       月～日、祝日、祝前日: 17:00～翌0:00
                       定休日：不定休
-                  status:
-                    type: string
-                    example: ACTIVE
-        '400':
-          description: Bad Request
-        '401':
-          description: Unauthorized
-  /shop/approval:
-    post:
-      tags:
-        - Shop
-      summary: Create Approval by shop
-      security:
-        - BearerAuth: []
-      parameters:
-        - in: query
-          name: yearMonth
-          required: true
-          schema:
-            type: integer
-            example: 202107
-          description: Year and month of approval to create
-      responses:
-        '200':
-          description: Successful Operation
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  id:
-                    type: integer
-                    example: 1
-                  shopId:
-                    type: string
-                    example: nikuyokocho-0001
-                  yearMonth:
-                    type: integer
-                    example: 202107
-                  approvedBy:
-                    type: string
-                    example: SHOP
         '400':
           description: Bad Request
         '401':
@@ -1487,30 +1475,30 @@ paths:
                   id:
                     type: string
                     example: ad89afgt
+                  status:
+                    type: string
+                    example: ACTIVE
                   nickname:
                     type: string
                     example: スタールくん
                   amount:
                     type: integer
                     example: 1234
-                  status:
-                    type: string
-                    example: ACTIVE
               examples:
-                ActivatedUser:
+                ActiveUser:
                   summary: 本会員登録済みユーザー
                   value:
                     id: ad89afgt
+                    status: ACTIVE
                     nickname: スタールくん
                     amount: 1234
-                    status: ACTIVE
                 RegisteredUser:
                   summary: 本会員登録していないユーザー
                   value:
                     id: ad89afgt
+                    status: REGISTERED
                     nickname: スタールくん
                     amount: 1234
-                    status: REGISTERED
         '400':
           description: Bad Request
         '401':
@@ -1570,7 +1558,7 @@ paths:
                     example: 23
                   createdAt:
                     type: string
-                    example: "2021-08-27T00:00:00"
+                    example: "2021-08-27T00:00:00+09:00"
         '400':
           description: Bad Request
         '401':
@@ -1632,7 +1620,10 @@ paths:
                     example: 22
                   createdAt:
                     type: string
-                    example: "2021-08-27T00:00:00"
+                    example: "2021-08-27T12:34:56+09:00"
+                  updatedAt:
+                    type: string
+                    example: "2021-08-27T12:37:39+09:00"
         '400':
           description: Bad Request
         '401':
@@ -1660,6 +1651,9 @@ paths:
                   id:
                     type: string
                     example: ad89afgt
+                  status:
+                    type: string
+                    example: ACTIVE
                   initialPassword:
                     type: string
                     example: P@ssw0rd
@@ -1675,9 +1669,6 @@ paths:
                   amount:
                     type: integer
                     example: 1234
-                  status:
-                    type: string
-                    example: ACTIVE
                   earnedPointsThisMonth:
                     type: integer
                     example: 100
@@ -1688,16 +1679,16 @@ paths:
                     type: integer
                     example: 4
               examples:
-                ActivatedUser:
+                ActiveUser:
                   summary: 本会員登録済みユーザー
                   value:
                     id: ad89afgt
+                    status: ACTIVE
                     initialPassword: P@ssw0rd
                     email: user@gmail.com
                     nickname: スタールくん
                     iconURL: https://www.example.com/ad89afgt
                     amount: 1234
-                    status: ACTIVE
                     earnedPointsThisMonth: 100
                     usedPointsThisMonth: 60
                     visitedShopsThisMonth: 4
@@ -1705,12 +1696,12 @@ paths:
                   summary: 本会員登録していないユーザー
                   value:
                     id: ad89afgt
+                    status: REGISTERED
                     initialPassword: P@ssw0rd
                     email:
                     nickname:
                     iconURL:
                     amount: 1234
-                    status: REGISTERED
                     earnedPointsThisMonth: 100
                     usedPointsThisMonth: 0
                     visitedShopsThisMonth: 4
@@ -1840,12 +1831,15 @@ paths:
                 items:
                   type: object
                   properties:
-                    storeId:
-                      type: string
-                      example: nikuyokocho
                     id:
                       type: string
                       example: nikuyokocho-0001
+                    storeId:
+                      type: string
+                      example: nikuyokocho
+                    status:
+                      type: string
+                      example: ACTIVE
                     storeName:
                       type: string
                       example: 渋谷 肉横丁
@@ -1863,9 +1857,6 @@ paths:
                       example: |
                         月～日、祝日、祝前日: 17:00～翌0:00
                         定休日：不定休
-                    status:
-                      type: string
-                      example: ACTIVE
         '400':
           description: Bad Request
         '401':
@@ -1895,15 +1886,15 @@ paths:
                     shopId:
                       type: string
                       example: nikuyokocho-0001
-                    shopName:
-                      type: string
-                      example: 渋谷 肉横丁 肉太郎
                     storeId:
                       type: string
                       example: nikuyokocho
                     storeName:
                       type: string
                       example: 渋谷 肉横丁
+                    shopName:
+                      type: string
+                      example: 渋谷 肉横丁 肉太郎
                     price:
                       type: integer
                       example: 2400
@@ -1915,7 +1906,10 @@ paths:
                       example: 23
                     createdAt:
                       type: string
-                      example: "2021-08-27T00:00:00"
+                      example: "2021-08-27T12:34:56+09:00"
+                    updatedAt:
+                      type: string
+                      example: "2021-08-27T12:37:39+09:00"
         '401':
           description: Unauthorized
         '404':
@@ -1973,9 +1967,6 @@ components:
         id:
           type: string
           example: nikuyokocho
-        email:
-          type: string
-          example: nikuyokocho@gmail.com
         storeName:
           type: string
           example: 渋谷 肉横丁
@@ -1985,18 +1976,15 @@ components:
         id:
           type: string
           example: nikuyokocho
-        email:
+        status:
           type: string
-          example: nikuyokocho@gmail.com
+          example: REGISTERED
         initialPassword:
           type: string
           example: P@ssw0rd
         storeName:
           type: string
           example: 渋谷 肉横丁
-        status:
-          type: string
-          example: REGISTERED
     StoreInitialSignInRequest:
       type: object
       properties:
@@ -2094,9 +2082,6 @@ components:
         id:
           type: string
           example: nikuyokocho-0001
-        email:
-          type: string
-          example: nikuyokocho@gmail.com
         shopName:
           type: string
           example: 渋谷 肉横丁 肉太郎
@@ -2114,15 +2099,15 @@ components:
     ShopSignUpResponse:
       type: object
       properties:
-        storeId:
-          type: string
-          example: nikuyokocho
         id:
           type: string
           example: nikuyokocho-0001
-        email:
+        storeId:
           type: string
-          example: nikuyokocho@gmail.com
+          example: nikuyokocho
+        status:
+          type: string
+          example: REGISTERED
         initialPassword:
           type: string
           example: P@ssw0rd
@@ -2140,9 +2125,6 @@ components:
           example: |
             月～日、祝日、祝前日: 17:00～翌0:00
             定休日：不定休
-        status:
-          type: string
-          example: REGISTERED
     ShopInitialSignInRequest:
       type: object
       properties:
@@ -2340,30 +2322,27 @@ components:
         id:
           type: string
           example: nikuyokocho
-        email:
+        status:
           type: string
-          example: nikuyokocho@gmail.com
+          example: ACTIVE
         initialPassword:
           type: string
           example: P@ssw0rd
         storeName:
           type: string
           example: 渋谷 肉横丁
-        status:
-          type: string
-          example: ACTIVE
     Shop:
       type: object
       properties:
-        storeId:
-          type: string
-          example: nikuyokocho
         id:
           type: string
           example: nikuyokocho-0001
-        email:
+        storeId:
           type: string
-          example: nikuyokocho@gmail.com
+          example: nikuyokocho
+        status:
+          type: string
+          example: ACTIVE
         initialPassword:
           type: string
           example: P@ssw0rd
@@ -2381,9 +2360,6 @@ components:
           example: |
             月～日、祝日、祝前日: 17:00～翌0:00
             定休日：不定休
-        status:
-          type: string
-          example: ACTIVE
     User:
       type: object
       properties:
@@ -2393,6 +2369,9 @@ components:
         deviceId:
           type: string
           example: 3K0XXXXX-83XX-HEXX-KIXX-29KH83XXXXXX
+        status:
+          type: string
+          example: ACTIVE
         initialPassword:
           type: string
           example: P@ssw0rd
@@ -2408,9 +2387,6 @@ components:
         amount:
           type: integer
           example: 1234
-        status:
-          type: string
-          example: ACTIVE
     Transaction:
       type: object
       properties:
@@ -2434,22 +2410,7 @@ components:
           example: 9
         createdAt:
           type: string
-          example: "2021-08-27T00:00:00"
-    Approval:
-      type: object
-      properties:
-        id:
-          type: integer
-          example: 1
-        shopId:
-          type: string
-          example: nikuyokocho-0001
-        yearMonth:
-          type: integer
-          example: 202107
-        approvedBy:
-          type: string
-          example: STORE
+          example: "2021-08-27T00:00:00+09:00"
 
   securitySchemes:
     BearerAuth:
