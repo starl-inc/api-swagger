@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   title: Starl-Backend API Document
   description: This is API Document of Starl-Backend
-  version: 1.0.9
+  version: 1.0.10
 
 servers:
   - url: https://api.starl.co.jp/v1
@@ -1963,7 +1963,8 @@ components:
         refreshToken:
           type: string
           example: dn43ud8uj32nk2je
-
+      required:
+        - refreshToken
     StoreSignUpRequest:
       type: object
       properties:
@@ -1973,6 +1974,9 @@ components:
         storeName:
           type: string
           example: 渋谷 肉横丁
+      required:
+        - id
+        - storeName
     StoreSignUpResponse:
       type: object
       properties:
@@ -1997,6 +2001,9 @@ components:
         password:
           type: string
           example: b03ddf3ca2e714a6548e7495e2a03f5e824eaac9837cd7f159c67b90fb4b7342
+      required:
+        - id
+        - password
     StoreInitialSignInResponse:
       type: object
       properties:
@@ -2021,6 +2028,9 @@ components:
         password:
           type: string
           example: b03ddf3ca2e714a6548e7495e2a03f5e824eaac9837cd7f159c67b90fb4b7342
+      required:
+        - id
+        - password
     StoreSignInResponse:
       type: object
       properties:
@@ -2048,6 +2058,10 @@ components:
         session:
           type: string
           example: AYABeEG4Uc9u9f-1S6Cyj3G5i8IAHQABAAdTZXJ2aWNlABBDb2duaXRvVXNlclBvb
+      required:
+        - id
+        - newPassword
+        - session
     StoreResetPasswordResponse:
       type: object
       properties:
@@ -2099,6 +2113,10 @@ components:
           example: |
             月～日、祝日、祝前日: 17:00～翌0:00
             定休日：不定休
+      required:
+        - storeId
+        - id
+        - shopName
     ShopSignUpResponse:
       type: object
       properties:
@@ -2137,6 +2155,9 @@ components:
         password:
           type: string
           example: b03ddf3ca2e714a6548e7495e2a03f5e824eaac9837cd7f159c67b90fb4b7342
+      required:
+        - id
+        - password
     ShopInitialSignInResponse:
       type: object
       properties:
@@ -2161,6 +2182,9 @@ components:
         password:
           type: string
           example: b03ddf3ca2e714a6548e7495e2a03f5e824eaac9837cd7f159c67b90fb4b7342
+      required:
+        - id
+        - password
     ShopSignInResponse:
       type: object
       properties:
@@ -2188,6 +2212,10 @@ components:
         session:
           type: string
           example: AYABeEG4Uc9u9f-1S6Cyj3G5i8IAHQABAAdTZXJ2aWNlABBDb2duaXRvVXNlclBvb
+      required:
+        - id
+        - newPassword
+        - session
     ShopResetPasswordResponse:
         type: object
         properties:
@@ -2222,6 +2250,8 @@ components:
         deviceId:
           type: string
           example: 3K0XXXXX-83XX-HEXX-KIXX-29KH83XXXXXX
+      required:
+        - deviceId
     UserSignUpResponse:
       type: object
       properties:
@@ -2243,6 +2273,9 @@ components:
         password:
           type: string
           example: b03ddf3ca2e714a6548e7495e2a03f5e824eaac9837cd7f159c67b90fb4b7342
+      required:
+        - id
+        - password
     UserSignInResponse:
       type: object
       properties:
@@ -2264,6 +2297,10 @@ components:
         nickname:
           type: string
           example: スタールくん
+      required:
+        - id
+        - email
+        - nickname
     UserConfirmResponse:
       type: object
       properties:
@@ -2291,6 +2328,10 @@ components:
         password:
           type: string
           example: b03ddf3ca2e714a6548e7495e2a03f5e824eaac9837cd7f159c67b90fb4b7342
+      required:
+        - id
+        - code
+        - password
     AdminUserDisableResponse:
       type: object
       properties:
