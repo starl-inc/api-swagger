@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   title: Starl-Backend API Document
   description: This is API Document of Starl-Backend
-  version: 1.0.10
+  version: 1.0.11
 
 servers:
   - url: https://api.starl.co.jp/v1
@@ -89,18 +89,14 @@ paths:
         content:
           application/json:
             schema:
-              oneOf:
-                - $ref: '#/components/schemas/StoreInitialSignInRequest'
-                - $ref: '#/components/schemas/StoreSignInRequest'
+              $ref: '#/components/schemas/StoreSignInRequest'
       responses:
         '200':
           description: Successful Operation
           content:
             application/json:
               schema:
-                oneOf:
-                  - $ref: '#/components/schemas/StoreInitialSignInResponse'
-                  - $ref: '#/components/schemas/StoreSignInResponse'
+                $ref: '#/components/schemas/StoreSignInResponse'
               examples:
                 StoreInitialSignInResponse:
                   summary: 初回ログイン時のレスポンス
@@ -294,18 +290,14 @@ paths:
         content:
           application/json:
             schema:
-              oneOf:
-                - $ref: '#/components/schemas/ShopInitialSignInRequest'
-                - $ref: '#/components/schemas/ShopSignInRequest'
+              $ref: '#/components/schemas/ShopSignInRequest'
       responses:
         '200':
           description: Successful Operation
           content:
             application/json:
               schema:
-                oneOf:
-                  - $ref: '#/components/schemas/ShopInitialSignInResponse'
-                  - $ref: '#/components/schemas/ShopSignInResponse'
+                $ref: '#/components/schemas/ShopSignInResponse'
               examples:
                 ShopInitialSignInResponse:
                   summary: 初回ログイン時のレスポンス
@@ -1992,33 +1984,6 @@ components:
         storeName:
           type: string
           example: 渋谷 肉横丁
-    StoreInitialSignInRequest:
-      type: object
-      properties:
-        id:
-          type: string
-          example: nikuyokocho
-        password:
-          type: string
-          example: b03ddf3ca2e714a6548e7495e2a03f5e824eaac9837cd7f159c67b90fb4b7342
-      required:
-        - id
-        - password
-    StoreInitialSignInResponse:
-      type: object
-      properties:
-        initialSignIn:
-          type: boolean
-          example: true
-        session:
-          type: string
-          example: AYABeEG4Uc9u9f-1S6Cyj3G5i8IAHQABAAdTZXJ2aWNlABBDb2duaXRvVXNlclBvb
-        idToken:
-          type: string
-          example:
-        refreshToken:
-          type: string
-          example:
     StoreSignInRequest:
       type: object
       properties:
@@ -2036,10 +2001,10 @@ components:
       properties:
         initialSignIn:
           type: boolean
-          example: false
+          example: true
         session:
           type: string
-          example:
+          example: AYABeEG4Uc9u9f-1S6Cyj3G5i8IAHQABAAdTZXJ2aWNlABBDb2duaXRvVXNlclBvb
         idToken:
           type: string
           example: dmcxd329ujdmkemkd349r
@@ -2146,33 +2111,6 @@ components:
           example: |
             月～日、祝日、祝前日: 17:00～翌0:00
             定休日：不定休
-    ShopInitialSignInRequest:
-      type: object
-      properties:
-        id:
-          type: string
-          example: nikuyokocho-0001
-        password:
-          type: string
-          example: b03ddf3ca2e714a6548e7495e2a03f5e824eaac9837cd7f159c67b90fb4b7342
-      required:
-        - id
-        - password
-    ShopInitialSignInResponse:
-      type: object
-      properties:
-        initialSignIn:
-          type: boolean
-          example: true
-        session:
-          type: string
-          example: AYABeEG4Uc9u9f-1S6Cyj3G5i8IAHQABAAdTZXJ2aWNlABBDb2duaXRvVXNlclBvb
-        idToken:
-          type: string
-          example:
-        refreshToken:
-          type: string
-          example:
     ShopSignInRequest:
       type: object
       properties:
@@ -2190,10 +2128,10 @@ components:
       properties:
         initialSignIn:
           type: boolean
-          example: false
+          example: true
         session:
           type: string
-          example:
+          example: AYABeEG4Uc9u9f-1S6Cyj3G5i8IAHQABAAdTZXJ2aWNlABBDb2duaXRvVXNlclBvb
         idToken:
           type: string
           example: dmcxd329ujdmkemkd349r
