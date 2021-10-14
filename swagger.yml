@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   title: Starl-Backend API Document
   description: This is API Document of Starl-Backend
-  version: 1.0.13
+  version: 1.0.14
 
 servers:
   - url: https://api.starl.co.jp/v1
@@ -52,60 +52,60 @@ paths:
         '401':
           description: Unauthorized (RefreshToken is invalid.)
 
-  # -------------------- AuthStore --------------------
-  /admin/store/signup:
+  # -------------------- AuthCorporation --------------------
+  /admin/corporation/signup:
     post:
       tags:
-        - AuthStore
-      summary: Sign up store by admin
+        - AuthCorporation
+      summary: Sign up corporation by admin
       security:
         - BearerAuth: []
       requestBody:
-        description: Store object to signup
+        description: Corporation object to signup
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/StoreSignUpRequest'
+              $ref: '#/components/schemas/CorporationSignUpRequest'
       responses:
         '200':
           description: Successful Operation
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/StoreSignUpResponse'
+                $ref: '#/components/schemas/CorporationSignUpResponse'
         '400':
           description: Bad Request
         '401':
           description: Unauthorized
-  /store/signin:
+  /corporation/signin:
     post:
       tags:
-        - AuthStore
-      summary: Sign in store
+        - AuthCorporation
+      summary: Sign in corporation
       requestBody:
-        description: Store auth info
+        description: Corporation auth info
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/StoreSignInRequest'
+              $ref: '#/components/schemas/CorporationSignInRequest'
       responses:
         '200':
           description: Successful Operation
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/StoreSignInResponse'
+                $ref: '#/components/schemas/CorporationSignInResponse'
               examples:
-                StoreInitialSignInResponse:
+                CorporationInitialSignInResponse:
                   summary: 初回ログイン時のレスポンス
                   value:
                     initialSignIn: true
                     session: AYABeEG4Uc9u9f-1S6Cyj3G5i8IAHQABAAdTZXJ2aWNlABBDb2duaXRvVXNlclBvb
                     idToken:
                     refreshToken:
-                StoreSignInResponse:
+                CorporationSignInResponse:
                   summary: 通常のレスポンス
                   value:
                     initialSignIn: false
@@ -116,40 +116,40 @@ paths:
           description: Bad Request
         '401':
           description: Unauthorized (ID or password is invalid.)
-  /store/reset-password:
+  /corporation/reset-password:
     post:
       tags:
-        - AuthStore
-      summary: Store reset password
+        - AuthCorporation
+      summary: Corporation reset password
       requestBody:
-        description: Store auth info
+        description: Corporation auth info
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/StoreResetPasswordRequest'
+              $ref: '#/components/schemas/CorporationResetPasswordRequest'
       responses:
         '200':
           description: Successful Operation
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/StoreResetPasswordResponse'
+                $ref: '#/components/schemas/CorporationResetPasswordResponse'
         '400':
           description: Bad Request
         '401':
           description: Unauthorized (ID or session is invalid.)
-  /admin/store/{storeId}/activate:
+  /admin/corporation/{corporationId}/activate:
     put:
       tags:
-        - AuthStore
-      summary: Activate store by admin
+        - AuthCorporation
+      summary: Activate corporation by admin
       security:
         - BearerAuth: []
       parameters:
         - in: path
-          name: storeId
-          description: Store ID
+          name: corporationId
+          description: Corporation ID
           required: true
           schema:
             type: string
@@ -160,18 +160,18 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/StoreActivateResponse'
+                $ref: '#/components/schemas/CorporationActivateResponse'
         '400':
           description: Bad Request
         '401':
           description: Unauthorized
         '404':
-          description: Store not found
-  /store/activate:
+          description: Corporation not found
+  /corporation/activate:
     put:
       tags:
-        - AuthStore
-      summary: Activate store by store
+        - AuthCorporation
+      summary: Activate corporation by corporation
       security:
         - BearerAuth: []
       responses:
@@ -180,22 +180,22 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/StoreActivateResponse'
+                $ref: '#/components/schemas/CorporationActivateResponse'
         '400':
           description: Bad Request
         '401':
           description: Unauthorized
-  /admin/store/{storeId}/disable:
+  /admin/corporation/{corporationId}/disable:
     put:
       tags:
-        - AuthStore
-      summary: Disable store by admin
+        - AuthCorporation
+      summary: Disable corporation by admin
       security:
         - BearerAuth: []
       parameters:
         - in: path
-          name: storeId
-          description: Store ID
+          name: corporationId
+          description: Corporation ID
           required: true
           schema:
             type: string
@@ -206,18 +206,18 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/StoreDisableResponse'
+                $ref: '#/components/schemas/CorporationDisableResponse'
         '400':
           description: Bad Request
         '401':
           description: Unauthorized
         '404':
-          description: Store not found
-  /store/disable:
+          description: Corporation not found
+  /corporation/disable:
     put:
       tags:
-        - AuthStore
-      summary: Disable store by store
+        - AuthCorporation
+      summary: Disable corporation by corporation
       security:
         - BearerAuth: []
       responses:
@@ -226,16 +226,16 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/StoreDisableResponse'
+                $ref: '#/components/schemas/CorporationDisableResponse'
         '400':
           description: Bad Request
         '401':
           description: Unauthorized
-  /store/signout:
+  /corporation/signout:
     post:
       tags:
-        - AuthStore
-      summary: Store sign out
+        - AuthCorporation
+      summary: Corporation sign out
       security:
         - BearerAuth: []
       requestBody:
@@ -368,11 +368,11 @@ paths:
           description: Unauthorized
         '404':
           description: Shop not found
-  /store/shop/{shopId}/activate:
+  /corporation/shop/{shopId}/activate:
     put:
       tags:
         - AuthShop
-      summary: Activate shop by store
+      summary: Activate shop by corporation
       security:
         - BearerAuth: []
       responses:
@@ -414,11 +414,11 @@ paths:
           description: Unauthorized
         '404':
           description: Shop not found
-  /store/shop/{shopId}/disable:
+  /corporation/shop/{shopId}/disable:
     put:
       tags:
         - AuthShop
-      summary: Disable shop by store
+      summary: Disable shop by corporation
       security:
         - BearerAuth: []
       responses:
@@ -624,11 +624,11 @@ paths:
           description: Unauthorized (RefreshToken is invalid.)
 
   # -------------------- Admin --------------------
-  /admin/store/list:
+  /admin/corporation/list:
     get:
       tags:
         - Admin
-      summary: Read stores by admin
+      summary: Read corporations by admin
       security:
         - BearerAuth: []
       parameters:
@@ -655,7 +655,7 @@ paths:
                     status:
                       type: string
                       example: ACTIVE
-                    storeName:
+                    corporationName:
                       type: string
                       example: 渋谷 肉横丁
                     shopsCount:
@@ -678,35 +678,35 @@ paths:
         '401':
           description: Unauthorized
         '404':
-          description: Store Not Found
-  /admin/store/{storeId}:
+          description: Corporation Not Found
+  /admin/corporation/{corporationId}:
     put:
       tags:
         - Admin
-      summary: Update store by admin
+      summary: Update corporation by admin
       security:
         - BearerAuth: []
       parameters:
         - in: path
-          name: storeId
-          description: Store ID
+          name: corporationId
+          description: Corporation ID
           required: true
           schema:
             type: string
             example: nikuyokocho
       requestBody:
-        description: Store object to update
+        description: Corporation object to update
         required: true
         content:
           application/json:
             schema:
               type: object
               properties:
-                storeName:
+                corporationName:
                   type: string
                   example: 渋谷 肉横丁
               required:
-                - storeName
+                - corporationName
       responses:
         '200':
           description: Successful Operation
@@ -721,7 +721,7 @@ paths:
                   status:
                     type: string
                     example: ACTIVE
-                  storeName:
+                  corporationName:
                     type: string
                     example: 渋谷 肉横丁
         '400':
@@ -729,17 +729,17 @@ paths:
         '401':
           description: Unauthorized
         '404':
-          description: Store not found
+          description: Corporation not found
     delete:
       tags:
         - Admin
-      summary: Delete store by admin
+      summary: Delete corporation by admin
       security:
         - BearerAuth: []
       parameters:
-        - name: storeId
+        - name: corporationId
           in: path
-          description: Store ID
+          description: Corporation ID
           required: true
           schema:
             type: string
@@ -752,7 +752,7 @@ paths:
         '401':
           description: Unauthorized
         '404':
-          description: Store not found
+          description: Corporation not found
   /admin/shop/list:
     get:
       tags:
@@ -762,11 +762,11 @@ paths:
         - BearerAuth: []
       parameters:
         - in: query
-          name: storeId
+          name: corporationId
           schema:
             type: string
             example: nikuyokocho
-          description: Store ID
+          description: Corporation ID
         - in: query
           name: yearMonth
           schema:
@@ -787,13 +787,13 @@ paths:
                     id:
                       type: string
                       example: nikuyokocho-0001
-                    storeId:
+                    corporationId:
                       type: string
                       example: nikuyokocho
                     status:
                       type: string
                       example: ACTIVE
-                    storeName:
+                    corporationName:
                       type: string
                       example: 渋谷 肉横丁
                     shopName:
@@ -825,7 +825,7 @@ paths:
         '401':
           description: Unauthorized
         '404':
-          description: Store Not Found
+          description: Corporation Not Found
   /admin/shop/{shopId}:
     put:
       tags:
@@ -992,12 +992,12 @@ paths:
         '404':
           description: User Not Found
 
-  # -------------------- Store --------------------
-  /store:
+  # -------------------- Corporation --------------------
+  /corporation:
     get:
       tags:
-        - Store
-      summary: Read store by store
+        - Corporation
+      summary: Read corporation by corporation
       security:
         - BearerAuth: []
       parameters:
@@ -1028,7 +1028,7 @@ paths:
                   status:
                     type: string
                     example: ACTIVE
-                  storeName:
+                  corporationName:
                     type: string
                     example: 渋谷 肉横丁
                   yearMonth:
@@ -1064,23 +1064,23 @@ paths:
           description: Unauthorized
     put:
       tags:
-        - Store
-      summary: Update store by store
+        - Corporation
+      summary: Update corporation by corporation
       security:
         - BearerAuth: []
       requestBody:
-        description: Store object to update
+        description: Corporation object to update
         required: true
         content:
           application/json:
             schema:
               type: object
               properties:
-                storeName:
+                corporationName:
                   type: string
                   example: 渋谷 肉横丁
               required:
-                - storeName
+                - corporationName
       responses:
         '200':
           description: Successful Operarion
@@ -1095,18 +1095,18 @@ paths:
                   status:
                     type: string
                     example: ACTIVE
-                  storeName:
+                  corporationName:
                     type: string
                     example: 渋谷 肉横丁
         '400':
           description: Bad Request
         '401':
           description: Unauthorized
-  /store/transaction/list:
+  /corporation/transaction/list:
     get:
       tags:
-        - Store
-      summary: Read transaction list of the store
+        - Corporation
+      summary: Read transaction list of the corporation
       security:
         - BearerAuth: []
       parameters:
@@ -1157,11 +1157,11 @@ paths:
           description: Unauthorized
         '404':
           description: Transaction not found
-  /store/shop/list:
+  /corporation/shop/list:
     get:
       tags:
-        - Store
-      summary: Read shop list of the store
+        - Corporation
+      summary: Read shop list of the corporation
       security:
         - BearerAuth: []
       parameters:
@@ -1220,11 +1220,11 @@ paths:
           description: Unauthorized
         '404':
           description: Shop not found
-  /store/shop/{shopId}:
+  /corporation/shop/{shopId}:
     get:
       tags:
-        - Store
-      summary: Read shop by store
+        - Corporation
+      summary: Read shop by corporation
       security:
         - BearerAuth: []
       parameters:
@@ -1315,8 +1315,8 @@ paths:
           description: Shop not found
     put:
       tags:
-        - Store
-      summary: Update shop by store
+        - Corporation
+      summary: Update shop by corporation
       description:
       security:
         - BearerAuth: []
@@ -1404,13 +1404,13 @@ paths:
                   id:
                     type: string
                     example: nikuyokocho-0001
-                  storeId:
+                  corporationId:
                     type: string
                     example: nikuyokocho
                   status:
                     type: string
                     example: ACTIVE
-                  storeName:
+                  corporationName:
                     type: string
                     example: 渋谷 肉横丁
                   shopName:
@@ -1483,7 +1483,7 @@ paths:
                   id:
                     type: string
                     example: nikuyokocho-0001
-                  storeId:
+                  corporationId:
                     type: string
                     example: nikuyokocho
                   status:
@@ -1898,13 +1898,13 @@ paths:
                     id:
                       type: string
                       example: nikuyokocho-0001
-                    storeId:
+                    corporationId:
                       type: string
                       example: nikuyokocho
                     status:
                       type: string
                       example: ACTIVE
-                    storeName:
+                    corporationName:
                       type: string
                       example: 渋谷 肉横丁
                     shopName:
@@ -1950,10 +1950,10 @@ paths:
                     shopId:
                       type: string
                       example: nikuyokocho-0001
-                    storeId:
+                    corporationId:
                       type: string
                       example: nikuyokocho
-                    storeName:
+                    corporationName:
                       type: string
                       example: 渋谷 肉横丁
                     shopName:
@@ -1982,8 +1982,8 @@ paths:
 tags:
   - name: AuthAdmin
     description: Authentication/Authorization of admin
-  - name: AuthStore
-    description: Authentication/Authorization of store
+  - name: AuthCorporation
+    description: Authentication/Authorization of corporation
   - name: AuthShop
     description: Authentication/Authorization of shop
   - name: AuthUser
@@ -1991,8 +1991,8 @@ tags:
 
   - name: Admin
     description: Endpoints to use in AdminApp
-  - name: Store
-    description: Endpoints to use in BizApp when store sign in
+  - name: Corporation
+    description: Endpoints to use in BizApp when corporation sign in
   - name: Shop
     description: Endpoints to use in BizApp when shop sign in
   - name: User
@@ -2029,19 +2029,19 @@ components:
           example: dn43ud8uj32nk2je
       required:
         - refreshToken
-    StoreSignUpRequest:
+    CorporationSignUpRequest:
       type: object
       properties:
         id:
           type: string
           example: nikuyokocho
-        storeName:
+        corporationName:
           type: string
           example: 渋谷 肉横丁
       required:
         - id
-        - storeName
-    StoreSignUpResponse:
+        - corporationName
+    CorporationSignUpResponse:
       type: object
       properties:
         id:
@@ -2053,10 +2053,10 @@ components:
         initialPassword:
           type: string
           example: P@ssw0rd
-        storeName:
+        corporationName:
           type: string
           example: 渋谷 肉横丁
-    StoreSignInRequest:
+    CorporationSignInRequest:
       type: object
       properties:
         id:
@@ -2068,7 +2068,7 @@ components:
       required:
         - id
         - password
-    StoreSignInResponse:
+    CorporationSignInResponse:
       type: object
       properties:
         initialSignIn:
@@ -2083,7 +2083,7 @@ components:
         refreshToken:
           type: string
           example: dn43ud8uj32nk2je
-    StoreResetPasswordRequest:
+    CorporationResetPasswordRequest:
       type: object
       properties:
         id:
@@ -2099,7 +2099,7 @@ components:
         - id
         - newPassword
         - session
-    StoreResetPasswordResponse:
+    CorporationResetPasswordResponse:
       type: object
       properties:
         idToken:
@@ -2108,7 +2108,7 @@ components:
         refreshToken:
           type: string
           example: dn43ud8uj32nk2je
-    StoreActivateResponse:
+    CorporationActivateResponse:
       type: object
       properties:
         id:
@@ -2117,7 +2117,7 @@ components:
         status:
           type: string
           example: ACTIVE
-    StoreDisableResponse:
+    CorporationDisableResponse:
       type: object
       properties:
         id:
@@ -2130,7 +2130,7 @@ components:
     ShopSignUpRequest:
       type: object
       properties:
-        storeId:
+        corporationId:
           type: string
           example: nikuyokocho
         id:
@@ -2151,7 +2151,7 @@ components:
             月～日、祝日、祝前日: 17:00～翌0:00
             定休日：不定休
       required:
-        - storeId
+        - corporationId
         - id
         - shopName
     ShopSignUpResponse:
@@ -2160,7 +2160,7 @@ components:
         id:
           type: string
           example: nikuyokocho-0001
-        storeId:
+        corporationId:
           type: string
           example: nikuyokocho
         status:
@@ -2370,7 +2370,7 @@ components:
             type: string
             example: dn43ud8uj32nk2je
 
-    Store:
+    Corporation:
       type: object
       properties:
         id:
@@ -2382,7 +2382,7 @@ components:
         initialPassword:
           type: string
           example: P@ssw0rd
-        storeName:
+        corporationName:
           type: string
           example: 渋谷 肉横丁
     Shop:
@@ -2391,7 +2391,7 @@ components:
         id:
           type: string
           example: nikuyokocho-0001
-        storeId:
+        corporationId:
           type: string
           example: nikuyokocho
         status:
