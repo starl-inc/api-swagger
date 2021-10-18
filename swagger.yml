@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   title: Starl-Backend API Document
   description: This is API Document of Starl-Backend
-  version: 1.0.17
+  version: 1.0.18
 
 servers:
   - url: https://api.starl.co.jp/v1
@@ -2297,30 +2297,30 @@ components:
     UserSignInResponse:
       type: object
       properties:
-        accessToken:
-          type: string
-          example: eyJz9sdfsdfsdfsd
         idToken:
           type: string
           example: dmcxd329ujdmkemkd349r
+        accessToken:
+          type: string
+          example: eyJz9sdfsdfsdfsd
         refreshToken:
           type: string
           example: dn43ud8uj32nk2je
     UserConfirmRequest:
       type: object
       properties:
-        accessToken:
-          type: string
-          example: eyJz9sdfsdfsdfsd
         email:
           type: string
           example: user@gmail.com
         nickname:
           type: string
           example: スタールくん
+        accessToken:
+          type: string
+          example: eyJz9sdfsdfsdfsd
       required:
-        - accessToken
         - email
+        - accessToken
     UserConfirmResponse:
       type: object
       properties:
