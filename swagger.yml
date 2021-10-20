@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   title: Starl-Backend API Document
   description: This is API Document of Starl-Backend
-  version: 1.0.19
+  version: 1.0.20
 
 servers:
   # - url: https://api.starl.co.jp/v1
@@ -140,34 +140,6 @@ paths:
           description: Bad Request
         '401':
           description: Unauthorized (ID or session is invalid.)
-  /admin/corporation/{corporationId}/activate:
-    put:
-      tags:
-        - AuthCorporation
-      summary: Activate corporation by admin
-      security:
-        - BearerAuth: []
-      parameters:
-        - in: path
-          name: corporationId
-          description: Corporation ID
-          required: true
-          schema:
-            type: string
-            example: nikuyokocho
-      responses:
-        '200':
-          description: Successful Operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CorporationActivateResponse'
-        '400':
-          description: Bad Request
-        '401':
-          description: Unauthorized
-        '404':
-          description: Corporation not found
   /admin/corporation/{corporationId}/disable:
     put:
       tags:
@@ -190,6 +162,34 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CorporationDisableResponse'
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '404':
+          description: Corporation not found
+  /admin/corporation/{corporationId}/activate:
+    put:
+      tags:
+        - AuthCorporation
+      summary: Activate corporation by admin
+      security:
+        - BearerAuth: []
+      parameters:
+        - in: path
+          name: corporationId
+          description: Corporation ID
+          required: true
+          schema:
+            type: string
+            example: nikuyokocho
+      responses:
+        '200':
+          description: Successful Operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CorporationActivateResponse'
         '400':
           description: Bad Request
         '401':
