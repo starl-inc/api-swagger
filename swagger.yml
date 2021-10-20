@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   title: Starl-Backend API Document
   description: This is API Document of Starl-Backend
-  version: 1.0.22
+  version: 1.0.0
 
 servers:
   # - url: https://api.starl.co.jp/v1
@@ -741,29 +741,6 @@ paths:
           description: Unauthorized
         '404':
           description: Corporation not found
-    delete:
-      tags:
-        - Admin
-      summary: Delete corporation by admin
-      security:
-        - BearerAuth: []
-      parameters:
-        - name: corporationId
-          in: path
-          description: Corporation ID
-          required: true
-          schema:
-            type: string
-            example: nikuyokocho
-      responses:
-        '200':
-          description: Successful Operation
-        '400':
-          description: Bad Request
-        '401':
-          description: Unauthorized
-        '404':
-          description: Corporation not found
   /admin/shop/list:
     get:
       tags:
@@ -902,29 +879,6 @@ paths:
                     example: |
                       月～日、祝日、祝前日: 17:00～翌0:00
                       定休日：不定休
-        '400':
-          description: Bad Request
-        '401':
-          description: Unauthorized
-        '404':
-          description: Shop not found
-    delete:
-      tags:
-        - Admin
-      summary: Delete shop by admin
-      security:
-        - BearerAuth: []
-      parameters:
-        - in: path
-          name: shopId
-          description: Shop ID
-          required: true
-          schema:
-            type: string
-            example: nikuyokocho-0001
-      responses:
-        '200':
-          description: Successful Operation
         '400':
           description: Bad Request
         '401':
@@ -1617,6 +1571,9 @@ paths:
                   shopId:
                     type: string
                     example: nikuyokocho-0001
+                  corporationId:
+                    type: string
+                    example: nikuyokocho
                   price:
                     type: integer
                     example: 2400
@@ -1682,6 +1639,9 @@ paths:
                   shopId:
                     type: string
                     example: nikuyokocho-0001
+                  corporationId:
+                    type: string
+                    example: nikuyokocho
                   price:
                     type: integer
                     example: 2400
