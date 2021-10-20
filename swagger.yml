@@ -2,11 +2,10 @@ openapi: 3.0.0
 info:
   title: Starl-Backend API Document
   description: This is API Document of Starl-Backend
-  version: 1.0.0
+  version: 1.0.1
 
 servers:
-  # - url: https://api.starl.co.jp/v1
-  - url: https://g3im603od8.execute-api.ap-northeast-1.amazonaws.com/v1/
+  - url: https://api.starl.co.jp/v1
 
 paths:
   # -------------------- AuthAdmin --------------------
@@ -956,6 +955,51 @@ paths:
           description: Unauthorized
         '404':
           description: User Not Found
+  /admin/transaction/list:
+    get:
+      tags:
+        - Admin
+      summary: Read transactions by admin
+      security:
+        - BearerAuth: []
+      responses:
+        '200':
+          description: Successful Operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                      example: 1
+                    userId:
+                      type: string
+                      example: ad89afgt
+                    shopId:
+                      type: string
+                      example: nikuyokocho-0001
+                    corporationId:
+                      type: string
+                      example: nikuyokocho
+                    price:
+                      type: integer
+                      example: 1000
+                    usedPoints:
+                      type: integer
+                      example: 100
+                    earnedPoints:
+                      type: integer
+                      example: 9
+                    createdAt:
+                      type: string
+                      example: "2021-08-27T00:00:00+09:00"
+        '401':
+          description: Unauthorized
+        '404':
+          description: Transaction Not Found
 
   # -------------------- Corporation --------------------
   /corporation:
@@ -2476,6 +2520,9 @@ components:
         shopId:
           type: string
           example: nikuyokocho-0001
+        corporationId:
+          type: string
+          example: nikuyokocho
         price:
           type: integer
           example: 1000
@@ -2494,4 +2541,3 @@ components:
       type: http
       scheme: bearer
       bearerFormat: JWT
-
