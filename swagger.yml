@@ -2,10 +2,11 @@ openapi: 3.0.0
 info:
   title: Starl-Backend API Document
   description: This is API Document of Starl-Backend
-  version: 1.0.18
+  version: 1.0.19
 
 servers:
-  - url: https://api.starl.co.jp/v1
+  # - url: https://api.starl.co.jp/v1
+  - url: https://g3im603od8.execute-api.ap-northeast-1.amazonaws.com/v1/
 
 paths:
   # -------------------- AuthAdmin --------------------
@@ -167,24 +168,6 @@ paths:
           description: Unauthorized
         '404':
           description: Corporation not found
-  /corporation/activate:
-    put:
-      tags:
-        - AuthCorporation
-      summary: Activate corporation by corporation
-      security:
-        - BearerAuth: []
-      responses:
-        '200':
-          description: Successful Operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CorporationActivateResponse'
-        '400':
-          description: Bad Request
-        '401':
-          description: Unauthorized
   /admin/corporation/{corporationId}/disable:
     put:
       tags:
@@ -213,20 +196,23 @@ paths:
           description: Unauthorized
         '404':
           description: Corporation not found
-  /corporation/disable:
-    put:
+  /corporation/change-password:
+    post:
       tags:
         - AuthCorporation
-      summary: Disable corporation by corporation
+      summary: Corporation change password
       security:
         - BearerAuth: []
+      requestBody:
+        description: Corporation auth info
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CorporationChangePasswordRequest'
       responses:
         '200':
           description: Successful Operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CorporationDisableResponse'
         '400':
           description: Bad Request
         '401':
@@ -428,6 +414,27 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ShopDisableResponse'
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+  /shop/change-password:
+    post:
+      tags:
+        - AuthShop
+      summary: Shop change password
+      security:
+        - BearerAuth: []
+      requestBody:
+        description: Shop auth info
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ShopChangePasswordRequest'
+      responses:
+        '200':
+          description: Successful Operation
         '400':
           description: Bad Request
         '401':
@@ -2029,6 +2036,7 @@ components:
           example: dn43ud8uj32nk2je
       required:
         - refreshToken
+
     CorporationSignUpRequest:
       type: object
       properties:
@@ -2134,6 +2142,22 @@ components:
               shopId:
                 type: string
                 example: nikuyokocho-0001
+    CorporationChangePasswordRequest:
+      type: object
+      properties:
+        previousPassword:
+          type: string
+          example: P@ssw0rd
+        newPassword:
+          type: string
+          example: newP@ssw0rd
+        accessToken:
+          type: string
+          example: eyJz9sdfsdfsdfsd
+      required:
+        - previousPassword
+        - newPassword
+        - accessToken
 
     ShopSignUpRequest:
       type: object
@@ -2261,6 +2285,22 @@ components:
         status:
           type: string
           example: DISABLED
+    ShopChangePasswordRequest:
+      type: object
+      properties:
+        previousPassword:
+          type: string
+          example: P@ssw0rd
+        newPassword:
+          type: string
+          example: newP@ssw0rd
+        accessToken:
+          type: string
+          example: eyJz9sdfsdfsdfsd
+      required:
+        - previousPassword
+        - newPassword
+        - accessToken
 
     UserSignUpRequest:
       type: object
