@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   title: Starl-Backend API Document
   description: This is API Document of Starl-Backend
-  version: 1.0.1
+  version: 1.0.2
 
 servers:
   - url: https://api.starl.co.jp/v1
@@ -1123,7 +1123,7 @@ paths:
           name: yearMonth
           schema:
             type: integer
-            example: 202107
+            example: 202108
           required: true
           description: Year and month of items to return
         - in: query
@@ -1157,6 +1157,9 @@ paths:
                     usedPoints:
                       type: integer
                       example: 100
+                    earnedPoints:
+                      type: integer
+                      example: 23
                     createdAt:
                       type: string
                       example: "2021-06-01T16:23:56+09:00"
@@ -1516,6 +1519,52 @@ paths:
           description: Bad Request
         '401':
           description: Unauthorized
+  /shop/transaction/list:
+    get:
+      tags:
+        - Shop
+      summary: Read transaction list of the shop
+      security:
+        - BearerAuth: []
+      parameters:
+        - in: query
+          name: yearMonth
+          schema:
+            type: integer
+            example: 202108
+          required: true
+          description: Year and month of items to return
+      responses:
+        '200':
+          description: Successful Operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                      example: 1
+                    price:
+                      type: integer
+                      example: 2400
+                    usedPoints:
+                      type: integer
+                      example: 100
+                    earnedPoints:
+                      type: integer
+                      example: 23
+                    createdAt:
+                      type: string
+                      example: "2021-06-01T16:23:56+09:00"
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '404':
+          description: Transaction not found
   /shop/user/{userId}:
     get:
       tags:
@@ -1618,6 +1667,9 @@ paths:
                   corporationId:
                     type: string
                     example: nikuyokocho
+                  yearMonth:
+                    type: integer
+                    example: 202108
                   price:
                     type: integer
                     example: 2400
@@ -1686,6 +1738,9 @@ paths:
                   corporationId:
                     type: string
                     example: nikuyokocho
+                  yearMonth:
+                    type: integer
+                    example: 202108
                   price:
                     type: integer
                     example: 2400
@@ -1965,12 +2020,6 @@ paths:
                     shopId:
                       type: string
                       example: nikuyokocho-0001
-                    corporationId:
-                      type: string
-                      example: nikuyokocho
-                    corporationName:
-                      type: string
-                      example: 渋谷 肉横丁
                     shopName:
                       type: string
                       example: 渋谷 肉横丁 肉太郎
