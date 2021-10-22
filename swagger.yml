@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   title: Starl-Backend API Document
   description: This is API Document of Starl-Backend
-  version: 1.0.5
+  version: 1.0.6
 
 servers:
   - url: https://api.starl.co.jp/v1
@@ -558,6 +558,10 @@ paths:
       responses:
         '200':
           description: Successful Operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserVerifyResponse'
         '400':
           description: Bad Request
   /user/change-password:
@@ -2498,12 +2502,18 @@ components:
         email:
           type: string
           example: user@gmail.com
-        nickname:
-          type: string
-          example: スタールくん
         status:
           type: string
           example: REGISTERED
+        nickname:
+          type: string
+          example: スタールくん
+        iconURL:
+          type: string
+          example:
+        amount:
+          type: integer
+          example: 1000
     UserResendCodeRequest:
       type: object
       properties:
@@ -2524,6 +2534,30 @@ components:
       required:
         - code
         - accessToken
+    UserVerifyResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          example: ad89afgt
+        email:
+          type: string
+          example: user@gmail.com
+        status:
+          type: string
+          example: VERIFIED
+        verification:
+          type: boolean
+          example: true
+        nickname:
+          type: string
+          example: スタールくん
+        iconURL:
+          type: string
+          example: https://www.example.com/ad89afgt
+        amount:
+          type: integer
+          example: 1234
     UserChangePasswordRequest:
       type: object
       properties:
@@ -2561,15 +2595,15 @@ components:
         email:
           type: string
           example: user@gmail.com
-        nickname:
-          type: string
-          example: スタールくん
         status:
           type: string
           example: ACTIVE
         verification:
           type: boolean
           example: false
+        nickname:
+          type: string
+          example: スタールくん
     AdminDisableUserResponse:
       type: object
       properties:
@@ -2579,6 +2613,9 @@ components:
         status:
           type: string
           example: DISABLED
+        verification:
+          type: boolean
+          example: true
     AdminActivateUserResponse:
       type: object
       properties:
@@ -2588,6 +2625,9 @@ components:
         status:
           type: string
           example: ACTIVE
+        verification:
+          type: boolean
+          example: true
 
     Corporation:
       type: object
