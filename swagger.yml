@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   title: Starl-Backend API Document
   description: This is API Document of Starl-Backend
-  version: 1.0.4
+  version: 1.0.5
 
 servers:
   - url: https://api.starl.co.jp/v1
@@ -202,8 +202,6 @@ paths:
       tags:
         - AuthCorporation
       summary: Corporation change password
-      security:
-        - BearerAuth: []
       requestBody:
         description: Corporation auth info
         required: true
@@ -426,8 +424,6 @@ paths:
       tags:
         - AuthShop
       summary: Shop change password
-      security:
-        - BearerAuth: []
       requestBody:
         description: Shop auth info
         required: true
@@ -599,7 +595,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UserRegisterResponse'
+                $ref: '#/components/schemas/UserUpdateEmailResponse'
         '400':
           description: Bad Request
   /admin/user/{userId}/disable:
@@ -951,12 +947,15 @@ paths:
                     id:
                       type: string
                       example: ad89afgt
-                    status:
-                      type: string
-                      example: ACTIVE
                     email:
                       type: string
                       example: user@gmail.com
+                    status:
+                      type: string
+                      example: ACTIVE
+                    verification:
+                      type: boolean
+                      example: true
                     nickname:
                       type: string
                       example: スタールくん
@@ -971,29 +970,40 @@ paths:
                       example: 3000
                   example:
                     - id: ad89afgt
-                      status: REGISTERED
                       email:
+                      status: SIGNEDUP
+                      verification:
                       nickname:
                       iconURL:
                       amount: 1000
                       totalEarnedPoints: 1000
                     - id: ad89afgt
-                      status: CONFIRMED
                       email: user@gmail.com
+                      status: REGISTERED
+                      verification: false
                       nickname: スタールくん
                       iconURL:
                       amount: 2000
                       totalEarnedPoints: 2000
                     - id: ad89afgt
-                      status: ACTIVE
                       email: user@gmail.com
+                      status: VERIFIED
+                      verification: true
                       nickname: スタールくん
                       iconURL: https://www.example.com/ad89afgt
                       amount: 1234
                       totalEarnedPoints: 3000
                     - id: ad89afgt
-                      status: DISABLED
                       email: user@gmail.com
+                      status: ACTIVE
+                      verification: true
+                      nickname: スタールくん
+                      iconURL: https://www.example.com/ad89afgt
+                      amount: 1234
+                      totalEarnedPoints: 3000
+                    - id: ad89afgt
+                      email: user@gmail.com
+                      status: DISABLED
                       nickname: スタールくん
                       iconURL: https://www.example.com/ad89afgt
                       amount: 1234
@@ -1031,6 +1041,9 @@ paths:
                     corporationId:
                       type: string
                       example: nikuyokocho
+                    yearMonth:
+                      type: integer
+                      example: 202108
                     price:
                       type: integer
                       example: 1000
@@ -1198,6 +1211,9 @@ paths:
                     shopName:
                       type: string
                       example: 渋谷 肉横丁 肉太郎
+                    yearMonth:
+                      type: integer
+                      example: 202108
                     price:
                       type: integer
                       example: 2400
@@ -1209,7 +1225,7 @@ paths:
                       example: 23
                     createdAt:
                       type: string
-                      example: "2021-06-01T16:23:56+09:00"
+                      example: "2021-08-01T16:23:56+09:00"
         '400':
           description: Bad Request
         '401':
@@ -1594,6 +1610,9 @@ paths:
                     id:
                       type: integer
                       example: 1
+                    yearMonth:
+                      type: integer
+                      example: 202108
                     price:
                       type: integer
                       example: 2400
@@ -1605,7 +1624,7 @@ paths:
                       example: 23
                     createdAt:
                       type: string
-                      example: "2021-06-01T16:23:56+09:00"
+                      example: "2021-08-01T16:23:56+09:00"
         '400':
           description: Bad Request
         '401':
@@ -1641,6 +1660,9 @@ paths:
                   status:
                     type: string
                     example: ACTIVE
+                  verification:
+                    type: boolean
+                    example: true
                   nickname:
                     type: string
                     example: スタールくん
@@ -1653,14 +1675,16 @@ paths:
                   value:
                     id: ad89afgt
                     status: ACTIVE
+                    verification: true
                     nickname: スタールくん
                     amount: 1234
-                RegisteredUser:
+                SignedUpUser:
                   summary: 本会員登録していないユーザー
                   value:
                     id: ad89afgt
-                    status: REGISTERED
-                    nickname: スタールくん
+                    status: SIGNEDUP
+                    verification:
+                    nickname:
                     amount: 1234
         '400':
           description: Bad Request
@@ -1746,8 +1770,8 @@ paths:
           description: Transaction ID
           required: true
           schema:
-            type: integer
-            example: 1
+            type: string
+            example: nikuyokocho-0001-20210827000000
       requestBody:
         description: Transaction object to update
         required: true
@@ -1862,22 +1886,24 @@ paths:
                   summary: 本会員登録済みユーザー
                   value:
                     id: ad89afgt
-                    status: ACTIVE
-                    initialPassword: P@ssw0rd
                     email: user@gmail.com
+                    status: ACTIVE
+                    verification: true
+                    initialPassword: P@ssw0rd
                     nickname: スタールくん
                     iconURL: https://www.example.com/ad89afgt
                     amount: 1234
                     earnedPointsThisMonth: 100
                     usedPointsThisMonth: 60
                     visitedShopsThisMonth: 4
-                RegisteredUser:
+                SignedUpUser:
                   summary: 本会員登録していないユーザー
                   value:
                     id: ad89afgt
-                    status: REGISTERED
-                    initialPassword: P@ssw0rd
                     email:
+                    status: SIGNEDUP
+                    verification:
+                    initialPassword: P@ssw0rd
                     nickname:
                     iconURL:
                     amount: 1234
@@ -1929,14 +1955,6 @@ paths:
       responses:
         '200':
           description: Successful Operation
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  nickname:
-                    type: string
-                    example: スタールちゃん
         '400':
           description: Bad Request
         '401':
@@ -2534,6 +2552,24 @@ components:
       required:
         - email
         - accessToken
+    UserUpdateEmailResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          example: ad89afgt
+        email:
+          type: string
+          example: user@gmail.com
+        nickname:
+          type: string
+          example: スタールくん
+        status:
+          type: string
+          example: ACTIVE
+        verification:
+          type: boolean
+          example: false
     AdminDisableUserResponse:
       type: object
       properties:
@@ -2606,15 +2642,18 @@ components:
         deviceId:
           type: string
           example: 3K0XXXXX-83XX-HEXX-KIXX-29KH83XXXXXX
-        status:
-          type: string
-          example: ACTIVE
-        initialPassword:
-          type: string
-          example: P@ssw0rd
         email:
           type: string
           example: user@gmail.com
+        status:
+          type: string
+          example: ACTIVE
+        verification:
+          type: boolean
+          example: true
+        initialPassword:
+          type: string
+          example: P@ssw0rd
         nickname:
           type: string
           example: スタールくん
@@ -2628,8 +2667,8 @@ components:
       type: object
       properties:
         id:
-          type: integer
-          example: 1
+          type: string
+          example: nikuyokocho-0001-20210827000000
         userId:
           type: string
           example: ad89afgt
@@ -2639,6 +2678,9 @@ components:
         corporationId:
           type: string
           example: nikuyokocho
+        yearMonth:
+          type: integer
+          example: 202108
         price:
           type: integer
           example: 1000
