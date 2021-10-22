@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   title: Starl-Backend API Document
   description: This is API Document of Starl-Backend
-  version: 1.0.3
+  version: 1.0.4
 
 servers:
   - url: https://api.starl.co.jp/v1
@@ -585,23 +585,23 @@ paths:
     post:
       tags:
         - AuthUser
-    summary: User update email
-    requestBody:
-      description: User new email and access token
-      required: true
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/UserUpdateEmailRequest'
-    responses:
-      '200':
-        description: Successful Operation
+      summary: User update email
+      requestBody:
+        description: User new email and access token
+        required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/UserRegisterResponse'
-      '400':
-        description: Bad Request
+              $ref: '#/components/schemas/UserUpdateEmailRequest'
+      responses:
+        '200':
+          description: Successful Operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserRegisterResponse'
+        '400':
+          description: Bad Request
   /admin/user/{userId}/disable:
     put:
       tags:
@@ -1906,33 +1906,6 @@ paths:
           description: Bad Request (RefreshToken is missing.)
         '401':
           description: Unauthorized (RefreshToken is invalid.)
-  /user/upload-icon-img:
-    put:
-      tags:
-        - User
-      summary: Upload user icon image by user
-      security:
-        - BearerAuth: []
-      requestBody:
-        description: User icon image data to update
-        required: true
-        content:
-          image/png:
-      responses:
-        '200':
-          description: Successful Operation
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  iconURL:
-                    type: string
-                    example: https://www.example.com/ad89afgt
-        '400':
-          description: Bad Request
-        '401':
-          description: Unauthorized
   /user/update-nickname:
     put:
       tags:
@@ -1964,6 +1937,33 @@ paths:
                   nickname:
                     type: string
                     example: スタールちゃん
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+  /user/upload-icon-img:
+    put:
+      tags:
+        - User
+      summary: Upload user icon image by user
+      security:
+        - BearerAuth: []
+      requestBody:
+        description: User icon image data to update
+        required: true
+        content:
+          image/png:
+      responses:
+        '200':
+          description: Successful Operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  iconURL:
+                    type: string
+                    example: https://www.example.com/ad89afgt
         '400':
           description: Bad Request
         '401':
@@ -2534,18 +2534,6 @@ components:
       required:
         - email
         - accessToken
-    UserActivateResponse:
-      type: object
-      properties:
-        idToken:
-          type: string
-          example: dmcxd329ujdmkemkd349r
-        accessToken:
-          type: string
-          example: eyJz9sdfsdfsdfsd
-        refreshToken:
-          type: string
-          example: dn43ud8uj32nk2je
     AdminDisableUserResponse:
       type: object
       properties:
