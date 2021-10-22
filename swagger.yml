@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   title: Starl-Backend API Document
   description: This is API Document of Starl-Backend
-  version: 1.0.2
+  version: 1.0.3
 
 servers:
   - url: https://api.starl.co.jp/v1
@@ -509,52 +509,99 @@ paths:
           description: Bad Request
         '401':
           description: Unauthorized (ID or password is invalid.)
-  /user/confirm:
+  /user/register:
     post:
       tags:
         - AuthUser
       summary: User registration
-      security:
-        - BearerAuth: []
       requestBody:
         description: User account info
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/UserConfirmRequest'
+              $ref: '#/components/schemas/UserRegisterRequest'
       responses:
         '200':
           description: Successful Operation
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UserConfirmResponse'
+                $ref: '#/components/schemas/UserRegisterResponse'
         '400':
           description: Bad Request
-        '401':
-          description: Unauthorized
-  /user/activate:
+  /user/resend-code:
     post:
       tags:
         - AuthUser
-      summary: User confirmation
+      summary: User registration
       requestBody:
-        description: User confirmation code and new password
+        description: Access Token
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/UserActivateRequest'
+              $ref: '#/components/schemas/UserResendCodeRequest'
       responses:
         '200':
           description: Successful Operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UserActivateResponse'
         '400':
           description: Bad Request
+  /user/verify:
+    post:
+      tags:
+        - AuthUser
+      summary: User email verification
+      requestBody:
+        description: User verification code and access token
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserVerifyRequest'
+      responses:
+        '200':
+          description: Successful Operation
+        '400':
+          description: Bad Request
+  /user/change-password:
+    post:
+      tags:
+        - AuthUser
+      summary: User change password
+      requestBody:
+        description: Pre/new password and access token
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserChangePasswordRequest'
+      responses:
+        '200':
+          description: Successful Operation
+        '400':
+          description: Bad Request
+  /user/update-email:
+    post:
+      tags:
+        - AuthUser
+    summary: User update email
+    requestBody:
+      description: User new email and access token
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UserUpdateEmailRequest'
+    responses:
+      '200':
+        description: Successful Operation
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserRegisterResponse'
+      '400':
+        description: Bad Request
   /admin/user/{userId}/disable:
     put:
       tags:
@@ -2384,7 +2431,7 @@ components:
           example: P@ssw0rd
         status:
           type: string
-          example: REGISTERED
+          example: SIGNEDUP
     UserSignInRequest:
       type: object
       properties:
@@ -2409,7 +2456,7 @@ components:
         refreshToken:
           type: string
           example: dn43ud8uj32nk2je
-    UserConfirmRequest:
+    UserRegisterRequest:
       type: object
       properties:
         email:
@@ -2424,7 +2471,7 @@ components:
       required:
         - email
         - accessToken
-    UserConfirmResponse:
+    UserRegisterResponse:
       type: object
       properties:
         id:
@@ -2438,23 +2485,55 @@ components:
           example: スタールくん
         status:
           type: string
-          example: CONFIRMED
-    UserActivateRequest:
+          example: REGISTERED
+    UserResendCodeRequest:
       type: object
       properties:
-        id:
+        accessToken:
           type: string
-          example: ad89afgt
+          example: eyJz9sdfsdfsdfsd
+      required:
+        - accessToken
+    UserVerifyRequest:
+      type: object
+      properties:
         code:
           type: string
-          example: s8xert6c
-        password:
+          example: 123456
+        accessToken:
           type: string
-          example: b03ddf3ca2e714a6548e7495e2a03f5e824eaac9837cd7f159c67b90fb4b7342
+          example: eyJz9sdfsdfsdfsd
       required:
-        - id
         - code
-        - password
+        - accessToken
+    UserChangePasswordRequest:
+      type: object
+      properties:
+        previousPassword:
+          type: string
+          example: b03ddf3c
+        newPassword:
+          type: string
+          example: fb4b7342
+        accessToken:
+          type: string
+          example: eyJz9sdfsdfsdfsd
+      required:
+        - previousPassword
+        - newPassword
+        - accessToken
+    UserUpdateEmailRequest:
+      type: object
+      properties:
+        email:
+          type: string
+          example: user@gmail.com
+        accessToken:
+          type: string
+          example: eyJz9sdfsdfsdfsd
+      required:
+        - email
+        - accessToken
     UserActivateResponse:
       type: object
       properties:
