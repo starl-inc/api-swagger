@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   title: Starl-Backend API Document
   description: This is API Document of Starl-Backend
-  version: 1.0.6
+  version: 1.0.7
 
 servers:
   - url: https://api.starl.co.jp/v1
@@ -562,6 +562,27 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/UserVerifyResponse'
+              examples:
+                Regisetration:
+                  summary: Verification of registration
+                  value:
+                    id: ad89afgt
+                    email: user@gmail.com
+                    status: VERIFIED
+                    verification: true
+                    nickname: スタールくん
+                    iconURL:
+                    amount: 1000
+                UpdateEmail:
+                  summary: Verification of update email
+                  value:
+                    id: ad89afgt
+                    email: user@gmail.com
+                    status: ACTIVE
+                    verification: true
+                    nickname: スタールくん
+                    iconURL: https://www.example.com/ad89afgt
+                    amount: 1234
         '400':
           description: Bad Request
   /user/change-password:
