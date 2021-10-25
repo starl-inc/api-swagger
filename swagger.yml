@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   title: Starl-Backend API Document
   description: This is API Document of Starl-Backend
-  version: 1.0.7
+  version: 1.0.8
 
 servers:
   - url: https://api.starl.co.jp/v1
@@ -2529,12 +2529,6 @@ components:
         nickname:
           type: string
           example: スタールくん
-        iconURL:
-          type: string
-          example:
-        amount:
-          type: integer
-          example: 1000
     UserResendCodeRequest:
       type: object
       properties:
