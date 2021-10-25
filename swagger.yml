@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   title: Starl-Backend API Document
   description: This is API Document of Starl-Backend
-  version: 1.0.9
+  version: 1.0.10
 
 servers:
   - url: https://api.starl.co.jp/v1
@@ -555,7 +555,7 @@ paths:
                     nickname: スタールくん
                     iconURL:
                     amount: 1000
-                UpdateEmail:
+                ChangeEmail:
                   summary: Verification of update email
                   value:
                     id: ad89afgt
@@ -583,25 +583,25 @@ paths:
           description: Successful Operation
         '400':
           description: Bad Request
-  /user/update-email:
+  /user/change-email:
     post:
       tags:
         - AuthUser
-      summary: User update email
+      summary: User change email
       requestBody:
         description: User new email and access token
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/UserUpdateEmailRequest'
+              $ref: '#/components/schemas/UserChangeEmailRequest'
       responses:
         '200':
           description: Successful Operation
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UserUpdateEmailResponse'
+                $ref: '#/components/schemas/UserChangeEmailResponse'
         '400':
           description: Bad Request
   /admin/user/{userId}/disable:
@@ -2553,7 +2553,7 @@ components:
         - previousPassword
         - newPassword
         - accessToken
-    UserUpdateEmailRequest:
+    UserChangeEmailRequest:
       type: object
       properties:
         email:
@@ -2565,7 +2565,7 @@ components:
       required:
         - email
         - accessToken
-    UserUpdateEmailResponse:
+    UserChangeEmailResponse:
       type: object
       properties:
         id:
