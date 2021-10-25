@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   title: Starl-Backend API Document
   description: This is API Document of Starl-Backend
-  version: 1.0.8
+  version: 1.0.9
 
 servers:
   - url: https://api.starl.co.jp/v1
@@ -526,23 +526,6 @@ paths:
                 $ref: '#/components/schemas/UserRegisterResponse'
         '400':
           description: Bad Request
-  /user/resend-code:
-    post:
-      tags:
-        - AuthUser
-      summary: User registration
-      requestBody:
-        description: Access Token
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/UserResendCodeRequest'
-      responses:
-        '200':
-          description: Successful Operation
-        '400':
-          description: Bad Request
   /user/verify:
     post:
       tags:
@@ -569,7 +552,6 @@ paths:
                     id: ad89afgt
                     email: user@gmail.com
                     status: VERIFIED
-                    verification: true
                     nickname: スタールくん
                     iconURL:
                     amount: 1000
@@ -579,7 +561,6 @@ paths:
                     id: ad89afgt
                     email: user@gmail.com
                     status: ACTIVE
-                    verification: true
                     nickname: スタールくん
                     iconURL: https://www.example.com/ad89afgt
                     amount: 1234
@@ -978,9 +959,6 @@ paths:
                     status:
                       type: string
                       example: ACTIVE
-                    verification:
-                      type: boolean
-                      example: true
                     nickname:
                       type: string
                       example: スタールくん
@@ -996,8 +974,7 @@ paths:
                   example:
                     - id: ad89afgt
                       email:
-                      status: SIGNEDUP
-                      verification:
+                      status: SIGND_UP
                       nickname:
                       iconURL:
                       amount: 1000
@@ -1005,7 +982,6 @@ paths:
                     - id: ad89afgt
                       email: user@gmail.com
                       status: REGISTERED
-                      verification: false
                       nickname: スタールくん
                       iconURL:
                       amount: 2000
@@ -1013,7 +989,6 @@ paths:
                     - id: ad89afgt
                       email: user@gmail.com
                       status: VERIFIED
-                      verification: true
                       nickname: スタールくん
                       iconURL: https://www.example.com/ad89afgt
                       amount: 1234
@@ -1021,7 +996,6 @@ paths:
                     - id: ad89afgt
                       email: user@gmail.com
                       status: ACTIVE
-                      verification: true
                       nickname: スタールくん
                       iconURL: https://www.example.com/ad89afgt
                       amount: 1234
@@ -1685,9 +1659,6 @@ paths:
                   status:
                     type: string
                     example: ACTIVE
-                  verification:
-                    type: boolean
-                    example: true
                   nickname:
                     type: string
                     example: スタールくん
@@ -1700,15 +1671,13 @@ paths:
                   value:
                     id: ad89afgt
                     status: ACTIVE
-                    verification: true
                     nickname: スタールくん
                     amount: 1234
                 SignedUpUser:
                   summary: 本会員登録していないユーザー
                   value:
                     id: ad89afgt
-                    status: SIGNEDUP
-                    verification:
+                    status: SIGND_UP
                     nickname:
                     amount: 1234
         '400':
@@ -1913,7 +1882,6 @@ paths:
                     id: ad89afgt
                     email: user@gmail.com
                     status: ACTIVE
-                    verification: true
                     initialPassword: P@ssw0rd
                     nickname: スタールくん
                     iconURL: https://www.example.com/ad89afgt
@@ -1926,8 +1894,7 @@ paths:
                   value:
                     id: ad89afgt
                     email:
-                    status: SIGNEDUP
-                    verification:
+                    status: SIGND_UP
                     initialPassword: P@ssw0rd
                     nickname:
                     iconURL:
@@ -2474,7 +2441,7 @@ components:
           example: P@ssw0rd
         status:
           type: string
-          example: SIGNEDUP
+          example: SIGND_UP
     UserSignInRequest:
       type: object
       properties:
@@ -2561,9 +2528,6 @@ components:
         status:
           type: string
           example: VERIFIED
-        verification:
-          type: boolean
-          example: true
         nickname:
           type: string
           example: スタールくん
@@ -2594,7 +2558,7 @@ components:
       properties:
         email:
           type: string
-          example: user@gmail.com
+          example: new@gmail.com
         accessToken:
           type: string
           example: eyJz9sdfsdfsdfsd
@@ -2609,13 +2573,13 @@ components:
           example: ad89afgt
         email:
           type: string
-          example: user@gmail.com
+          example: new@gmail.com
         status:
           type: string
-          example: ACTIVE
-        verification:
-          type: boolean
-          example: false
+          example: REQUIRE_VERIFICATION
+        prevEmail:
+          type: string
+          example: user@gmail.com
         nickname:
           type: string
           example: スタールくん
@@ -2628,9 +2592,6 @@ components:
         status:
           type: string
           example: DISABLED
-        verification:
-          type: boolean
-          example: true
     AdminActivateUserResponse:
       type: object
       properties:
@@ -2640,9 +2601,6 @@ components:
         status:
           type: string
           example: ACTIVE
-        verification:
-          type: boolean
-          example: true
 
     Corporation:
       type: object
@@ -2703,9 +2661,6 @@ components:
         status:
           type: string
           example: ACTIVE
-        verification:
-          type: boolean
-          example: true
         initialPassword:
           type: string
           example: P@ssw0rd
