@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   title: Starl-Backend API Document
   description: This is API Document of Starl-Backend
-  version: 1.0.12
+  version: 1.0.13
 
 servers:
   - url: https://api.starl.co.jp/v1
@@ -569,18 +569,12 @@ paths:
                     id: ad89afgt
                     email: user@gmail.com
                     status: VERIFIED
-                    nickname: スタールくん
-                    iconURL:
-                    amount: 1000
                 ChangeEmail:
                   summary: Verification of update email
                   value:
                     id: ad89afgt
                     email: user@gmail.com
                     status: ACTIVE
-                    nickname: スタールくん
-                    iconURL: https://www.example.com/ad89afgt
-                    amount: 1234
         '400':
           description: Bad Request
   /user/change-password:
@@ -598,6 +592,10 @@ paths:
       responses:
         '200':
           description: Successful Operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserChangePasswordResponse'
         '400':
           description: Bad Request
   /user/change-email:
@@ -979,7 +977,7 @@ paths:
                     nickname:
                       type: string
                       example: スタールくん
-                    iconURL:
+                    iconUrl:
                       type: string
                       example: https://www.example.com/ad89afgt
                     amount:
@@ -993,35 +991,35 @@ paths:
                       email:
                       status: SIGND_UP
                       nickname:
-                      iconURL:
+                      iconUrl:
                       amount: 1000
                       totalEarnedPoints: 1000
                     - id: ad89afgt
                       email: user@gmail.com
                       status: REGISTERED
                       nickname: スタールくん
-                      iconURL:
+                      iconUrl:
                       amount: 2000
                       totalEarnedPoints: 2000
                     - id: ad89afgt
                       email: user@gmail.com
                       status: VERIFIED
                       nickname: スタールくん
-                      iconURL: https://www.example.com/ad89afgt
+                      iconUrl: https://www.example.com/ad89afgt
                       amount: 1234
                       totalEarnedPoints: 3000
                     - id: ad89afgt
                       email: user@gmail.com
                       status: ACTIVE
                       nickname: スタールくん
-                      iconURL: https://www.example.com/ad89afgt
+                      iconUrl: https://www.example.com/ad89afgt
                       amount: 1234
                       totalEarnedPoints: 3000
                     - id: ad89afgt
                       email: user@gmail.com
                       status: DISABLED
                       nickname: スタールくん
-                      iconURL: https://www.example.com/ad89afgt
+                      iconUrl: https://www.example.com/ad89afgt
                       amount: 1234
                       totalEarnedPoints: 3000
         '401':
@@ -1877,7 +1875,7 @@ paths:
                   nickname:
                     type: string
                     example: スタールくん
-                  iconURL:
+                  iconUrl:
                     type: string
                     example: https://www.example.com/ad89afgt
                   amount:
@@ -1901,7 +1899,7 @@ paths:
                     status: ACTIVE
                     initialPassword: P@ssw0rd
                     nickname: スタールくん
-                    iconURL: https://www.example.com/ad89afgt
+                    iconUrl: https://www.example.com/ad89afgt
                     amount: 1234
                     earnedPointsThisMonth: 100
                     usedPointsThisMonth: 60
@@ -1914,7 +1912,7 @@ paths:
                     status: SIGND_UP
                     initialPassword: P@ssw0rd
                     nickname:
-                    iconURL:
+                    iconUrl:
                     amount: 1234
                     earnedPointsThisMonth: 100
                     usedPointsThisMonth: 0
@@ -1988,7 +1986,7 @@ paths:
               schema:
                 type: object
                 properties:
-                  iconURL:
+                  iconUrl:
                     type: string
                     example: https://www.example.com/ad89afgt
         '400':
@@ -2545,15 +2543,6 @@ components:
         status:
           type: string
           example: VERIFIED
-        nickname:
-          type: string
-          example: スタールくん
-        iconURL:
-          type: string
-          example: https://www.example.com/ad89afgt
-        amount:
-          type: integer
-          example: 1234
     UserChangePasswordRequest:
       type: object
       properties:
@@ -2570,6 +2559,15 @@ components:
         - prevPassword
         - newPassword
         - accessToken
+    UserChangePasswordResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          example: ad89afgt
+        status:
+          type: string
+          example: ACTIVE
     UserChangeEmailRequest:
       type: object
       properties:
@@ -2687,7 +2685,7 @@ components:
         nickname:
           type: string
           example: スタールくん
-        iconURL:
+        iconUrl:
           type: string
           example: https://www.example.com/ad89afgt
         amount:
