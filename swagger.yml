@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   title: Starl-Backend API Document
   description: This is API Document of Starl-Backend
-  version: 1.0.13
+  version: 1.0.14
 
 servers:
   - url: https://api.starl.co.jp/v1
@@ -2595,9 +2595,6 @@ components:
         prevEmail:
           type: string
           example: user@gmail.com
-        nickname:
-          type: string
-          example: スタールくん
     AdminDisableUserResponse:
       type: object
       properties:
