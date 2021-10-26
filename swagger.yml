@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   title: Starl-Backend API Document
   description: This is API Document of Starl-Backend
-  version: 1.0.10
+  version: 1.0.11
 
 servers:
   - url: https://api.starl.co.jp/v1
@@ -524,6 +524,23 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/UserRegisterResponse'
+        '400':
+          description: Bad Request
+  /user/resende-code:
+    post:
+      tags:
+        - AuthUser
+      summary: User resend code
+      requestBody:
+        description: Email
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserResendCodeRequest'
+      responses:
+        '200':
+          description: Successful Operation
         '400':
           description: Bad Request
   /user/verify:
@@ -2664,6 +2681,9 @@ components:
         initialPassword:
           type: string
           example: P@ssw0rd
+        prevEmail:
+          type: string
+          example: prev@gmail.com
         nickname:
           type: string
           example: スタールくん
