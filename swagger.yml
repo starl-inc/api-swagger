@@ -1083,20 +1083,6 @@ paths:
       summary: Read corporation by corporation
       security:
         - BearerAuth: []
-      parameters:
-        - in: query
-          name: yearMonth
-          schema:
-            type: integer
-            example: 202107
-          required: true
-          description: Year and month of items to return
-        - in: query
-          name: shopId
-          schema:
-            type: string
-            example: nikuyokocho-0001
-          description: Shop ID to filter by
       responses:
         '200':
           description: Successful Operation
@@ -1114,18 +1100,6 @@ paths:
                   corporationName:
                     type: string
                     example: 渋谷 肉横丁
-                  yearMonth:
-                    type: integer
-                    example: 202107
-                  totalSales:
-                    type: integer
-                    example: 1234567
-                  totalEarnedPoints:
-                    type: integer
-                    example: 12345
-                  totalUsedPoints:
-                    type: integer
-                    example: 3000
                   shops:
                     type: array
                     items:
@@ -1140,47 +1114,17 @@ paths:
                         shopName:
                           type: string
                           example: 渋谷 肉横丁 肉太郎
-                        totalSales:
-                          type: integer
-                          example: 456789
-                        totalEarnedPoints:
-                          type: integer
-                          example: 4567
-                        totalUsedPoints:
-                          type: integer
-                          example: 1000
-              examples:
-                Full:
-                  summary: Full info
-                  value:
-                    id: nikuyokocho
-                    status: ACTIVE
-                    corporationName: 渋谷 肉横丁
-                    yearMonth: 202107
-                    totalSales: 1234567
-                    totalEarnedPoints: 12345
-                    totalUsedPoints: 3000
-                    shops:
-                      - id: nikuyokocho-0001
-                        status: ACTIVE
-                        shopName: 渋谷 肉横丁 肉太郎
-                Filtered:
-                  summary: Filtered by shopId
-                  value:
-                    id: nikuyokocho
-                    status: ACTIVE
-                    corporationName: 渋谷 肉横丁
-                    yearMonth: 202107
-                    totalSales: 1234567
-                    totalEarnedPoints: 12345
-                    totalUsedPoints: 3000
-                    shops:
-                      - id: nikuyokocho-0001
-                        status: ACTIVE
-                        shopName: 渋谷 肉横丁 肉太郎
-                        totalSales: 456789
-                        totalEarnedPoints: 4567
-                        totalUsedPoints: 1000
+                        address:
+                          type: string
+                          example: 東京都渋谷区宇田川町１３−８ ちとせ会館 ２F 渋谷肉横丁内
+                        phone:
+                          type: string
+                          example: 03-6427-8994
+                        openingHours:
+                          type: string
+                          example: |
+                            月～日、祝日、祝前日: 17:00～翌0:00
+                            定休日：不定休
         '400':
           description: Bad Request
         '401':
@@ -1225,223 +1169,7 @@ paths:
           description: Bad Request
         '401':
           description: Unauthorized
-  /corporation/transaction/list:
-    get:
-      tags:
-        - Corporation
-      summary: Read transaction list of the corporation
-      security:
-        - BearerAuth: []
-      parameters:
-        - in: query
-          name: yearMonth
-          schema:
-            type: integer
-            example: 202108
-          required: true
-          description: Year and month of items to return
-        - in: query
-          name: shopId
-          schema:
-            type: string
-            example: nikuyokocho-0001
-          description: Shop ID to filter by
-      responses:
-        '200':
-          description: Successful Operation
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    id:
-                      type: integer
-                      example: 1
-                    shopId:
-                      type: string
-                      example: nikuyokocho-0001
-                    shopName:
-                      type: string
-                      example: 渋谷 肉横丁 肉太郎
-                    yearMonth:
-                      type: integer
-                      example: 202108
-                    price:
-                      type: integer
-                      example: 2400
-                    usedPoints:
-                      type: integer
-                      example: 100
-                    earnedPoints:
-                      type: integer
-                      example: 23
-                    createdAt:
-                      type: string
-                      example: "2021-08-01T16:23:56+09:00"
-        '400':
-          description: Bad Request
-        '401':
-          description: Unauthorized
-        '404':
-          description: Transaction not found
-  /corporation/shop/list:
-    get:
-      tags:
-        - Corporation
-      summary: Read shop list of the corporation
-      security:
-        - BearerAuth: []
-      parameters:
-        - in: query
-          name: yearMonth
-          schema:
-            type: integer
-            example: 202107
-          required: true
-          description: Year and month of item to return
-      responses:
-        '200':
-          description: Successful Operation
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    id:
-                      type: string
-                      example: nikuyokocho-0001
-                    status:
-                      type: string
-                      example: ACTIVE
-                    shopName:
-                      type: string
-                      example: 渋谷 肉横丁 肉太郎
-                    address:
-                      type: string
-                      example: 東京都渋谷区宇田川町１３−８ ちとせ会館 ２F 渋谷肉横丁内
-                    phone:
-                      type: string
-                      example: 03-6427-8994
-                    openingHours:
-                      type: string
-                      example: |
-                        月～日、祝日、祝前日: 17:00～翌0:00
-                        定休日：不定休
-                    yearMonth:
-                      type: integer
-                      example: 202107
-                    totalSales:
-                      type: integer
-                      example: 1234567
-                    totalEarnedPoints:
-                      type: integer
-                      example: 12345
-                    totalUsedPoints:
-                      type: integer
-                      example: 3000
-        '400':
-          description: Bad Request
-        '401':
-          description: Unauthorized
-        '404':
-          description: Shop not found
   /corporation/shop/{shopId}:
-    get:
-      tags:
-        - Corporation
-      summary: Read shop by corporation
-      security:
-        - BearerAuth: []
-      parameters:
-        - in: query
-          name: yearMonth
-          schema:
-            type: integer
-            example: 202107
-          description: Year and month of items to return
-      responses:
-        '200':
-          description: Successful Operation
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  id:
-                    type: string
-                    example: nikuyokocho-0001
-                  status:
-                    type: string
-                    example: ACTIVE
-                  shopName:
-                    type: string
-                    example: 渋谷 肉横丁 肉太郎
-                  address:
-                    type: string
-                    example: 東京都渋谷区宇田川町１３−８ ちとせ会館 ２F 渋谷肉横丁内
-                  phone:
-                    type: string
-                    example: 03-6427-8994
-                  openingHours:
-                    type: string
-                    example: |
-                      月～日、祝日、祝前日: 17:00～翌0:00
-                      定休日：不定休
-                  yearMonth:
-                    type: integer
-                    example: 202107
-                  totalSales:
-                    type: integer
-                    example: 1234567
-                  totalEarnedPoints:
-                    type: integer
-                    example: 12345
-                  totalUsedPoints:
-                    type: integer
-                    example: 3000
-              examples:
-                WithoutTransactionData:
-                  summary: 会計情報なし
-                  description: yearMonthなし
-                  value:
-                    id: nikuyokocho-0001
-                    status: ACTIVE
-                    shopName: 渋谷 肉横丁 肉太郎
-                    address: 東京都渋谷区宇田川町１３−８ ちとせ会館 ２F 渋谷肉横丁内
-                    phone: 03-6427-8994
-                    openingHours: |
-                      月～日、祝日、祝前日: 17:00～翌0:00
-                      定休日：不定休
-                    yearMonth:
-                    totalSales:
-                    totalEarnedPoints:
-                    totalUsedPoints:
-                WithTransactionData:
-                  summary: 会計情報あり
-                  description: yearMonthをクエリパラメーターに含めた場合
-                  value:
-                    id: nikuyokocho-0001
-                    status: ACTIVE
-                    shopName: 渋谷 肉横丁 肉太郎
-                    address: 東京都渋谷区宇田川町１３−８ ちとせ会館 ２F 渋谷肉横丁内
-                    phone: 03-6427-8994
-                    openingHours: |
-                      月～日、祝日、祝前日: 17:00～翌0:00
-                      定休日：不定休
-                    yearMonth: 202107
-                    totalSales: 1234567
-                    totalEarnedPoints: 12345
-                    totalUsedPoints: 3000
-        '400':
-          description: Bad Request
-        '401':
-          description: Unauthorized
-        '404':
-          description: Shop not found
     put:
       tags:
         - Corporation
@@ -1505,6 +1233,62 @@ paths:
           description: Unauthorized
         '404':
           description: Shop not found
+  /corporation/transaction/list:
+    get:
+      tags:
+        - Corporation
+      summary: Read transaction list of the corporation
+      security:
+        - BearerAuth: [ ]
+      parameters:
+        - in: query
+          name: yearMonth
+          schema:
+            type: integer
+            example: 202108
+          required: true
+          description: Year and month of items to return
+      responses:
+        '200':
+          description: Successful Operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                      example: 1
+                    shopId:
+                      type: string
+                      example: nikuyokocho-0001
+                    corporationId:
+                      type: string
+                      example: nikuyokocho
+                    yearMonth:
+                      type: integer
+                      example: 202108
+                    price:
+                      type: integer
+                      example: 2400
+                    usedPoints:
+                      type: integer
+                      example: 100
+                    earnedPoints:
+                      type: integer
+                      example: 23
+                    createdAt:
+                      type: string
+                      example: "2021-08-01T16:23:56+09:00"
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '404':
+          description: Transaction not found
+
 
   # -------------------- Shop --------------------
   /shop:
