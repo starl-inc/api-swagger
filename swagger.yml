@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   title: Starl-Backend API Document
   description: This is API Document of Starl-Backend
-  version: 1.0.15
+  version: 1.0.16
 
 servers:
   - url: https://api.starl.co.jp/v1
@@ -1140,6 +1140,15 @@ paths:
                         shopName:
                           type: string
                           example: 渋谷 肉横丁 肉太郎
+                        totalSales:
+                          type: integer
+                          example: 456789
+                        totalEarnedPoints:
+                          type: integer
+                          example: 4567
+                        totalUsedPoints:
+                          type: integer
+                          example: 1000
               examples:
                 Full:
                   summary: Full info
@@ -1162,9 +1171,16 @@ paths:
                     status: ACTIVE
                     corporationName: 渋谷 肉横丁
                     yearMonth: 202107
-                    totalSales: 456789
-                    totalEarnedPoints: 4567
-                    totalUsedPoints: 1000
+                    totalSales: 1234567
+                    totalEarnedPoints: 12345
+                    totalUsedPoints: 3000
+                    shops:
+                      - id: nikuyokocho-0001
+                        status: ACTIVE
+                        shopName: 渋谷 肉横丁 肉太郎
+                        totalSales: 456789
+                        totalEarnedPoints: 4567
+                        totalUsedPoints: 1000
         '400':
           description: Bad Request
         '401':
