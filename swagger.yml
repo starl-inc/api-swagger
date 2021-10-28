@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   title: Starl-Backend API Document
   description: This is API Document of Starl-Backend
-  version: 1.0.19
+  version: 1.0.20
 
 servers:
   - url: https://api.starl.co.jp/v1
@@ -1902,6 +1902,9 @@ paths:
                     shopName:
                       type: string
                       example: 渋谷 肉横丁 肉太郎
+                    yearMonth:
+                      type: integer
+                      example: 202108
                     price:
                       type: integer
                       example: 2400
