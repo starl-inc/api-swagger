@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   title: Starl-Backend API Document
   description: This is API Document of Starl-Backend
-  version: 1.0.18
+  version: 1.0.19
 
 servers:
   - url: https://api.starl.co.jp/v1
@@ -1703,15 +1703,6 @@ paths:
                   amount:
                     type: integer
                     example: 1234
-                  earnedPointsThisMonth:
-                    type: integer
-                    example: 100
-                  usedPointsThisMonth:
-                    type: integer
-                    example: 60
-                  visitedShopsThisMonth:
-                    type: integer
-                    example: 4
               examples:
                 ActiveUser:
                   summary: 本会員登録済みユーザー
@@ -1723,9 +1714,6 @@ paths:
                     nickname: スタールくん
                     iconUrl: https://www.example.com/ad89afgt
                     amount: 1234
-                    earnedPointsThisMonth: 100
-                    usedPointsThisMonth: 60
-                    visitedShopsThisMonth: 4
                 SignedUpUser:
                   summary: 本会員登録していないユーザー
                   value:
@@ -1736,9 +1724,6 @@ paths:
                     nickname:
                     iconUrl:
                     amount: 1234
-                    earnedPointsThisMonth: 100
-                    usedPointsThisMonth: 0
-                    visitedShopsThisMonth: 4
         '401':
           description: Unauthorized
     delete:
