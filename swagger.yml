@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   title: Starl-Backend API Document
   description: This is API Document of Starl-Backend
-  version: 1.0.20
+  version: 1.0.1
 
 servers:
   - url: https://api.starl.co.jp/v1
@@ -1733,12 +1733,16 @@ paths:
       security:
         - BearerAuth: []
       requestBody:
-        description: RefreshToken
+        description: AccessToken
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/RefreshToken'
+              type: object
+              properties:
+                accessToken:
+                  type: string
+                  example: eyJz9sdfsdfsdfsd
       responses:
         '200':
           description: Successful Operation
