@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   title: Starl-Backend API Document
   description: This is API Document of Starl-Backend
-  version: 1.0.2
+  version: 1.0.3
 
 servers:
   - url: https://api.starl.co.jp/v1
@@ -1879,6 +1879,14 @@ paths:
       summary: Read transaction list by user
       security:
         - BearerAuth: []
+      parameters:
+        - in: query
+          name: yearMonth
+          schema:
+            type: integer
+            example: 202108
+          required: true
+          description: Year and month of items to return
       responses:
         '200':
           description: Successful Operation
