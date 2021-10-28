@@ -2,12 +2,26 @@ openapi: 3.0.0
 info:
   title: Starl-Backend API Document
   description: This is API Document of Starl-Backend
-  version: 1.0.17
+  version: 1.0.18
 
 servers:
   - url: https://api.starl.co.jp/v1
 
 paths:
+  # -------------------- HealthCheck --------------------
+  /health-check:
+    post:
+      tags:
+        - HealthCheck
+      summary: Health check
+      security:
+        - BearerAuth: []
+      responses:
+        '200':
+          description: Successful Operation
+        '400':
+          description: Bad Request
+
   # -------------------- AuthAdmin --------------------
   /admin/signin:
     post:
@@ -1924,6 +1938,8 @@ paths:
           description: Not Found
 
 tags:
+  - name: HealthCheck
+    description: Health check
   - name: AuthAdmin
     description: Authentication/Authorization of admin
   - name: AuthCorporation
