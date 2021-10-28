@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   title: Starl-Backend API Document
   description: This is API Document of Starl-Backend
-  version: 1.0.16
+  version: 1.0.17
 
 servers:
   - url: https://api.starl.co.jp/v1
@@ -1199,6 +1199,11 @@ paths:
                   example: |
                     月～日、祝日、祝前日: 17:00～翌0:00
                     定休日：不定休
+              required:
+                - shopName
+                - address
+                - phone
+                - openingHours
       responses:
         '200':
           description: Successful Operation
@@ -1289,7 +1294,6 @@ paths:
         '404':
           description: Transaction not found
 
-
   # -------------------- Shop --------------------
   /shop:
     get:
@@ -1298,14 +1302,6 @@ paths:
       summary: Read shop by shop
       security:
         - BearerAuth: []
-      parameters:
-        - in: query
-          name: yearMonth
-          schema:
-            type: integer
-            example: 202107
-          required: true
-          description: Year and month of items to return
       responses:
         '200':
           description: Successful Operation
@@ -1340,18 +1336,6 @@ paths:
                     example: |
                       月～日、祝日、祝前日: 17:00～翌0:00
                       定休日：不定休
-                  yearMonth:
-                    type: integer
-                    example: 202107
-                  totalSales:
-                    type: integer
-                    example: 1234567
-                  totalEarnedPoints:
-                    type: integer
-                    example: 12345
-                  totalUsedPoints:
-                    type: integer
-                    example: 3000
         '400':
           description: Bad Request
         '401':
