@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   title: Starl-Backend API Document
   description: This is API Document of Starl-Backend
-  version: 1.0.8
+  version: 1.0.9
 
 servers:
   - url: https://api.starl.co.jp/v1
@@ -1794,7 +1794,16 @@ paths:
         description: User icon image data to update
         required: true
         content:
-          image/png:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                iconImg:
+                  type: string
+                  format: binary
+            encoding:
+              iconImg:
+                contentType: image/png, image/jpeg, image/svg+xml, image/gif
       responses:
         '200':
           description: Successful Operation
