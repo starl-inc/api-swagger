@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   title: Starl-Backend API Document
   description: This is API Document of Starl-Backend
-  version: 1.0.4
+  version: 1.0.5
 
 servers:
   - url: https://api.starl.co.jp/v1
@@ -466,6 +466,31 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/RefreshToken'
+      responses:
+        '200':
+          description: Successful Operation
+        '400':
+          description: Bad Request (RefreshToken is missing.)
+        '401':
+          description: Unauthorized (RefreshToken is invalid.)
+  /user/disable:
+    delete:
+      tags:
+        - AuthUser
+      summary: Delete User
+      security:
+        - BearerAuth: [ ]
+      requestBody:
+        description: AccessToken
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                accessToken:
+                  type: string
+                  example: eyJz9sdfsdfsdfsd
       responses:
         '200':
           description: Successful Operation
@@ -1737,30 +1762,6 @@ paths:
                     amount: 1234
         '401':
           description: Unauthorized
-    delete:
-      tags:
-        - User
-      summary: Delete User
-      security:
-        - BearerAuth: []
-      requestBody:
-        description: AccessToken
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                accessToken:
-                  type: string
-                  example: eyJz9sdfsdfsdfsd
-      responses:
-        '200':
-          description: Successful Operation
-        '400':
-          description: Bad Request (RefreshToken is missing.)
-        '401':
-          description: Unauthorized (RefreshToken is invalid.)
   /user/update-nickname:
     put:
       tags:
