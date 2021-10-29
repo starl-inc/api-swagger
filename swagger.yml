@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   title: Starl-Backend API Document
   description: This is API Document of Starl-Backend
-  version: 1.0.5
+  version: 1.0.6
 
 servers:
   - url: https://api.starl.co.jp/v1
@@ -62,9 +62,9 @@ paths:
         '200':
           description: Successful Operation
         '400':
-            description: Bad Request (RefreshToken is missing.)
+            description: Bad Request
         '401':
-          description: Unauthorized (RefreshToken is invalid.)
+          description: Unauthorized
 
   # -------------------- AuthCorporation --------------------
   /admin/corporation/signup:
@@ -248,9 +248,9 @@ paths:
         '200':
           description: Successful Operation
         '400':
-          description: Bad Request (RefreshToken is missing.)
+          description: Bad Request
         '401':
-          description: Unauthorized (RefreshToken is invalid.)
+          description: Unauthorized
 
   # -------------------- AuthShop --------------------
   /admin/shop/signup:
@@ -470,10 +470,10 @@ paths:
         '200':
           description: Successful Operation
         '400':
-          description: Bad Request (RefreshToken is missing.)
+          description: Bad Request
         '401':
-          description: Unauthorized (RefreshToken is invalid.)
-  /user/disable:
+          description: Unauthorized
+  /user/delete:
     delete:
       tags:
         - AuthUser
@@ -495,9 +495,9 @@ paths:
         '200':
           description: Successful Operation
         '400':
-          description: Bad Request (RefreshToken is missing.)
+          description: Bad Request
         '401':
-          description: Unauthorized (RefreshToken is invalid.)
+          description: Unauthorized
 
   # -------------------- AuthUser --------------------
   /user/signup:
@@ -732,9 +732,9 @@ paths:
         '200':
           description: Successful Operation
         '400':
-          description: Bad Request (RefreshToken is missing.)
+          description: Bad Request
         '401':
-          description: Unauthorized (RefreshToken is invalid.)
+          description: Unauthorized
 
   # -------------------- Admin --------------------
   /admin/corporation/list:
