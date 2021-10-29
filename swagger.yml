@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   title: Starl-Backend API Document
   description: This is API Document of Starl-Backend
-  version: 1.0.7
+  version: 1.0.8
 
 servers:
   - url: https://api.starl.co.jp/v1
@@ -831,9 +831,6 @@ paths:
                   id:
                     type: string
                     example: nikuyokocho
-                  status:
-                    type: string
-                    example: ACTIVE
                   corporationName:
                     type: string
                     example: 渋谷 肉横丁
@@ -964,9 +961,6 @@ paths:
                   id:
                     type: string
                     example: nikuyokocho-0001
-                  status:
-                    type: string
-                    example: ACTIVE
                   shopName:
                     type: string
                     example: 渋谷 肉横丁 肉太郎
