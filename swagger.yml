@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   title: Starl-Backend API Document
   description: This is API Document of Starl-Backend
-  version: 1.0.6
+  version: 1.0.7
 
 servers:
   - url: https://api.starl.co.jp/v1
@@ -473,31 +473,6 @@ paths:
           description: Bad Request
         '401':
           description: Unauthorized
-  /user/delete:
-    delete:
-      tags:
-        - AuthUser
-      summary: Delete User
-      security:
-        - BearerAuth: [ ]
-      requestBody:
-        description: AccessToken
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                accessToken:
-                  type: string
-                  example: eyJz9sdfsdfsdfsd
-      responses:
-        '200':
-          description: Successful Operation
-        '400':
-          description: Bad Request
-        '401':
-          description: Unauthorized
 
   # -------------------- AuthUser --------------------
   /user/signup:
@@ -728,6 +703,31 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/RefreshToken'
+      responses:
+        '200':
+          description: Successful Operation
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+  /user/delete:
+    delete:
+      tags:
+        - AuthUser
+      summary: Delete User
+      security:
+        - BearerAuth: [ ]
+      requestBody:
+        description: AccessToken
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                accessToken:
+                  type: string
+                  example: eyJz9sdfsdfsdfsd
       responses:
         '200':
           description: Successful Operation
