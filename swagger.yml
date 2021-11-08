@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   title: Starl-Backend API Document
   description: This is API Document of Starl-Backend
-  version: 1.0.1
+  version: 1.0.2
 
 servers:
   - url: https://api.starl.co.jp/v1
@@ -44,6 +44,21 @@ paths:
                 $ref: '#/components/schemas/AdminSignInResponse'
         '400':
           description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                message: Invalid request parameter
+                description: id and password required to sign in admin
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                message: Failed to sign in
   /admin/signout:
     post:
       tags:
@@ -61,10 +76,34 @@ paths:
       responses:
         '200':
           description: Successful Operation
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AdminSignOutResponse'
         '400':
-            description: Bad Request
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                message: Invalid request parameter
+                description: refreshToken required to sign out admin
         '401':
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                message: Unauthorized
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                message: Failed to sign out
 
   # -------------------- AuthCorporation --------------------
   /admin/corporation/signup:
@@ -1967,6 +2006,14 @@ tags:
 
 components:
   schemas:
+    ErrorResponse:
+      type: object
+      properties:
+        message:
+          type: string
+        description:
+          type: string
+
     AdminSignInRequest:
       type: object
       properties:
@@ -1996,6 +2043,9 @@ components:
           example: dn43ud8uj32nk2je
       required:
         - refreshToken
+    AdminSignOutResponse:
+      type: string
+      example: Signed out successfully
 
     CorporationSignUpRequest:
       type: object
