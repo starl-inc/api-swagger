@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   title: Starl-Backend API Document
   description: This is API Document of Starl-Backend
-  version: 1.0.2
+  version: 1.0.3
 
 servers:
   - url: https://api.starl.co.jp/v1
@@ -19,8 +19,12 @@ paths:
       responses:
         '200':
           description: Successful Operation
-        '400':
-          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HealthCheckResponse'
+        '500':
+          description: Internal Server Error
 
   # -------------------- AuthAdmin --------------------
   /admin/signin:
@@ -58,7 +62,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
               example:
-                message: Failed to sign in
+                message: Failed to sign in admin
   /admin/signout:
     post:
       tags:
@@ -103,7 +107,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
               example:
-                message: Failed to sign out
+                message: Failed to sign out admin
 
   # -------------------- AuthCorporation --------------------
   /admin/corporation/signup:
@@ -129,8 +133,36 @@ paths:
                 $ref: '#/components/schemas/CorporationSignUpResponse'
         '400':
           description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                message: Invalid request parameter
+                description: id and corporationName required to sign up corporation
         '401':
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                message: Unauthorized
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                cognito:
+                  value:
+                    message: Failed to sign up corporation
+                    description: Amazon Cognito AdminCreateUser failed
+                dynamodb:
+                  value:
+                    message: Failed to sign up corporation
+                    description: Amazon DynamoDB PutItem failed
   /corporation/signin:
     post:
       tags:
@@ -169,8 +201,22 @@ paths:
                     refreshToken: dn43ud8uj32nk2je
         '400':
           description: Bad Request
-        '401':
-          description: Unauthorized (ID or password is invalid.)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                message: Invalid request parameter
+                description: id and password required to sign in corporation
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                message: Failed to sign in corporation
+                description: Amazon Cognito sign in corporation failed
   /corporation/reset-password:
     post:
       tags:
@@ -2013,6 +2059,10 @@ components:
           type: string
         description:
           type: string
+
+    HealthCheckResponse:
+      type: string
+      example: Success
 
     AdminSignInRequest:
       type: object
