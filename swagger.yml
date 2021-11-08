@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   title: Starl-Backend API Document
   description: This is API Document of Starl-Backend
-  version: 1.0.3
+  version: 1.0.4
 
 servers:
   - url: https://api.starl.co.jp/v1
@@ -63,6 +63,7 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
               example:
                 message: Failed to sign in admin
+                description: "Amazon Cognito: ${err.message}"
   /admin/signout:
     post:
       tags:
@@ -108,6 +109,7 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
               example:
                 message: Failed to sign out admin
+                description: "Amazon Cognito: ${err.message}"
 
   # -------------------- AuthCorporation --------------------
   /admin/corporation/signup:
@@ -158,11 +160,11 @@ paths:
                 cognito:
                   value:
                     message: Failed to sign up corporation
-                    description: Amazon Cognito AdminCreateUser failed
+                    description: "Amazon Cognito: ${err.message}"
                 dynamodb:
                   value:
                     message: Failed to sign up corporation
-                    description: Amazon DynamoDB PutItem failed
+                    description: "Amazon DynamoDB: ${err.message}"
   /corporation/signin:
     post:
       tags:
@@ -216,7 +218,7 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
               example:
                 message: Failed to sign in corporation
-                description: Amazon Cognito sign in corporation failed
+                description: "Amazon Cognito: ${err.message}"
   /corporation/reset-password:
     post:
       tags:
@@ -238,8 +240,30 @@ paths:
                 $ref: '#/components/schemas/CorporationResetPasswordResponse'
         '400':
           description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                message: Invalid request parameter
+                description: id, newPassword and session required to reset password
         '401':
-          description: Unauthorized (ID or session is invalid.)
+          description: Unauthorized
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                cognito:
+                  value:
+                    message: Failed to reset password
+                    description: "Amazon Cognito: ${err.message}"
+                dynamodb:
+                  value:
+                    message: Failed to reset password
+                    description: "Amazon DynamoDB: ${err.message}"
   /admin/corporation/{corporationId}/disable:
     put:
       tags:
