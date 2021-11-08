@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   title: Starl-Backend API Document
   description: This is API Document of Starl-Backend
-  version: 1.0.7
+  version: 1.0.8
 
 servers:
   - url: https://api.starl.co.jp/v1
@@ -84,7 +84,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/AdminSignOutResponse'
+                $ref: '#/components/schemas/SignOutResponse'
         '400':
           description: Bad Request
           content:
@@ -444,7 +444,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/CorporationSignOutResponse'
+                $ref: '#/components/schemas/SignOutResponse'
         '400':
           description: Bad Request
           content:
@@ -951,6 +951,10 @@ paths:
       responses:
         '200':
           description: Successful Operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserDeleteResponse'
         '400':
           description: Bad Request
         '401':
@@ -2197,8 +2201,11 @@ components:
           type: string
 
     HealthCheckResponse:
-      type: string
-      example: Success
+      type: object
+      properties:
+        message:
+          type: string
+          example: Success
 
     AdminSignInRequest:
       type: object
@@ -2229,9 +2236,12 @@ components:
           example: dn43ud8uj32nk2je
       required:
         - refreshToken
-    AdminSignOutResponse:
-      type: string
-      example: Signed out successfully
+    SignOutResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          example: Signed out successfully
 
     CorporationSignUpRequest:
       type: object
@@ -2360,9 +2370,6 @@ components:
         - previousPassword
         - newPassword
         - accessToken
-    CorporationSignOutResponse:
-      type: string
-      example: Signed out successfully
 
     ShopSignUpRequest:
       type: object
@@ -2680,6 +2687,12 @@ components:
         status:
           type: string
           example: ACTIVE
+    UserDeleteResponse:
+      type: object
+        properties:
+          message:
+            type: string
+            example: User successfully disabled to be deleted in 30 days
 
     Corporation:
       type: object
