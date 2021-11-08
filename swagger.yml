@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   title: Starl-Backend API Document
   description: This is API Document of Starl-Backend
-  version: 1.0.5
+  version: 1.0.6
 
 servers:
   - url: https://api.starl.co.jp/v1
@@ -288,8 +288,27 @@ paths:
                 $ref: '#/components/schemas/CorporationDisableResponse'
         '400':
           description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                registered:
+                  value:
+                    message: Invalid corporation status
+                    description: Required to reset password
+                disabled:
+                  value:
+                    message: Invalid corporation status
+                    description: Corporation is already disabled
         '401':
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                message: Unauthorized
         '404':
           description: Not Found
           content:
@@ -332,10 +351,45 @@ paths:
                 $ref: '#/components/schemas/CorporationActivateResponse'
         '400':
           description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                registered:
+                  value:
+                    message: Invalid corporation status
+                    description: Required to reset password
+                active:
+                  value:
+                    message: Invalid corporation status
+                    description: Corporation is already active
         '401':
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                message: Unauthorized
         '404':
-          description: Corporation not found
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                message: Corporation not found
+                description: "Amazon DynamoDB: ${err.message}"
+        '500':
+            description: Internal Server Error
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/ErrorResponse'
+                example:
+                  message: Failed to activate corporation
+                  description: "Amazon DynamoDB: ${err.message}"
   /corporation/change-password:
     post:
       tags:
