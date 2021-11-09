@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   title: Starl-Backend API Document
   description: This is API Document of Starl-Backend
-  version: 1.0.10
+  version: 1.0.11
 
 servers:
   - url: https://api.starl.co.jp/v1
@@ -714,8 +714,59 @@ paths:
                 $ref: '#/components/schemas/ShopActivateResponse'
         '400':
           description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                corporationRegistered:
+                  value:
+                    message: Invalid corporation status
+                    description: Corporation is required to reset password
+                corporationDisabled:
+                  value:
+                    message: Invalid corporation status
+                    description: Corporation is disabled
+                shopRegistered:
+                  value:
+                    message: Invalid shop status
+                    description: Shop is required to reset password
+                shopActive:
+                  value:
+                    message: Invalid shop status
+                    description: Shop is already active
         '401':
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                message: Unauthorized
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                corporation:
+                  value:
+                    message: Corporation not found
+                    description: "corporationId: ${corporationId}"
+                shop:
+                  value:
+                    message: Shop not found
+                    description: "shopId: ${shopId}"
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                message: Failed to activate shop
+                description: "Amazon DynamoDB: ${err.message}"
   /admin/shop/{shopId}/disable:
     put:
       tags:
@@ -740,10 +791,51 @@ paths:
                 $ref: '#/components/schemas/ShopDisableResponse'
         '400':
           description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                shopRegistered:
+                  value:
+                    message: Invalid shop status
+                    description: Shop is required to reset password
+                shopConfirmed:
+                  value:
+                    message: Invalid shop status
+                    description: Shop is not activated yet
+                shopDisabled:
+                  value:
+                    message: Invalid shop status
+                    description: Shop is already disabled
         '401':
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                message: Unauthorized
         '404':
-          description: Shop not found
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                shop:
+                  value:
+                    message: Shop not found
+                    description: "shopId: ${shopId}"
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                message: Failed to disable shop
+                description: "Amazon DynamoDB: ${err.message}"
   /corporation/shop/{shopId}/disable:
     put:
       tags:
@@ -760,8 +852,51 @@ paths:
                 $ref: '#/components/schemas/ShopDisableResponse'
         '400':
           description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                shopRegistered:
+                  value:
+                    message: Invalid shop status
+                    description: Shop is required to reset password
+                shopConfirmed:
+                  value:
+                    message: Invalid shop status
+                    description: Shop is not activated yet
+                shopDisabled:
+                  value:
+                    message: Invalid shop status
+                    description: Shop is already disabled
         '401':
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                message: Unauthorized
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                shop:
+                  value:
+                    message: Shop not found
+                    description: "shopId: ${shopId}"
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                message: Failed to disable shop
+                description: "Amazon DynamoDB: ${err.message}"
   /shop/change-password:
     post:
       tags:
@@ -779,8 +914,28 @@ paths:
           description: Successful Operation
         '400':
           description: Bad Request
-        '401':
-          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                message: Invalid request parameter
+                description: previousPassword, newPassword and accessToken required to change password
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                cognito:
+                  value:
+                    message: Failed to change password
+                    description: "Amazon Cognito: ${err.message}"
+                dynamodb:
+                  value:
+                    message: Failed to change password
+                    description: "Amazon DynamoDB: ${err.message}"
   /shop/signout:
     post:
       tags:
@@ -798,10 +953,36 @@ paths:
       responses:
         '200':
           description: Successful Operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SignOutResponse'
         '400':
           description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                message: Invalid request parameter
+                description: refreshToken required to sign out shop
         '401':
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                message: Unauthorized
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                message: Failed to sign out shop
+                description: "Amazon Cognito: ${err.message}"
 
   # -------------------- AuthUser --------------------
   /user/signup:
