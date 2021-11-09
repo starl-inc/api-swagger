@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   title: Starl-Backend API Document
   description: This is API Document of Starl-Backend
-  version: 1.0.11
+  version: 1.0.12
 
 servers:
   - url: https://api.starl.co.jp/v1
@@ -158,11 +158,11 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
               examples:
-                cognito:
+                Cognito:
                   value:
                     message: Failed to sign up corporation
                     description: "Amazon Cognito: ${err.message}"
-                dynamodb:
+                DynamoDB:
                   value:
                     message: Failed to sign up corporation
                     description: "Amazon DynamoDB: ${err.message}"
@@ -255,11 +255,11 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
               examples:
-                cognito:
+                Cognito:
                   value:
                     message: Failed to reset password
                     description: "Amazon Cognito: ${err.message}"
-                dynamodb:
+                DynamoDB:
                   value:
                     message: Failed to reset password
                     description: "Amazon DynamoDB: ${err.message}"
@@ -292,11 +292,11 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
               examples:
-                registered:
+                StatusRegistered:
                   value:
                     message: Invalid corporation status
                     description: Required to reset password
-                disabled:
+                StatusDisabled:
                   value:
                     message: Invalid corporation status
                     description: Corporation is already disabled
@@ -355,11 +355,11 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
               examples:
-                registered:
+                StatusRegistered:
                   value:
                     message: Invalid corporation status
                     description: Required to reset password
-                active:
+                StatusActive:
                   value:
                     message: Invalid corporation status
                     description: Corporation is already active
@@ -381,14 +381,14 @@ paths:
                 message: Corporation not found
                 description: "Amazon DynamoDB: ${err.message}"
         '500':
-            description: Internal Server Error
-            content:
-              application/json:
-                schema:
-                  $ref: '#/components/schemas/ErrorResponse'
-                example:
-                  message: Failed to activate corporation
-                  description: "Amazon DynamoDB: ${err.message}"
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                message: Failed to activate corporation
+                description: "Amazon DynamoDB: ${err.message}"
   /corporation/change-password:
     post:
       tags:
@@ -516,11 +516,11 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
               examples:
-                cognito:
+                Cognito:
                   value:
                     message: Failed to sign up shop
                     description: "Amazon Cognito: ${err.message}"
-                dynamodb:
+                DynamoDB:
                   value:
                     message: Failed to sign up shop
                     description: "Amazon DynamoDB: ${err.message}"
@@ -613,11 +613,11 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
               examples:
-                cognito:
+                Cognito:
                   value:
                     message: Failed to reset password
                     description: "Amazon Cognito: ${err.message}"
-                dynamodb:
+                DynamoDB:
                   value:
                     message: Failed to reset password
                     description: "Amazon DynamoDB: ${err.message}"
@@ -650,19 +650,19 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
               examples:
-                corporationRegistered:
+                CorporationStatusRegistered:
                   value:
                     message: Invalid corporation status
                     description: Corporation is required to reset password
-                corporationDisabled:
+                CorporationStatusDisabled:
                   value:
                     message: Invalid corporation status
                     description: Corporation is disabled
-                shopRegistered:
+                ShopStatusRegistered:
                   value:
                     message: Invalid shop status
                     description: Shop is required to reset password
-                shopActive:
+                ShopStatusActive:
                   value:
                     message: Invalid shop status
                     description: Shop is already active
@@ -681,11 +681,11 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
               examples:
-                corporation:
+                CorporationNotFound:
                   value:
                     message: Corporation not found
                     description: "corporationId: ${corporationId}"
-                shop:
+                ShopNotFound:
                   value:
                     message: Shop not found
                     description: "shopId: ${shopId}"
@@ -719,19 +719,19 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
               examples:
-                corporationRegistered:
+                CorporationStatusRegistered:
                   value:
                     message: Invalid corporation status
                     description: Corporation is required to reset password
-                corporationDisabled:
+                CorporationStatusDisabled:
                   value:
                     message: Invalid corporation status
                     description: Corporation is disabled
-                shopRegistered:
+                ShopStatusRegistered:
                   value:
                     message: Invalid shop status
                     description: Shop is required to reset password
-                shopActive:
+                ShopStatusActive:
                   value:
                     message: Invalid shop status
                     description: Shop is already active
@@ -750,11 +750,11 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
               examples:
-                corporation:
+                CorporationNotFound:
                   value:
                     message: Corporation not found
                     description: "corporationId: ${corporationId}"
-                shop:
+                ShopNotFound:
                   value:
                     message: Shop not found
                     description: "shopId: ${shopId}"
@@ -796,15 +796,15 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
               examples:
-                shopRegistered:
+                StatusRegistered:
                   value:
                     message: Invalid shop status
                     description: Shop is required to reset password
-                shopConfirmed:
+                StatusConfirmed:
                   value:
                     message: Invalid shop status
                     description: Shop is not activated yet
-                shopDisabled:
+                StatusDisabled:
                   value:
                     message: Invalid shop status
                     description: Shop is already disabled
@@ -823,7 +823,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
               examples:
-                shop:
+                ShopNotFound:
                   value:
                     message: Shop not found
                     description: "shopId: ${shopId}"
@@ -857,15 +857,15 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
               examples:
-                shopRegistered:
+                StatusRegistered:
                   value:
                     message: Invalid shop status
                     description: Shop is required to reset password
-                shopConfirmed:
+                StatusConfirmed:
                   value:
                     message: Invalid shop status
                     description: Shop is not activated yet
-                shopDisabled:
+                StatusDisabled:
                   value:
                     message: Invalid shop status
                     description: Shop is already disabled
@@ -884,7 +884,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
               examples:
-                shop:
+                ShopNotFound:
                   value:
                     message: Shop not found
                     description: "shopId: ${shopId}"
@@ -928,11 +928,11 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
               examples:
-                cognito:
+                Cognito:
                   value:
                     message: Failed to change password
                     description: "Amazon Cognito: ${err.message}"
-                dynamodb:
+                DynamoDB:
                   value:
                     message: Failed to change password
                     description: "Amazon DynamoDB: ${err.message}"
@@ -1006,6 +1006,34 @@ paths:
                 $ref: '#/components/schemas/UserSignUpResponse'
         '400':
           description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                InvalidParams:
+                  value:
+                    message: Invalid request parameter
+                    description: deviceId required to sign up user
+                DeviceUsed:
+                  value:
+                    message: This device already used
+                    description: "deviceId: ${deviceId}"
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                Cognito:
+                  value:
+                    message: Failed to sign up user
+                    description: "Amazon Cognito: ${err.message}"
+                DynamoDB:
+                  value:
+                    message: Failed to sign up user
+                    description: "Amazon DynamoDB: ${err.message}"
   /user/signin:
     post:
       tags:
@@ -1027,8 +1055,22 @@ paths:
                 $ref: '#/components/schemas/UserSignInResponse'
         '400':
           description: Bad Request
-        '401':
-          description: Unauthorized (ID or password is invalid.)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                message: Invalid request parameter
+                description: id and password required to sign in user
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                message: Failed to sign in user
+                description: "Amazon Cognito: ${err.message}"
   /user/register:
     post:
       tags:
@@ -1050,6 +1092,54 @@ paths:
                 $ref: '#/components/schemas/UserRegisterResponse'
         '400':
           description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                InvalidParams:
+                  value:
+                    message: Invalid request parameter
+                    description: email and accessToken required to register user
+                EmailUsed:
+                  value:
+                    message: This email already used
+                    description: "email: ${email}"
+                StatusRegistered:
+                  value:
+                    message: Invalid user status
+                    description: User is already registered
+                StatusVerified:
+                  value:
+                    message: Invalid user status
+                    description: User is already verified
+                StatusActive:
+                  value:
+                    message: Invalid user status
+                    description: User is already active
+                StatusDisabled:
+                  value:
+                    message: Invalid user status
+                    description: User is disabled
+                StatusRequireVerification:
+                  value:
+                    message: Invalid user status
+                    description: User is already registered
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                Cognito:
+                  value:
+                    message: Failed to register user
+                    description: "Amazon Cognito: ${err.message}"
+                DynamoDB:
+                  value:
+                    message: Failed to register user
+                    description: "Amazon DynamoDB: ${err.message}"
   /user/resende-code:
     post:
       tags:
@@ -1067,6 +1157,46 @@ paths:
           description: Successful Operation
         '400':
           description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                InvalidParams:
+                  value:
+                    message: Invalid request parameter
+                    description: accessToken required to resend code
+                StatusSignedUp:
+                  value:
+                    message: Invalid user status
+                    description: User is required to register email
+                StatusVerified:
+                  value:
+                    message: Invalid user status
+                    description: User is already verified
+                StatusActive:
+                  value:
+                    message: Invalid user status
+                    description: User is already verified
+                StatusDisabled:
+                  value:
+                    message: Invalid user status
+                    description: User is disabled
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                Cognito:
+                  value:
+                    message: Failed to resend code
+                    description: "Amazon Cognito: ${err.message}"
+                DynamoDB:
+                  value:
+                    message: Failed to resend code
+                    description: "Amazon DynamoDB: ${err.message}"
   /user/verify:
     post:
       tags:
@@ -1226,7 +1356,7 @@ paths:
         - AuthUser
       summary: Delete User
       security:
-        - BearerAuth: [ ]
+        - BearerAuth: []
       requestBody:
         description: AccessToken
         required: true
@@ -1803,7 +1933,7 @@ paths:
         - Corporation
       summary: Read transaction list of the corporation
       security:
-        - BearerAuth: [ ]
+        - BearerAuth: []
       parameters:
         - in: query
           name: yearMonth
@@ -2764,14 +2894,14 @@ components:
         - newPassword
         - session
     ShopResetPasswordResponse:
-        type: object
-        properties:
-          idToken:
-            type: string
-            example: dmcxd329ujdmkemkd349r
-          refreshToken:
-            type: string
-            example: dn43ud8uj32nk2je
+      type: object
+      properties:
+        idToken:
+          type: string
+          example: dmcxd329ujdmkemkd349r
+        refreshToken:
+          type: string
+          example: dn43ud8uj32nk2je
     ShopActivateResponse:
       type: object
       properties:
@@ -2979,10 +3109,10 @@ components:
           example: ACTIVE
     UserDeleteResponse:
       type: object
-        properties:
-          message:
-            type: string
-            example: User successfully disabled to be deleted in 30 days
+      properties:
+        message:
+          type: string
+          example: User successfully disabled to be deleted in 30 days
 
     Corporation:
       type: object
