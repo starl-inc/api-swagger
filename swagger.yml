@@ -292,11 +292,11 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
               examples:
-                StatusRegistered:
+                InvalidStatusRegistered:
                   value:
                     message: Invalid corporation status
                     description: Required to reset password
-                StatusDisabled:
+                InvalidStatusDisabled:
                   value:
                     message: Invalid corporation status
                     description: Corporation is already disabled
@@ -355,11 +355,11 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
               examples:
-                StatusRegistered:
+                InvalidStatusRegistered:
                   value:
                     message: Invalid corporation status
                     description: Required to reset password
-                StatusActive:
+                InvalidStatusActive:
                   value:
                     message: Invalid corporation status
                     description: Corporation is already active
@@ -650,19 +650,19 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
               examples:
-                CorporationStatusRegistered:
+                InvalidCorporationStatusRegistered:
                   value:
                     message: Invalid corporation status
                     description: Corporation is required to reset password
-                CorporationStatusDisabled:
+                InvalidCorporationStatusDisabled:
                   value:
                     message: Invalid corporation status
                     description: Corporation is disabled
-                ShopStatusRegistered:
+                InvalidShopStatusRegistered:
                   value:
                     message: Invalid shop status
                     description: Shop is required to reset password
-                ShopStatusActive:
+                InvalidShopStatusActive:
                   value:
                     message: Invalid shop status
                     description: Shop is already active
@@ -727,19 +727,19 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
               examples:
-                CorporationStatusRegistered:
+                InvalidCorporationStatusRegistered:
                   value:
                     message: Invalid corporation status
                     description: Corporation is required to reset password
-                CorporationStatusDisabled:
+                InvalidCorporationStatusDisabled:
                   value:
                     message: Invalid corporation status
                     description: Corporation is disabled
-                ShopStatusRegistered:
+                InvalidShopStatusRegistered:
                   value:
                     message: Invalid shop status
                     description: Shop is required to reset password
-                ShopStatusActive:
+                InvalidShopStatusActive:
                   value:
                     message: Invalid shop status
                     description: Shop is already active
@@ -804,15 +804,15 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
               examples:
-                StatusRegistered:
+                InvalidStatusRegistered:
                   value:
                     message: Invalid shop status
                     description: Shop is required to reset password
-                StatusConfirmed:
+                InvalidStatusConfirmed:
                   value:
                     message: Invalid shop status
                     description: Shop is not activated yet
-                StatusDisabled:
+                InvalidStatusDisabled:
                   value:
                     message: Invalid shop status
                     description: Shop is already disabled
@@ -873,15 +873,15 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
               examples:
-                StatusRegistered:
+                InvalidStatusRegistered:
                   value:
                     message: Invalid shop status
                     description: Shop is required to reset password
-                StatusConfirmed:
+                InvalidStatusConfirmed:
                   value:
                     message: Invalid shop status
                     description: Shop is not activated yet
-                StatusDisabled:
+                InvalidStatusDisabled:
                   value:
                     message: Invalid shop status
                     description: Shop is already disabled
@@ -1121,23 +1121,23 @@ paths:
                   value:
                     message: This email already used
                     description: "email: ${email}"
-                StatusRegistered:
+                InvalidStatusRegistered:
                   value:
                     message: Invalid user status
                     description: User is already registered
-                StatusVerified:
+                InvalidStatusVerified:
                   value:
                     message: Invalid user status
                     description: User is already verified
-                StatusActive:
+                InvalidStatusActive:
                   value:
                     message: Invalid user status
                     description: User is already active
-                StatusDisabled:
+                InvalidStatusDisabled:
                   value:
                     message: Invalid user status
                     description: User is disabled
-                StatusRequireVerification:
+                InvalidStatusRequireVerification:
                   value:
                     message: Invalid user status
                     description: User is already registered
@@ -1186,19 +1186,19 @@ paths:
                   value:
                     message: Invalid request parameter
                     description: accessToken required to resend code
-                StatusSignedUp:
+                InvalidStatusSignedUp:
                   value:
                     message: Invalid user status
                     description: User is required to register email
-                StatusVerified:
+                InvalidStatusVerified:
                   value:
                     message: Invalid user status
                     description: User is already verified
-                StatusActive:
+                InvalidStatusActive:
                   value:
                     message: Invalid user status
                     description: User is already verified
-                StatusDisabled:
+                InvalidStatusDisabled:
                   value:
                     message: Invalid user status
                     description: User is disabled
@@ -1260,19 +1260,19 @@ paths:
                   value:
                     message: Invalid request parameter
                     description: code and accessToken required to verify email
-                StatusSignedUp:
+                InvalidStatusSignedUp:
                   value:
                     message: Invalid user status
                     description: User is required to register email
-                StatusVerified:
+                InvalidStatusVerified:
                   value:
                     message: Invalid user status
                     description: User is already verified
-                StatusActive:
+                InvalidStatusActive:
                   value:
                     message: Invalid user status
                     description: User is already verified
-                StatusDisabled:
+                InvalidStatusDisabled:
                   value:
                     message: Invalid user status
                     description: User is disabled
@@ -1312,6 +1312,46 @@ paths:
                 $ref: '#/components/schemas/UserChangePasswordResponse'
         '400':
           description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                InvalidParams:
+                  value:
+                    message: Invalid request parameter
+                    description: prevPassword, newPassword and accessToken required to change password
+                InvalidStatusSignedUp:
+                  value:
+                    message: Invalid user status
+                    description: User is required to register email
+                InvalidStatusRegistered:
+                  value:
+                    message: Invalid user status
+                    description: User is required to verify email
+                InvalidStatusDisabled:
+                  value:
+                    message: Invalid user status
+                    description: User is disabled
+                InvalidStatusRequireVerification:
+                  value:
+                    message: Invalid user status
+                    description: User is required to verify email
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                Cognito:
+                  value:
+                    message: Failed to change password
+                    description: "Amazon Cognito: ${err.message}"
+                DynamoDB:
+                  value:
+                    message: Failed to change password
+                    description: "Amazon DynamoDB: ${err.message}"
   /user/change-email:
     post:
       tags:
