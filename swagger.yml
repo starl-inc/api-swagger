@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   title: Starl-Backend API Document
   description: This is API Document of Starl-Backend
-  version: 1.0.14
+  version: 1.0.15
 
 servers:
   - url: https://api.starl.co.jp/v1
@@ -1171,6 +1171,10 @@ paths:
       responses:
         '200':
           description: Successful Operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserResendCodeResponse'
         '400':
           description: Bad Request
           content:
@@ -1247,6 +1251,46 @@ paths:
                     status: ACTIVE
         '400':
           description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                InvalidParams:
+                  value:
+                    message: Invalid request parameter
+                    description: code and accessToken required to verify email
+                StatusSignedUp:
+                  value:
+                    message: Invalid user status
+                    description: User is required to register email
+                StatusVerified:
+                  value:
+                    message: Invalid user status
+                    description: User is already verified
+                StatusActive:
+                  value:
+                    message: Invalid user status
+                    description: User is already verified
+                StatusDisabled:
+                  value:
+                    message: Invalid user status
+                    description: User is disabled
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                Cognito:
+                  value:
+                    message: Failed to verify email
+                    description: "Amazon Cognito: ${err.message}"
+                DynamoDB:
+                  value:
+                    message: Failed to verify email
+                    description: "Amazon DynamoDB: ${err.message}"
   /user/change-password:
     post:
       tags:
@@ -3029,6 +3073,12 @@ components:
           example: eyJz9sdfsdfsdfsd
       required:
         - accessToken
+    UserResendCodeResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          example: Resent code successfully
     UserVerifyRequest:
       type: object
       properties:
