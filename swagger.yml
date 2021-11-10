@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   title: Starl-Backend API Document
   description: This is API Document of Starl-Backend
-  version: 1.0.19
+  version: 1.0.20
 
 servers:
   - url: https://api.starl.co.jp/v1
@@ -2542,10 +2542,26 @@ paths:
                     example: |
                       月～日、祝日、祝前日: 17:00～翌0:00
                       定休日：不定休
-        '400':
-          description: Bad Request
+                  createdAt:
+                    type: string
+                    example: "2021-08-01T16:23:56+09:00"
         '401':
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                message: Unauthorized
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                message: Failed to get shop
+                description: "Amazon DynamoDB: ${err.message}"
     put:
       tags:
         - Shop
@@ -2608,8 +2624,30 @@ paths:
                       定休日：不定休
         '400':
           description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                message: Invalid request parameter
+                description: shopName, address, phone and openingHours required to update shop info
         '401':
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                message: Unauthorized
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                message: Failed to update shop info
+                description: "Amazon DynamoDB: ${err.message}"
   /shop/transaction/list:
     get:
       tags:
@@ -2652,12 +2690,23 @@ paths:
                     createdAt:
                       type: string
                       example: "2021-08-01T16:23:56+09:00"
-        '400':
-          description: Bad Request
         '401':
           description: Unauthorized
-        '404':
-          description: Transaction not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                message: Unauthorized
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                message: Failed to get transaction list
+                description: "Amazon DynamoDB: ${err.message}"
   /shop/user/{userId}:
     get:
       tags:
@@ -2708,10 +2757,32 @@ paths:
                     status: SIGND_UP
                     nickname:
                     amount: 1234
-        '400':
-          description: Bad Request
         '401':
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                message: Unauthorized
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                message: User not found
+                description: "userId: ${userId}"
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                message: Failed to get user info
+                description: "Amazon DynamoDB: ${err.message}"
   /shop/transaction:
     post:
       tags:
@@ -2777,8 +2848,79 @@ paths:
                     example: "2021-08-27T00:00:00+09:00"
         '400':
           description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                InvalidParams:
+                  value:
+                    message: Invalid request parameter
+                    description: userId, price and usedPoints required to create transaction
+                UsedPointsSmallerThan0:
+                  summary: "利用ポイント < 0"
+                  value:
+                    message: Invalid request parameter
+                    description: usedPoints required larger than or equal to 0
+                UsedPointsLargerThanPrice:
+                  summary: "利用ポイント > 合計金額"
+                  value:
+                    message: Invalid request parameter
+                    description: usedPoints required smaller than or equal to price
+                UsedPointsLargerThanAmount:
+                  summary: "利用ポイント > 残高"
+                  value:
+                    message: Invalid request parameter
+                    description: usedPoints required smaller than or equal to amount
+                InvalidUserStatusSignedUp:
+                  value:
+                    message: Invalid user status
+                    description: User is required to register in order to use points
+                InvalidUserStatusRegistered:
+                  value:
+                    message: Invalid user status
+                    description: User is required to verify email in order to use points
+                InvalidUserStatusVerified:
+                  value:
+                    message: Invalid user status
+                    description: User is required to change password in order to use points
+                InvalidUserStatusDisabled:
+                  value:
+                    message: Invalid user status
+                    description: User is disabled
+                InvalidUserStatusRequireVerification:
+                  value:
+                    message: Invalid user status
+                    description: User is required to verify email in order to use points
+                InvalidShopStatusRegistered:
+                  value:
+                    message: Invalid shop status
+                    description: Shop is required to reset password
+                InvalidShopStatusConfirmed:
+                  value:
+                    message: Invalid shop status
+                    description: Shop is required to activate
+                InvalidShopStatusDisabled:
+                  value:
+                    message: Invalid shop status
+                    description: Shop is disabled
         '401':
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                message: Unauthorized
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                message: Failed to create transaction
+                description: "Amazon DynamoDB: ${err.message}"
   /shop/transaction/{transactionId}:
     put:
       tags:
@@ -2851,10 +2993,98 @@ paths:
                     example: "2021-08-27T12:37:39+09:00"
         '400':
           description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                InvalidParams:
+                  value:
+                    message: Invalid request parameter
+                    description: price and usedPoints required to update transaction
+                UsedPointsSmallerThan0:
+                  summary: "利用ポイント < 0"
+                  value:
+                    message: Invalid request parameter
+                    description: usedPoints required larger than or equal to 0
+                UsedPointsLargerThanPrice:
+                  summary: "利用ポイント > 合計金額"
+                  value:
+                    message: Invalid request parameter
+                    description: usedPoints required smaller than or equal to price
+                UsedPointsLargerThanAmount:
+                  summary: "利用ポイント > 残高"
+                  value:
+                    message: Invalid request parameter
+                    description: usedPoints required smaller than or equal to amount
+                InvalidUserStatusSignedUp:
+                  value:
+                    message: Invalid user status
+                    description: User is required to register in order to use points
+                InvalidUserStatusRegistered:
+                  value:
+                    message: Invalid user status
+                    description: User is required to verify email in order to use points
+                InvalidUserStatusVerified:
+                  value:
+                    message: Invalid user status
+                    description: User is required to change password in order to use points
+                InvalidUserStatusDisabled:
+                  value:
+                    message: Invalid user status
+                    description: User is disabled
+                InvalidUserStatusRequireVerification:
+                  value:
+                    message: Invalid user status
+                    description: User is required to verify email in order to use points
+                InvalidShopStatusRegistered:
+                  value:
+                    message: Invalid shop status
+                    description: Shop is required to reset password
+                InvalidShopStatusConfirmed:
+                  value:
+                    message: Invalid shop status
+                    description: Shop is required to activate
+                InvalidShopStatusDisabled:
+                  value:
+                    message: Invalid shop status
+                    description: Shop is disabled
         '401':
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                message: Unauthorized
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                message: Too late to update transaction
+                description: Update required within 5 minutes after creation
         '404':
-          description: Transaction not found
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                message: Transaction not found
+                description: "transactionId: ${transactionId}"
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                message: Failed to update transaction
+                description: "Amazon DynamoDB: ${err.message}"
+
 
   # -------------------- User --------------------
   /user:
