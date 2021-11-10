@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   title: Starl-Backend API Document
   description: This is API Document of Starl-Backend
-  version: 1.0.18
+  version: 1.0.19
 
 servers:
   - url: https://api.starl.co.jp/v1
@@ -1991,7 +1991,7 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
               example:
                 message: Invalid request parameter
-                description: corporationName required to update shop info
+                description: shopName, address, phone and openingHours required to update shop info
         '401':
           description: Unauthorized
           content:
@@ -2108,7 +2108,6 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
               example:
                 message: User not found
-                description: "userId: ${userId}"
         '500':
           description: Internal Server Error
           content:
@@ -2218,6 +2217,9 @@ paths:
                   corporationName:
                     type: string
                     example: 渋谷 肉横丁
+                  createdAt:
+                    type: string
+                    example: "2021-08-01T16:23:56+09:00"
                   shops:
                     type: array
                     items:
@@ -2243,10 +2245,23 @@ paths:
                           example: |
                             月～日、祝日、祝前日: 17:00～翌0:00
                             定休日：不定休
-        '400':
-          description: Bad Request
         '401':
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                message: Unauthorized
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                message: Failed to get corporation
+                description: "Amazon DynamoDB: ${err.message}"
     put:
       tags:
         - Corporation
@@ -2285,8 +2300,30 @@ paths:
                     example: 渋谷 肉横丁
         '400':
           description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                message: Invalid request parameter
+                description: corporationName required to update corporation info
         '401':
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                message: Unauthorized
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                message: Failed to update corporation info
+                description: "Amazon DynamoDB: ${err.message}"
   /corporation/shop/{shopId}:
     put:
       tags:
@@ -2352,10 +2389,48 @@ paths:
                       定休日：不定休
         '400':
           description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                message: Invalid request parameter
+                description: shopName, address, phone and openingHours required to update shop info
         '401':
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                message: Unauthorized
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                message: Permission denied
+                description: "shopId: ${shopId}"
         '404':
-          description: Shop not found
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                message: Shop not found
+                description: "shopId: ${shopId}"
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                message: Failed to update shop info
+                description: "Amazon DynamoDB: ${err.message}"
   /corporation/transaction/list:
     get:
       tags:
@@ -2407,12 +2482,23 @@ paths:
                     createdAt:
                       type: string
                       example: "2021-08-01T16:23:56+09:00"
-        '400':
-          description: Bad Request
         '401':
           description: Unauthorized
-        '404':
-          description: Transaction not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                message: Unauthorized
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                message: Failed to get transaction list
+                description: "Amazon DynamoDB: ${err.message}"
 
   # -------------------- Shop --------------------
   /shop:
@@ -3052,7 +3138,7 @@ components:
           example: ACTIVE
         initialPassword:
           type: string
-          example: P@ssw0rd
+          example: b03ddf3ca2e714a6548e7495e2a03f5e824eaac9837cd7f159c67b90fb4b7342
         corporationName:
           type: string
           example: 渋谷 肉横丁
@@ -3076,7 +3162,7 @@ components:
           example: ACTIVE
         initialPassword:
           type: string
-          example: P@ssw0rd
+          example: b03ddf3ca2e714a6548e7495e2a03f5e824eaac9837cd7f159c67b90fb4b7342
         shopName:
           type: string
           example: 渋谷 肉横丁 肉太郎
@@ -3114,7 +3200,7 @@ components:
           example: ACTIVE
         initialPassword:
           type: string
-          example: P@ssw0rd
+          example: b03ddf3ca2e714a6548e7495e2a03f5e824eaac9837cd7f159c67b90fb4b7342
         prevEmail:
           type: string
           example: prev@gmail.com
@@ -3343,10 +3429,10 @@ components:
       properties:
         previousPassword:
           type: string
-          example: P@ssw0rd
+          example: b03ddf3ca2e714a6548e7495e2a03f5e824eaac9837cd7f159c67b90fb4b7342
         newPassword:
           type: string
-          example: newP@ssw0rd
+          example: new0000ca2e714a6548e7495e2a03f5e824eaac9837cd7f159c67b90fb4b7342
         accessToken:
           type: string
           example: eyJz9sdfsdfsdfsd
@@ -3489,10 +3575,10 @@ components:
       properties:
         previousPassword:
           type: string
-          example: P@ssw0rd
+          example: b03ddf3ca2e714a6548e7495e2a03f5e824eaac9837cd7f159c67b90fb4b7342
         newPassword:
           type: string
-          example: newP@ssw0rd
+          example: new0000ca2e714a6548e7495e2a03f5e824eaac9837cd7f159c67b90fb4b7342
         accessToken:
           type: string
           example: eyJz9sdfsdfsdfsd
