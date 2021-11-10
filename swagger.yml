@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   title: Starl-Backend API Document
   description: This is API Document of Starl-Backend
-  version: 1.0.17
+  version: 1.0.18
 
 servers:
   - url: https://api.starl.co.jp/v1
@@ -72,12 +72,12 @@ paths:
       security:
         - BearerAuth: []
       requestBody:
-        description: RefreshToken
+        description: Sign out request
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/RefreshToken'
+              $ref: '#/components/schemas/SignOutRequest'
       responses:
         '200':
           description: Successful Operation
@@ -430,12 +430,12 @@ paths:
       security:
         - BearerAuth: []
       requestBody:
-        description: RefreshToken
+        description: Sign out request
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/RefreshToken'
+              $ref: '#/components/schemas/SignOutRequest'
       responses:
         '200':
           description: Successful Operation
@@ -960,12 +960,12 @@ paths:
       security:
         - BearerAuth: []
       requestBody:
-        description: RefreshToken
+        description: Sign out request
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/RefreshToken'
+              $ref: '#/components/schemas/SignOutRequest'
       responses:
         '200':
           description: Successful Operation
@@ -1579,12 +1579,12 @@ paths:
       security:
         - BearerAuth: []
       requestBody:
-        description: RefreshToken
+        description: Sign out request
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/RefreshToken'
+              $ref: '#/components/schemas/SignOutRequest'
       responses:
         '200':
           description: Successful Operation
@@ -3041,6 +3041,141 @@ tags:
 
 components:
   schemas:
+    Corporation:
+      type: object
+      properties:
+        id:
+          type: string
+          example: nikuyokocho
+        status:
+          type: string
+          example: ACTIVE
+        initialPassword:
+          type: string
+          example: P@ssw0rd
+        corporationName:
+          type: string
+          example: 渋谷 肉横丁
+        createdAt:
+          type: string
+          example: "2021-08-27T00:00:00+09:00"
+        updatedAt:
+          type: string
+          example: "2021-08-27T00:00:00+09:00"
+    Shop:
+      type: object
+      properties:
+        id:
+          type: string
+          example: nikuyokocho-0001
+        corporationId:
+          type: string
+          example: nikuyokocho
+        status:
+          type: string
+          example: ACTIVE
+        initialPassword:
+          type: string
+          example: P@ssw0rd
+        shopName:
+          type: string
+          example: 渋谷 肉横丁 肉太郎
+        address:
+          type: string
+          example: 東京都渋谷区宇田川町１３−８ ちとせ会館 ２F 渋谷肉横丁内
+        phone:
+          type: string
+          example: 03-6427-8994
+        openingHours:
+          type: string
+          example: |
+            月～日、祝日、祝前日: 17:00～翌0:00
+            定休日：不定休
+        createdAt:
+          type: string
+          example: "2021-08-27T00:00:00+09:00"
+        updatedAt:
+          type: string
+          example: "2021-08-27T00:00:00+09:00"
+    User:
+      type: object
+      properties:
+        id:
+          type: string
+          example: ad89afgt
+        deviceId:
+          type: string
+          example: 3K0XXXXX-83XX-HEXX-KIXX-29KH83XXXXXX
+        email:
+          type: string
+          example: user@gmail.com
+        status:
+          type: string
+          example: ACTIVE
+        initialPassword:
+          type: string
+          example: P@ssw0rd
+        prevEmail:
+          type: string
+          example: prev@gmail.com
+        nickname:
+          type: string
+          example: スタールくん
+        iconUrl:
+          type: string
+          example: https://www.example.com/ad89afgt
+        amount:
+          type: integer
+          example: 1234
+        createdAt:
+          type: string
+          example: "2021-08-27T00:00:00+09:00"
+        updatedAt:
+          type: string
+          example: "2021-08-27T00:00:00+09:00"
+        activatedAt:
+          type: string
+          example: "2021-08-27T00:00:00+09:00"
+        deletedAt:
+          type: string
+          example: "2021-08-27T00:00:00+09:00"
+    Transaction:
+      type: object
+      properties:
+        id:
+          type: string
+          example: nikuyokocho-0001-20210827000000
+        userId:
+          type: string
+          example: ad89afgt
+        shopId:
+          type: string
+          example: nikuyokocho-0001
+        corporationId:
+          type: string
+          example: nikuyokocho
+        shopName:
+          type: string
+          example: 渋谷 肉横丁 肉太郎
+        yearMonth:
+          type: integer
+          example: 202108
+        price:
+          type: integer
+          example: 1000
+        usedPoints:
+          type: integer
+          example: 100
+        earnedPoints:
+          type: integer
+          example: 9
+        createdAt:
+          type: string
+          example: "2021-08-27T00:00:00+09:00"
+        updatedAt:
+          type: string
+          example: "2021-08-27T00:00:00+09:00"
+
     ErrorResponse:
       type: object
       properties:
@@ -3048,6 +3183,20 @@ components:
           type: string
         description:
           type: string
+    SignOutRequest:
+      type: object
+      properties:
+        refreshToken:
+          type: string
+          example: dn43ud8uj32nk2je
+      required:
+        - refreshToken
+    SignOutResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          example: Signed out successfully
 
     HealthCheckResponse:
       type: object
@@ -3077,20 +3226,6 @@ components:
         refreshToken:
           type: string
           example: dn43ud8uj32nk2je
-    RefreshToken:
-      type: object
-      properties:
-        refreshToken:
-          type: string
-          example: dn43ud8uj32nk2je
-      required:
-        - refreshToken
-    SignOutResponse:
-      type: object
-      properties:
-        message:
-          type: string
-          example: Signed out successfully
 
     CorporationSignUpRequest:
       type: object
@@ -3548,111 +3683,6 @@ components:
         message:
           type: string
           example: User successfully disabled to be deleted in 30 days
-
-    Corporation:
-      type: object
-      properties:
-        id:
-          type: string
-          example: nikuyokocho
-        status:
-          type: string
-          example: ACTIVE
-        initialPassword:
-          type: string
-          example: P@ssw0rd
-        corporationName:
-          type: string
-          example: 渋谷 肉横丁
-    Shop:
-      type: object
-      properties:
-        id:
-          type: string
-          example: nikuyokocho-0001
-        corporationId:
-          type: string
-          example: nikuyokocho
-        status:
-          type: string
-          example: ACTIVE
-        initialPassword:
-          type: string
-          example: P@ssw0rd
-        shopName:
-          type: string
-          example: 渋谷 肉横丁 肉太郎
-        address:
-          type: string
-          example: 東京都渋谷区宇田川町１３−８ ちとせ会館 ２F 渋谷肉横丁内
-        phone:
-          type: string
-          example: 03-6427-8994
-        openingHours:
-          type: string
-          example: |
-            月～日、祝日、祝前日: 17:00～翌0:00
-            定休日：不定休
-    User:
-      type: object
-      properties:
-        id:
-          type: string
-          example: ad89afgt
-        deviceId:
-          type: string
-          example: 3K0XXXXX-83XX-HEXX-KIXX-29KH83XXXXXX
-        email:
-          type: string
-          example: user@gmail.com
-        status:
-          type: string
-          example: ACTIVE
-        initialPassword:
-          type: string
-          example: P@ssw0rd
-        prevEmail:
-          type: string
-          example: prev@gmail.com
-        nickname:
-          type: string
-          example: スタールくん
-        iconUrl:
-          type: string
-          example: https://www.example.com/ad89afgt
-        amount:
-          type: integer
-          example: 1234
-    Transaction:
-      type: object
-      properties:
-        id:
-          type: string
-          example: nikuyokocho-0001-20210827000000
-        userId:
-          type: string
-          example: ad89afgt
-        shopId:
-          type: string
-          example: nikuyokocho-0001
-        corporationId:
-          type: string
-          example: nikuyokocho
-        yearMonth:
-          type: integer
-          example: 202108
-        price:
-          type: integer
-          example: 1000
-        usedPoints:
-          type: integer
-          example: 100
-        earnedPoints:
-          type: integer
-          example: 9
-        createdAt:
-          type: string
-          example: "2021-08-27T00:00:00+09:00"
 
   securitySchemes:
     BearerAuth:
