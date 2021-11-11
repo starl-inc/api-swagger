@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   title: Starl-Backend API Document
   description: This is API Document of Starl-Backend
-  version: 1.0.21
+  version: 1.0.22
 
 servers:
   - url: https://api.starl.co.jp/v1
@@ -3242,6 +3242,21 @@ paths:
                     amount: 1234
         '401':
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                message: Unauthorized
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                message: Failed to get user
+                description: "Amazon DynamoDB: ${err.message}"
   /user/update-nickname:
     put:
       tags:
@@ -3265,10 +3280,40 @@ paths:
       responses:
         '200':
           description: Successful Operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Updated nickname successfully
         '400':
           description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                message: Invalid request parameter
+                description: nickname required to update nickname
         '401':
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                message: Unauthorized
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                message: Failed to update nickname
+                description: "Amazon DynamoDB: ${err.message}"
   /user/upload-icon-img:
     put:
       tags:
@@ -3300,11 +3345,48 @@ paths:
                 properties:
                   iconUrl:
                     type: string
-                    example: https://www.example.com/ad89afgt
+                    example: https://starpoint-user-icon-img.s3.amazonaws.com/ad89afgt.png
         '400':
           description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                message: Invalid request parameter
+                description: iconImg required to upload icon image
         '401':
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                message: Unauthorized
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                message: Invalid user status
+                description: User is disabled
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                DynamoDB:
+                  value:
+                    message: Failed to upload icon image
+                    description: "Amazon DynamoDB: ${err.message}"
+                S3:
+                  value:
+                    message: Failed to upload icon image
+                    description: "Amazon S3: ${err.message}"
   /user/shop/list:
     get:
       tags:
@@ -3367,12 +3449,31 @@ paths:
                       example: |
                         月～日、祝日、祝前日: 17:00～翌0:00
                         定休日：不定休
-        '400':
-          description: Bad Request
         '401':
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                message: Unauthorized
         '404':
-          description: Shop Not Found
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                message: Shop not found
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                message: Failed to get shop list
+                description: "Amazon DynamoDB: ${err.message}"
   /user/transaction/list:
     get:
       tags:
@@ -3426,8 +3527,21 @@ paths:
                       example: "2021-08-27T12:37:39+09:00"
         '401':
           description: Unauthorized
-        '404':
-          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                message: Unauthorized
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                message: Failed to get transaction list
+                description: "Amazon DynamoDB: ${err.message}"
 
 tags:
   - name: HealthCheck
