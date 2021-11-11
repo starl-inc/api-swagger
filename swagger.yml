@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   title: Starl-Backend API Document
   description: This is API Document of Starl-Backend
-  version: 1.0.20
+  version: 1.0.21
 
 servers:
   - url: https://api.starl.co.jp/v1
@@ -285,21 +285,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CorporationDisableResponse'
-        '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-              examples:
-                InvalidStatusRegistered:
-                  value:
-                    message: Invalid corporation status
-                    description: Required to reset password
-                InvalidStatusDisabled:
-                  value:
-                    message: Invalid corporation status
-                    description: Corporation is already disabled
         '401':
           description: Unauthorized
           content:
@@ -308,6 +293,23 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
               example:
                 message: Unauthorized
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                InvalidStatusRegistered:
+                  summary: 'Invalid status: REGISTERED'
+                  value:
+                    message: Invalid corporation status
+                    description: Required to reset password
+                InvalidStatusDisabled:
+                  summary: 'Invalid status: DISABLED'
+                  value:
+                    message: Invalid corporation status
+                    description: Corporation is already disabled
         '404':
           description: Not Found
           content:
@@ -348,21 +350,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CorporationActivateResponse'
-        '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-              examples:
-                InvalidStatusRegistered:
-                  value:
-                    message: Invalid corporation status
-                    description: Required to reset password
-                InvalidStatusActive:
-                  value:
-                    message: Invalid corporation status
-                    description: Corporation is already active
         '401':
           description: Unauthorized
           content:
@@ -371,6 +358,23 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
               example:
                 message: Unauthorized
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                InvalidStatusRegistered:
+                  summary: 'Invalid status: REGISTERED'
+                  value:
+                    message: Invalid corporation status
+                    description: Required to reset password
+                InvalidStatusActive:
+                  summary: 'Invalid status: ACTIVE'
+                  value:
+                    message: Invalid corporation status
+                    description: Corporation is already active
         '404':
           description: Not Found
           content:
@@ -643,29 +647,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ShopActivateResponse'
-        '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-              examples:
-                InvalidCorporationStatusRegistered:
-                  value:
-                    message: Invalid corporation status
-                    description: Corporation is required to reset password
-                InvalidCorporationStatusDisabled:
-                  value:
-                    message: Invalid corporation status
-                    description: Corporation is disabled
-                InvalidShopStatusRegistered:
-                  value:
-                    message: Invalid shop status
-                    description: Shop is required to reset password
-                InvalidShopStatusActive:
-                  value:
-                    message: Invalid shop status
-                    description: Shop is already active
         '401':
           description: Unauthorized
           content:
@@ -674,6 +655,33 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
               example:
                 message: Unauthorized
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                InvalidCorporationStatusRegistered:
+                  summary: 'Invalid corporation status: REGISTERED'
+                  value:
+                    message: Invalid corporation status
+                    description: Corporation is required to reset password
+                InvalidCorporationStatusDisabled:
+                  summary: 'Invalid corporation status: DISABLED'
+                  value:
+                    message: Invalid corporation status
+                    description: Corporation is disabled
+                InvalidShopStatusRegistered:
+                  summary: 'Invalid shop status: REGISTERED'
+                  value:
+                    message: Invalid shop status
+                    description: Shop is required to reset password
+                InvalidShopStatusActive:
+                  summary: 'Invalid shop status: ACTIVE'
+                  value:
+                    message: Invalid shop status
+                    description: Shop is already active
         '404':
           description: Not Found
           content:
@@ -720,29 +728,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ShopActivateResponse'
-        '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-              examples:
-                InvalidCorporationStatusRegistered:
-                  value:
-                    message: Invalid corporation status
-                    description: Corporation is required to reset password
-                InvalidCorporationStatusDisabled:
-                  value:
-                    message: Invalid corporation status
-                    description: Corporation is disabled
-                InvalidShopStatusRegistered:
-                  value:
-                    message: Invalid shop status
-                    description: Shop is required to reset password
-                InvalidShopStatusActive:
-                  value:
-                    message: Invalid shop status
-                    description: Shop is already active
         '401':
           description: Unauthorized
           content:
@@ -751,6 +736,33 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
               example:
                 message: Unauthorized
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                InvalidCorporationStatusRegistered:
+                  summary: 'Invalid corporation status: REGISTERED'
+                  value:
+                    message: Invalid corporation status
+                    description: Corporation is required to reset password
+                InvalidCorporationStatusDisabled:
+                  summary: 'Invalid corporation status: DISABLED'
+                  value:
+                    message: Invalid corporation status
+                    description: Corporation is disabled
+                InvalidShopStatusRegistered:
+                  summary: 'Invalid shop status: REGISTERED'
+                  value:
+                    message: Invalid shop status
+                    description: Shop is required to reset password
+                InvalidShopStatusActive:
+                  summary: 'Invalid shop status: ACTIVE'
+                  value:
+                    message: Invalid shop status
+                    description: Shop is already active
         '404':
           description: Not Found
           content:
@@ -797,25 +809,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ShopDisableResponse'
-        '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-              examples:
-                InvalidStatusRegistered:
-                  value:
-                    message: Invalid shop status
-                    description: Shop is required to reset password
-                InvalidStatusConfirmed:
-                  value:
-                    message: Invalid shop status
-                    description: Shop is not activated yet
-                InvalidStatusDisabled:
-                  value:
-                    message: Invalid shop status
-                    description: Shop is already disabled
         '401':
           description: Unauthorized
           content:
@@ -824,6 +817,28 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
               example:
                 message: Unauthorized
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                InvalidStatusRegistered:
+                  summary: 'Invalid status: REGISTERED'
+                  value:
+                    message: Invalid shop status
+                    description: Shop is required to reset password
+                InvalidStatusConfirmed:
+                  summary: 'Invalid status: CONFIRMED'
+                  value:
+                    message: Invalid shop status
+                    description: Shop is not activated yet
+                InvalidStatusDisabled:
+                  summary: 'Invalid status: DISABLED'
+                  value:
+                    message: Invalid shop status
+                    description: Shop is already disabled
         '404':
           description: Not Found
           content:
@@ -866,25 +881,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ShopDisableResponse'
-        '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-              examples:
-                InvalidStatusRegistered:
-                  value:
-                    message: Invalid shop status
-                    description: Shop is required to reset password
-                InvalidStatusConfirmed:
-                  value:
-                    message: Invalid shop status
-                    description: Shop is not activated yet
-                InvalidStatusDisabled:
-                  value:
-                    message: Invalid shop status
-                    description: Shop is already disabled
         '401':
           description: Unauthorized
           content:
@@ -893,6 +889,28 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
               example:
                 message: Unauthorized
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                InvalidStatusRegistered:
+                  summary: 'Invalid status: REGISTERED'
+                  value:
+                    message: Invalid shop status
+                    description: Shop is required to reset password
+                InvalidStatusConfirmed:
+                  summary: 'Invalid status: CONFIRMED'
+                  value:
+                    message: Invalid shop status
+                    description: Shop is not activated yet
+                InvalidStatusDisabled:
+                  summary: 'Invalid status: DISABLED'
+                  value:
+                    message: Invalid shop status
+                    description: Shop is already disabled
         '404':
           description: Not Found
           content:
@@ -1121,23 +1139,35 @@ paths:
                   value:
                     message: This email already used
                     description: "email: ${email}"
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
                 InvalidStatusRegistered:
+                  summary: 'Invalid status: REGISTERED'
                   value:
                     message: Invalid user status
                     description: User is already registered
                 InvalidStatusVerified:
+                  summary: 'Invalid status: VERIFIED'
                   value:
                     message: Invalid user status
                     description: User is already verified
                 InvalidStatusActive:
+                  summary: 'Invalid status: ACTIVE'
                   value:
                     message: Invalid user status
                     description: User is already active
                 InvalidStatusDisabled:
+                  summary: 'Invalid status: DISABLED'
                   value:
                     message: Invalid user status
                     description: User is disabled
                 InvalidStatusRequireVerification:
+                  summary: 'Invalid status: REQUIRE_VERIFICATION'
                   value:
                     message: Invalid user status
                     description: User is already registered
@@ -1181,24 +1211,33 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+              example:
+                message: Invalid request parameter
+                description: accessToken required to resend code
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
               examples:
-                InvalidParams:
-                  value:
-                    message: Invalid request parameter
-                    description: accessToken required to resend code
                 InvalidStatusSignedUp:
+                  summary: 'Invalid status: SIGNED_UP'
                   value:
                     message: Invalid user status
                     description: User is required to register email
                 InvalidStatusVerified:
+                  summary: 'Invalid status: VERIFIED'
                   value:
                     message: Invalid user status
                     description: User is already verified
                 InvalidStatusActive:
+                  summary: 'Invalid status: ACTIVE'
                   value:
                     message: Invalid user status
                     description: User is already verified
                 InvalidStatusDisabled:
+                  summary: 'Invalid status: DISABLED'
                   value:
                     message: Invalid user status
                     description: User is disabled
@@ -1255,24 +1294,33 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+              example:
+                message: Invalid request parameter
+                description: code and accessToken required to verify email
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
               examples:
-                InvalidParams:
-                  value:
-                    message: Invalid request parameter
-                    description: code and accessToken required to verify email
                 InvalidStatusSignedUp:
+                  summary: 'Invalid status: SIGNED_UP'
                   value:
                     message: Invalid user status
                     description: User is required to register email
                 InvalidStatusVerified:
+                  summary: 'Invalid status: VERIFIED'
                   value:
                     message: Invalid user status
                     description: User is already verified
                 InvalidStatusActive:
+                  summary: 'Invalid status: ACTIVE'
                   value:
                     message: Invalid user status
                     description: User is already verified
                 InvalidStatusDisabled:
+                  summary: 'Invalid status: DISABLED'
                   value:
                     message: Invalid user status
                     description: User is disabled
@@ -1316,24 +1364,33 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+              example:
+                message: Invalid request parameter
+                description: prevPassword, newPassword and accessToken required to change password
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
               examples:
-                InvalidParams:
-                  value:
-                    message: Invalid request parameter
-                    description: prevPassword, newPassword and accessToken required to change password
                 InvalidStatusSignedUp:
+                  summary: 'Invalid status: SIGNED_UP'
                   value:
                     message: Invalid user status
                     description: User is required to register email
                 InvalidStatusRegistered:
+                  summary: 'Invalid status: REGISTERED'
                   value:
                     message: Invalid user status
                     description: User is required to verify email
                 InvalidStatusDisabled:
+                  summary: 'Invalid status: DISABLED'
                   value:
                     message: Invalid user status
                     description: User is disabled
                 InvalidStatusRequireVerification:
+                  summary: 'Invalid status: REQUIRE_VERIFICATION'
                   value:
                     message: Invalid user status
                     description: User is required to verify email
@@ -1386,19 +1443,30 @@ paths:
                   value:
                     message: This email already used
                     description: "email: ${email}"
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
                 InvalidStatusSignedUp:
+                  summary: 'Invalid status: SIGNED_UP'
                   value:
                     message: Invalid user status
                     description: User is required to register email
                 InvalidStatusRegistered:
+                  summary: 'Invalid status: REGISTERED'
                   value:
                     message: Invalid user status
                     description: User is required to verify email
                 InvalidStatusVerified:
+                  summary: 'Invalid status: VERIFIED'
                   value:
                     message: Invalid user status
                     description: User is required to set password
                 InvalidStatusDisabled:
+                  summary: 'Invalid status: DISABLED'
                   value:
                     message: Invalid user status
                     description: User is disabled
@@ -1439,33 +1507,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/AdminDisableUserResponse'
-        '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-              examples:
-                InvalidStatusSignedUp:
-                  value:
-                    message: Invalid user status
-                    description: User is required to register email
-                InvalidStatusRegistered:
-                  value:
-                    message: Invalid user status
-                    description: User is required to verify email
-                InvalidStatusVerified:
-                  value:
-                    message: Invalid user status
-                    description: User is required to set password
-                InvalidStatusDisabled:
-                  value:
-                    message: Invalid user status
-                    description: User is disabled
-                InvalidStatusRequireVerification:
-                  value:
-                    message: Invalid user status
-                    description: User is required to verify email
         '401':
           description: Unauthorized
           content:
@@ -1474,6 +1515,38 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
               example:
                 message: Unauthorized
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                InvalidStatusSignedUp:
+                  summary: 'Invalid status: SIGNED_UP'
+                  value:
+                    message: Invalid user status
+                    description: User is required to register email
+                InvalidStatusRegistered:
+                  summary: 'Invalid status: REGISTERED'
+                  value:
+                    message: Invalid user status
+                    description: User is required to verify email
+                InvalidStatusVerified:
+                  summary: 'Invalid status: VERIFIED'
+                  value:
+                    message: Invalid user status
+                    description: User is required to set password
+                InvalidStatusDisabled:
+                  summary: 'Invalid status: DISABLED'
+                  value:
+                    message: Invalid user status
+                    description: User is disabled
+                InvalidStatusRequireVerification:
+                  summary: 'Invalid status: REQUIRE_VERIFICATION'
+                  value:
+                    message: Invalid user status
+                    description: User is required to verify email
         '404':
           description: Not Found
           content:
@@ -1516,33 +1589,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/AdminActivateUserResponse'
-        '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-              examples:
-                InvalidStatusSignedUp:
-                  value:
-                    message: Invalid user status
-                    description: User is required to register email
-                InvalidStatusRegistered:
-                  value:
-                    message: Invalid user status
-                    description: User is required to verify email
-                InvalidStatusVerified:
-                  value:
-                    message: Invalid user status
-                    description: User is required to set password
-                InvalidStatusActive:
-                  value:
-                    message: Invalid user status
-                    description: User is already active
-                InvalidStatusRequireVerification:
-                  value:
-                    message: Invalid user status
-                    description: User is required to verify email
         '401':
           description: Unauthorized
           content:
@@ -1551,6 +1597,38 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
               example:
                 message: Unauthorized
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                InvalidStatusSignedUp:
+                  summary: 'Invalid status: SIGNED_UP'
+                  value:
+                    message: Invalid user status
+                    description: User is required to register email
+                InvalidStatusRegistered:
+                  summary: 'Invalid status: REGISTERED'
+                  value:
+                    message: Invalid user status
+                    description: User is required to verify email
+                InvalidStatusVerified:
+                  summary: 'Invalid status: VERIFIED'
+                  value:
+                    message: Invalid user status
+                    description: User is required to set password
+                InvalidStatusActive:
+                  summary: 'Invalid status: ACTIVE'
+                  value:
+                    message: Invalid user status
+                    description: User is already active
+                InvalidStatusRequireVerification:
+                  summary: 'Invalid status: REQUIRE_VERIFICATION'
+                  value:
+                    message: Invalid user status
+                    description: User is required to verify email
         '404':
           description: Not Found
           content:
@@ -2404,15 +2482,6 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
               example:
                 message: Unauthorized
-        '403':
-          description: Forbidden
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-              example:
-                message: Permission denied
-                description: "shopId: ${shopId}"
         '404':
           description: Not Found
           content:
@@ -2872,38 +2941,6 @@ paths:
                   value:
                     message: Invalid request parameter
                     description: usedPoints required smaller than or equal to amount
-                InvalidUserStatusSignedUp:
-                  value:
-                    message: Invalid user status
-                    description: User is required to register in order to use points
-                InvalidUserStatusRegistered:
-                  value:
-                    message: Invalid user status
-                    description: User is required to verify email in order to use points
-                InvalidUserStatusVerified:
-                  value:
-                    message: Invalid user status
-                    description: User is required to change password in order to use points
-                InvalidUserStatusDisabled:
-                  value:
-                    message: Invalid user status
-                    description: User is disabled
-                InvalidUserStatusRequireVerification:
-                  value:
-                    message: Invalid user status
-                    description: User is required to verify email in order to use points
-                InvalidShopStatusRegistered:
-                  value:
-                    message: Invalid shop status
-                    description: Shop is required to reset password
-                InvalidShopStatusConfirmed:
-                  value:
-                    message: Invalid shop status
-                    description: Shop is required to activate
-                InvalidShopStatusDisabled:
-                  value:
-                    message: Invalid shop status
-                    description: Shop is disabled
         '401':
           description: Unauthorized
           content:
@@ -2912,6 +2949,53 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
               example:
                 message: Unauthorized
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                InvalidUserStatusSignedUp:
+                  summary: 'Invalid user status: SIGNED_UP'
+                  value:
+                    message: Invalid user status
+                    description: User is required to register in order to use points
+                InvalidUserStatusRegistered:
+                  summary: 'Invalid user status: REGISTERED'
+                  value:
+                    message: Invalid user status
+                    description: User is required to verify email in order to use points
+                InvalidUserStatusVerified:
+                  summary: 'Invalid user status: VERIFIED'
+                  value:
+                    message: Invalid user status
+                    description: User is required to change password in order to use points
+                InvalidUserStatusDisabled:
+                  summary: 'Invalid user status: DISABLED'
+                  value:
+                    message: Invalid user status
+                    description: User is disabled
+                InvalidUserStatusRequireVerification:
+                  summary: 'Invalid user status: REQUIRE_VERIFICATION'
+                  value:
+                    message: Invalid user status
+                    description: User is required to verify email in order to use points
+                InvalidShopStatusRegistered:
+                  summary: 'Invalid shop status: REGISTERED'
+                  value:
+                    message: Invalid shop status
+                    description: Shop is required to reset password
+                InvalidShopStatusConfirmed:
+                  summary: 'Invalid shop status: CONFIRMED'
+                  value:
+                    message: Invalid shop status
+                    description: Shop is required to activate
+                InvalidShopStatusDisabled:
+                  summary: 'Invalid shop status: DISABLED'
+                  value:
+                    message: Invalid shop status
+                    description: Shop is disabled
         '500':
           description: Internal Server Error
           content:
@@ -3017,38 +3101,6 @@ paths:
                   value:
                     message: Invalid request parameter
                     description: usedPoints required smaller than or equal to amount
-                InvalidUserStatusSignedUp:
-                  value:
-                    message: Invalid user status
-                    description: User is required to register in order to use points
-                InvalidUserStatusRegistered:
-                  value:
-                    message: Invalid user status
-                    description: User is required to verify email in order to use points
-                InvalidUserStatusVerified:
-                  value:
-                    message: Invalid user status
-                    description: User is required to change password in order to use points
-                InvalidUserStatusDisabled:
-                  value:
-                    message: Invalid user status
-                    description: User is disabled
-                InvalidUserStatusRequireVerification:
-                  value:
-                    message: Invalid user status
-                    description: User is required to verify email in order to use points
-                InvalidShopStatusRegistered:
-                  value:
-                    message: Invalid shop status
-                    description: Shop is required to reset password
-                InvalidShopStatusConfirmed:
-                  value:
-                    message: Invalid shop status
-                    description: Shop is required to activate
-                InvalidShopStatusDisabled:
-                  value:
-                    message: Invalid shop status
-                    description: Shop is disabled
         '401':
           description: Unauthorized
           content:
@@ -3063,9 +3115,52 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-              example:
-                message: Too late to update transaction
-                description: Update required within 5 minutes after creation
+              examples:
+                TooLate:
+                  summary: Too late to update
+                  value:
+                    message: Too late to update transaction
+                    description: Update required within 5 minutes after creation
+                InvalidUserStatusSignedUp:
+                  summary: 'Invalid user status: SIGNED_UP'
+                  value:
+                    message: Invalid user status
+                    description: User is required to register in order to use points
+                InvalidUserStatusRegistered:
+                  summary: 'Invalid user status: REGISTERED'
+                  value:
+                    message: Invalid user status
+                    description: User is required to verify email in order to use points
+                InvalidUserStatusVerified:
+                  summary: 'Invalid user status: VERIFIED'
+                  value:
+                    message: Invalid user status
+                    description: User is required to change password in order to use points
+                InvalidUserStatusDisabled:
+                  summary: 'Invalid user status: DISABLED'
+                  value:
+                    message: Invalid user status
+                    description: User is disabled
+                InvalidUserStatusRequireVerification:
+                  summary: 'Invalid user status: REQUIRE_VERIFICATION'
+                  value:
+                    message: Invalid user status
+                    description: User is required to verify email in order to use points
+                InvalidShopStatusRegistered:
+                  summary: 'Invalid shop status: REGISTERED'
+                  value:
+                    message: Invalid shop status
+                    description: Shop is required to reset password
+                InvalidShopStatusConfirmed:
+                  summary: 'Invalid shop status: CONFIRMED'
+                  value:
+                    message: Invalid shop status
+                    description: Shop is required to activate
+                InvalidShopStatusDisabled:
+                  summary: 'Invalid shop status: DISABLED'
+                  value:
+                    message: Invalid shop status
+                    description: Shop is disabled
         '404':
           description: Not Found
           content:
