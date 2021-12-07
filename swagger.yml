@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   title: Starl-Backend API Document
   description: This is API Document of Starl-Backend
-  version: 1.0.1
+  version: 1.0.2
 
 servers:
   - url: https://api.starl.co.jp/v1
@@ -3048,6 +3048,106 @@ paths:
                 message: Failed to create transaction
                 description: "Amazon DynamoDB: ${err.message}"
   /shop/transaction/{transactionId}:
+    get:
+      tags:
+        - Shop
+      summary: Read transaction by shop
+      security:
+        - BearerAuth: []
+      parameters:
+        - in: path
+          name: transactionId
+          description: Transaction ID
+          required: true
+          schema:
+            type: string
+            example: nikuyokocho-0001-20210827000000
+      responses:
+        '200':
+          description: Successful Operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    example: 1
+                  userId:
+                    type: string
+                    example: ad89afgt
+                  shopId:
+                    type: string
+                    example: nikuyokocho-0001
+                  corporationId:
+                    type: string
+                    example: nikuyokocho
+                  yearMonth:
+                    type: integer
+                    example: 202108
+                  price:
+                    type: integer
+                    example: 2400
+                  usedPoints:
+                    type: integer
+                    example: 200
+                  earnedPoints:
+                    type: integer
+                    example: 22
+                  createdAt:
+                    type: string
+                    example: "2021-08-27T12:34:56+09:00"
+                  updatedAt:
+                    type: string
+                    example: "2021-08-27T12:37:39+09:00"
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                message: Unauthorized
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                InvalidShopStatusRegistered:
+                  summary: 'Invalid shop status: REGISTERED'
+                  value:
+                    message: Invalid shop status
+                    description: Shop is required to reset password
+                InvalidShopStatusConfirmed:
+                  summary: 'Invalid shop status: CONFIRMED'
+                  value:
+                    message: Invalid shop status
+                    description: Shop is required to activate
+                InvalidShopStatusDisabled:
+                  summary: 'Invalid shop status: DISABLED'
+                  value:
+                    message: Invalid shop status
+                    description: Shop is disabled
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                message: Transaction not found
+                description: "transactionId: ${transactionId}"
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                message: Failed to get transaction info
+                description: "Amazon DynamoDB: ${err.message}"
     put:
       tags:
         - Shop
