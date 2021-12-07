@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   title: Starl-Backend API Document
   description: This is API Document of Starl-Backend
-  version: 1.0.2
+  version: 1.0.3
 
 servers:
   - url: https://api.starl.co.jp/v1
@@ -55,6 +55,15 @@ paths:
               example:
                 message: Invalid request parameter
                 description: id and password required to sign in admin
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                message: Unauthorized
+                description: Incorrect username or password.
         '500':
           description: Internal Server Error
           content:
@@ -211,6 +220,15 @@ paths:
               example:
                 message: Invalid request parameter
                 description: id and password required to sign in corporation
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                message: Unauthorized
+                description: Incorrect username or password.
         '500':
           description: Internal Server Error
           content:
@@ -590,6 +608,15 @@ paths:
               example:
                 message: Invalid request parameter
                 description: id and password required to sign in shop
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                message: Unauthorized
+                description: Incorrect username or password.
         '500':
           description: Internal Server Error
           content:
@@ -1135,6 +1162,15 @@ paths:
               example:
                 message: Invalid request parameter
                 description: id and password required to sign in user
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                message: Unauthorized
+                description: Incorrect username or password.
         '500':
           description: Internal Server Error
           content:
