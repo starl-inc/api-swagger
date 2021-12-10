@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   title: Starl-Backend API Document
   description: This is API Document of Starl-Backend
-  version: 1.0.6
+  version: 1.0.7
 
 servers:
   - url: https://api.starl.co.jp/v1
@@ -1139,7 +1139,6 @@ paths:
       tags:
         - AuthUser
       summary: Confirm sns sign up
-      description:
       security:
         - BearerAuth: []
       requestBody:
@@ -2791,7 +2790,6 @@ paths:
       tags:
         - Shop
       summary: Update Shop
-      description:
       security:
         - BearerAuth: []
       requestBody:
@@ -3443,7 +3441,6 @@ paths:
       tags:
         - User
       summary: Read user by user
-      description:
       security:
         - BearerAuth: []
       responses:
