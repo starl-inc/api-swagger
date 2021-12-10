@@ -1135,7 +1135,7 @@ paths:
                     message: Failed to sign up user
                     description: "Amazon DynamoDB: ${err.message}"
   /user/confirm-sns-signup:
-    get:
+    post:
       tags:
         - AuthUser
       summary: Confirm sns sign up
