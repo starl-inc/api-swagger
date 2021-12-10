@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   title: Starl-Backend API Document
   description: This is API Document of Starl-Backend
-  version: 1.0.3
+  version: 1.0.4
 
 servers:
   - url: https://api.starl.co.jp/v1
@@ -63,7 +63,7 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
               example:
                 message: Unauthorized
-                description: Incorrect username or password.
+                description: Incorrect id or password
         '500':
           description: Internal Server Error
           content:
@@ -228,7 +228,7 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
               example:
                 message: Unauthorized
-                description: Incorrect username or password.
+                description: Incorrect id or password
         '500':
           description: Internal Server Error
           content:
@@ -616,7 +616,7 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
               example:
                 message: Unauthorized
-                description: Incorrect username or password.
+                description: Incorrect id or password
         '500':
           description: Internal Server Error
           content:
@@ -1134,6 +1134,82 @@ paths:
                   value:
                     message: Failed to sign up user
                     description: "Amazon DynamoDB: ${err.message}"
+  /user/confirm-sns-signup:
+    get:
+      tags:
+        - AuthUser
+      summary: Confirm sns sign up
+      description:
+      security:
+        - BearerAuth: []
+      requestBody:
+        description: User auth info
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserConfirmSnsSignUpRequest'
+      responses:
+        '200':
+          description: Successful Operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserConfirmSnsSignUpResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                message: Invalid request parameter
+                description: id and password required to confirm sns sign up
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                message: Unauthorized
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                InvalidStatusActive:
+                  summary: 'Invalid status: ACTIVE'
+                  value:
+                    message: Invalid user status
+                    description: User is already active
+                InvalidStatusDisabled:
+                  summary: 'Invalid status: DISABLED'
+                  value:
+                    message: Invalid user status
+                    description: User is disabled
+                InvalidStatusRequireVerification:
+                  summary: 'Invalid status: REQUIRE_VERIFICATION'
+                  value:
+                    message: Invalid user status
+                    description: User is already registered
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                Cognito:
+                  value:
+                    message: Failed to confirm sns sign up
+                    description: "Amazon Cognito: ${err.message}"
+                DynamoDB:
+                  value:
+                    message: Failed to confirm sns sign up
+                    description: "Amazon DynamoDB: ${err.message}"
   /user/signin:
     post:
       tags:
@@ -1170,7 +1246,7 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
               example:
                 message: Unauthorized
-                description: Incorrect username or password.
+                description: Incorrect id or password
         '500':
           description: Internal Server Error
           content:
@@ -1221,11 +1297,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
               examples:
-                InvalidStatusRegistered:
-                  summary: 'Invalid status: REGISTERED'
-                  value:
-                    message: Invalid user status
-                    description: User is already registered
                 InvalidStatusVerified:
                   summary: 'Invalid status: VERIFIED'
                   value:
@@ -3818,6 +3889,9 @@ components:
         initialPassword:
           type: string
           example: b03ddf3ca2e714a6548e7495e2a03f5e824eaac9837cd7f159c67b90fb4b7342
+        prevId:
+          type: string
+          example: ad89afgt
         prevEmail:
           type: string
           example: prev@gmail.com
@@ -4224,6 +4298,30 @@ components:
         status:
           type: string
           example: SIGND_UP
+    UserConfirmSnsSignUpRequest:
+      type: object
+      properties:
+        id:
+          type: string
+          example: ad89afgt
+        password:
+          type: string
+          example: b03ddf3ca2e714a6548e7495e2a03f5e824eaac9837cd7f159c67b90fb4b7342
+      required:
+        - id
+        - password
+    UserConfirmSnsSignUpResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          example: ad89afgt
+        email:
+          type: string
+          example: user@gmail.com
+        status:
+          type: string
+          example: VERIFIED
     UserSignInRequest:
       type: object
       properties:
