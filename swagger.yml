@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   title: Starl-Backend API Document
   description: This is API Document of Starl-Backend
-  version: 1.0.7
+  version: 1.0.8
 
 servers:
   - url: https://api.starl.co.jp/v1
@@ -3501,6 +3501,65 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
               example:
                 message: Unauthorized
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                message: Failed to get user
+                description: "Amazon DynamoDB: ${err.message}"
+  /user/device/{deviceId}:
+    get:
+      tags:
+        - User
+      summary: Read user by device ID
+      parameters:
+        - in: path
+          name: deviceId
+          description: Device ID
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful Operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    example: ad89afgt
+                  status:
+                    type: string
+                    example: ACTIVE
+                  initialPassword:
+                    type: string
+                    example: P@ssw0rd
+                  email:
+                    type: string
+                    example: user@gmail.com
+                  nickname:
+                    type: string
+                    example: スタールくん
+                  iconUrl:
+                    type: string
+                    example: https://www.example.com/ad89afgt
+                  amount:
+                    type: integer
+                    example: 1234
+        '404':
+          description: User not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                message: User not found
+                description: "deviceId: ${deviceId}"
         '500':
           description: Internal Server Error
           content:
