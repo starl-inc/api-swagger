@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   title: Starl-Backend API Document
   description: This is API Document of Starl-Backend
-  version: 1.0.8
+  version: 1.0.9
 
 servers:
   - url: https://api.starl.co.jp/v1
@@ -1630,6 +1630,165 @@ paths:
                   value:
                     message: Failed to change password
                     description: "Amazon DynamoDB: ${err.message}"
+  /user/reset-password:
+    post:
+      tags:
+        - AuthUser
+      summary: User reset password
+      requestBody:
+        description: Email
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserResetPasswordRequest'
+      responses:
+        '200':
+          description: Successful Operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserResetPasswordResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                message: Invalid request parameter
+                description: email required to reset password
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                InvalidUserId:
+                  summary: SNS sign up
+                  value:
+                    message: Invalid user
+                    description: Password not set
+                InvalidStatusSignedUp:
+                  summary: 'Invalid status: SIGNED_UP'
+                  value:
+                    message: Invalid user status
+                    description: User is required to register email
+                InvalidStatusRegistered:
+                  summary: 'Invalid status: REGISTERED'
+                  value:
+                    message: Invalid user status
+                    description: User is required to verify email
+                InvalidStatusVerified:
+                  summary: 'Invalid status: VERIFIED'
+                  value:
+                    message: Invalid user status
+                    description: User is required to set password
+                InvalidStatusDisabled:
+                  summary: 'Invalid status: DISABLED'
+                  value:
+                    message: Invalid user status
+                    description: User is disabled
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                message: User not found
+                description: "email: ${email}"
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                Cognito:
+                  value:
+                    message: Failed to reset password
+                    description: "Amazon Cognito: ${err.message}"
+                DynamoDB:
+                  value:
+                    message: Failed to reset password
+                    description: "Amazon DynamoDB: ${err.message}"
+  /user/confirm-reset-password:
+    post:
+      tags:
+        - AuthUser
+      summary: User confirm reset password
+      requestBody:
+        description: email, code and new password
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserConfirmResetPasswordRequest'
+      responses:
+        '200':
+          description: Successful Operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserConfirmResetPasswordResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                message: Invalid request parameter
+                description: email, code and newPassword required to change email
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                InvalidStatusSignedUp:
+                  summary: 'Invalid status: SIGNED_UP'
+                  value:
+                    message: Invalid user status
+                    description: User is required to register email
+                InvalidStatusRegistered:
+                  summary: 'Invalid status: REGISTERED'
+                  value:
+                    message: Invalid user status
+                    description: User is required to verify email
+                InvalidStatusVerified:
+                  summary: 'Invalid status: VERIFIED'
+                  value:
+                    message: Invalid user status
+                    description: User is required to set password
+                InvalidStatusActive:
+                  summary: 'Invalid status: ACTIVE'
+                  value:
+                    message: Invalid user status
+                    description: User is already active
+                InvalidStatusDisabled:
+                  summary: 'Invalid status: DISABLED'
+                  value:
+                    message: Invalid user status
+                    description: User is disabled
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                Cognito:
+                  value:
+                    message: Failed to change password
+                    description: "Amazon Cognito: ${err.message}"
+                DynamoDB:
+                  value:
+                    message: Failed to change password
+                    description: "Amazon DynamoDB: ${err.message}"
   /admin/user/{userId}/disable:
     put:
       tags:
@@ -1698,11 +1857,9 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-              examples:
-                ShopNotFound:
-                  value:
-                    message: User not found
-                    description: "userId: ${userId}"
+              example:
+                message: User not found
+                description: "userId: ${userId}"
         '500':
           description: Internal Server Error
           content:
@@ -4523,6 +4680,54 @@ components:
         prevEmail:
           type: string
           example: user@gmail.com
+    UserResetPasswordRequest:
+      type: object
+      properties:
+        email:
+          type: string
+          example: user@gmail.com
+      required:
+        - email
+    UserResetPasswordResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          example: ad89afgt
+        email:
+          type: string
+          example: user@gmail.com
+        status:
+          type: string
+          example: REQUIRE_VERIFICATION
+    UserConfirmResetPasswordRequest:
+      type: object
+      properties:
+        email:
+          type: string
+          example: user@gmail.com
+        code:
+          type: string
+          example: 123456
+        newPassword:
+          type: string
+          example: fb4b7342
+      required:
+        - email
+        - code
+        - newPassword
+    UserConfirmResetPasswordResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          example: ad89afgt
+        email:
+          type: string
+          example: user@gmail.com
+        status:
+          type: string
+          example: ACTIVE
     AdminDisableUserResponse:
       type: object
       properties:
