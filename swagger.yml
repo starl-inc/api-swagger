@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   title: Starl-Backend API Document
   description: This is API Document of Starl-Backend
-  version: 1.0.10
+  version: 1.0.11
 
 servers:
   - url: https://api.starl.co.jp/v1
@@ -563,80 +563,6 @@ paths:
                   value:
                     message: Failed to sign up shop
                     description: "Amazon DynamoDB: ${err.message}"
-  /corporation/shop/reset-password:
-    post:
-      tags:
-        - AuthShop
-      summary: Corporation reset shop password
-      requestBody:
-        description: Shop auth info
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/CorporationResetShopPasswordRequest'
-      responses:
-        '200':
-          description: Successful Operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CorporationResetShopPasswordResponse'
-        '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-              example:
-                message: Invalid request parameter
-                description: shopId, initialPassword and newPassword required for corporation to reset shop password
-        '401':
-          description: Unauthorized
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-              example:
-                message: Unauthorized
-                description: Incorrect shopId or password
-        '403':
-          description: Forbidden
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-              examples:
-                InvalidStatusConfirmed:
-                  summary: 'Invalid status: CONFIRMED'
-                  value:
-                    message: Invalid shop status
-                    description: Shop is already confirmed
-                InvalidStatusActive:
-                  summary: 'Invalid status: ACTIVE'
-                  value:
-                    message: Invalid shop status
-                    description: Shop is already active
-                InvalidStatusDisabled:
-                  summary: 'Invalid status: DISABLED'
-                  value:
-                    message: Invalid shop status
-                    description: Shop is disabled
-        '500':
-          description: Internal Server Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-              examples:
-                Cognito:
-                  value:
-                    message: Failed to reset shop password
-                    description: "Amazon Cognito: ${err.message}"
-                DynamoDB:
-                  value:
-                    message: Failed to reset shop password
-                    description: "Amazon DynamoDB: ${err.message}"
   /shop/signin:
     post:
       tags:
@@ -764,6 +690,80 @@ paths:
                 DynamoDB:
                   value:
                     message: Failed to reset password
+                    description: "Amazon DynamoDB: ${err.message}"
+  /corporation/shop/reset-password:
+    post:
+      tags:
+        - AuthShop
+      summary: Corporation reset shop password
+      requestBody:
+        description: Shop auth info
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CorporationResetShopPasswordRequest'
+      responses:
+        '200':
+          description: Successful Operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CorporationResetShopPasswordResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                message: Invalid request parameter
+                description: shopId, initialPassword and newPassword required for corporation to reset shop password
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                message: Unauthorized
+                description: Incorrect shopId or password
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                InvalidStatusConfirmed:
+                  summary: 'Invalid status: CONFIRMED'
+                  value:
+                    message: Invalid shop status
+                    description: Shop is already confirmed
+                InvalidStatusActive:
+                  summary: 'Invalid status: ACTIVE'
+                  value:
+                    message: Invalid shop status
+                    description: Shop is already active
+                InvalidStatusDisabled:
+                  summary: 'Invalid status: DISABLED'
+                  value:
+                    message: Invalid shop status
+                    description: Shop is disabled
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                Cognito:
+                  value:
+                    message: Failed to reset shop password
+                    description: "Amazon Cognito: ${err.message}"
+                DynamoDB:
+                  value:
+                    message: Failed to reset shop password
                     description: "Amazon DynamoDB: ${err.message}"
   /admin/shop/{shopId}/activate:
     put:
