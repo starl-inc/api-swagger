@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   title: Starl-Backend API Document
   description: This is API Document of Starl-Backend
-  version: 1.0.9
+  version: 1.0.10
 
 servers:
   - url: https://api.starl.co.jp/v1
@@ -562,6 +562,80 @@ paths:
                 DynamoDB:
                   value:
                     message: Failed to sign up shop
+                    description: "Amazon DynamoDB: ${err.message}"
+  /corporation/shop/reset-password:
+    post:
+      tags:
+        - AuthShop
+      summary: Corporation reset shop password
+      requestBody:
+        description: Shop auth info
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CorporationResetShopPasswordRequest'
+      responses:
+        '200':
+          description: Successful Operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CorporationResetShopPasswordResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                message: Invalid request parameter
+                description: shopId, initialPassword and newPassword required for corporation to reset shop password
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                message: Unauthorized
+                description: Incorrect shopId or password
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                InvalidStatusConfirmed:
+                  summary: 'Invalid status: CONFIRMED'
+                  value:
+                    message: Invalid shop status
+                    description: Shop is already confirmed
+                InvalidStatusActive:
+                  summary: 'Invalid status: ACTIVE'
+                  value:
+                    message: Invalid shop status
+                    description: Shop is already active
+                InvalidStatusDisabled:
+                  summary: 'Invalid status: DISABLED'
+                  value:
+                    message: Invalid shop status
+                    description: Shop is disabled
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                Cognito:
+                  value:
+                    message: Failed to reset shop password
+                    description: "Amazon Cognito: ${err.message}"
+                DynamoDB:
+                  value:
+                    message: Failed to reset shop password
                     description: "Amazon DynamoDB: ${err.message}"
   /shop/signin:
     post:
@@ -1519,6 +1593,11 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
               examples:
+                InvalidUser:
+                  summary: SNS account not need password
+                  value:
+                    message: Invalid user
+                    description: Password not set
                 InvalidStatusSignedUp:
                   summary: 'Invalid status: SIGNED_UP'
                   value:
@@ -1665,8 +1744,8 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
               examples:
-                InvalidUserId:
-                  summary: SNS sign up
+                InvalidUser:
+                  summary: SNS account not need password
                   value:
                     message: Invalid user
                     description: Password not set
@@ -1749,6 +1828,11 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
               examples:
+                InvalidUser:
+                  summary: SNS account not need password
+                  value:
+                    message: Invalid user
+                    description: Password not set
                 InvalidStatusSignedUp:
                   summary: 'Invalid status: SIGNED_UP'
                   value:
@@ -4408,6 +4492,31 @@ components:
           example: |
             月～日、祝日、祝前日: 17:00～翌0:00
             定休日：不定休
+    CorporationResetShopPasswordRequest:
+      type: object
+      properties:
+        shopId:
+          type: string
+          example: nikuyokocho-0001
+        initialPassword:
+          type: string
+          example: b03ddf3ca2e714a6548e7495e2a03f5e824eaac9837cd7f159c67b90fb4b7342
+        newPassword:
+          type: string
+          example: b03ddf3ca2e714a6548e7495e2a03f5e824eaac9837cd7f159c67b90fb4b7342
+      required:
+        - shopId
+        - initialPassword
+        - newPassword
+    CorporationResetShopPasswordResponse:
+      type: object
+      properties:
+        shopId:
+          type: string
+          example: nikuyokocho-0001
+        status:
+          type: string
+          example: CONFIRMED
     ShopSignInRequest:
       type: object
       properties:
