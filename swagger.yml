@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   title: Starl-Backend API Document
   description: This is API Document of Starl-Backend
-  version: 1.0.2
+  version: 1.0.3
 
 servers:
   - url: https://api.starl.co.jp/v1
@@ -460,7 +460,7 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
               example:
                 message: Unauthorized
-                description: Incorrect id or password
+                description: Incorrect previousPassword or accessToken
         '500':
           description: Internal Server Error
           content:
@@ -1112,7 +1112,7 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
               example:
                 message: Unauthorized
-                description: Incorrect id or password
+                description: Incorrect previousPassword or accessToken
         '500':
           description: Internal Server Error
           content:
@@ -1612,7 +1612,7 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
               example:
                 message: Unauthorized
-                description: Incorrect id or password
+                description: Incorrect previousPassword or accessToken
         '403':
           description: Forbidden
           content:
