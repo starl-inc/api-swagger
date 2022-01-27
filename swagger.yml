@@ -3798,27 +3798,40 @@ paths:
               schema:
                 type: object
                 properties:
-                  id:
+                  idProvider:
                     type: string
-                    example: ad89afgt
-                  status:
-                    type: string
-                    example: ACTIVE
-                  initialPassword:
-                    type: string
-                    example: P@ssw0rd
                   email:
                     type: string
-                    example: user@gmail.com
-                  nickname:
-                    type: string
-                    example: スタールくん
-                  iconUrl:
-                    type: string
-                    example: https://www.example.com/ad89afgt
-                  amount:
-                    type: integer
-                    example: 1234
+                examples:
+                  Google:
+                    value:
+                      idProvider: Google
+                      email: user@gmail.com
+                  Facebook:
+                    value:
+                      idProvider: Facebook
+                      email: user@gmail.com
+                  Email:
+                    value:
+                      idProvider: Email
+                      email: user@gmail.com
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                RegistrationNotCompleted:
+                  summary: 'Registration not completed'
+                  value:
+                    message: Invalid user status
+                    description: Registration was not completed. Unable to restore account.
+                InvalidStatusDisabled:
+                  summary: 'Invalid status: DISABLED'
+                  value:
+                    message: Invalid user status
+                    description: User is disabled
         '404':
           description: User not found
           content:
@@ -4637,7 +4650,7 @@ components:
     UserSignUpRequest:
       type: object
       properties:
-        deviceId:
+        deviceToken:
           type: string
           example: 3K0XXXXX-83XX-HEXX-KIXX-29KH83XXXXXX
       required:
@@ -4647,7 +4660,7 @@ components:
       properties:
         id:
           type: string
-          example: ad89afgt
+          example: Google_102345678901234567890
         initialPassword:
           type: string
           example: P@ssw0rd
