@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   title: Starl-Backend API Document
   description: This is API Document of Starl-Backend
-  version: 1.0.3
+  version: 1.0.4
 
 servers:
   - url: https://api.starl.co.jp/v1
@@ -1177,6 +1177,66 @@ paths:
                 description: "Amazon Cognito: ${err.message}"
 
   # -------------------- AuthUser --------------------
+  /user/device/{deviceId}:
+    get:
+      tags:
+        - AuthUser
+      summary: Read user by device ID
+      parameters:
+        - in: path
+          name: deviceId
+          description: Device ID
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful Operation
+          content:
+            application/json:
+              schema:
+                ref: '#/components/schemas/UserFindByDeviceIdResponse'
+              examples:
+                NotFound:
+                  value:
+                    deviceId: 3K0XXXXX-83XX-HEXX-KIXX-29KH83XXXXXX
+                    exists: false
+                RegistrationNotCompleted:
+                  value:
+                    deviceId: 3K0XXXXX-83XX-HEXX-KIXX-29KH83XXXXXX
+                    exists: true
+                    registrationCompleted: false
+                Disabled:
+                  value:
+                    deviceId: 3K0XXXXX-83XX-HEXX-KIXX-29KH83XXXXXX
+                    exists: true
+                    registrationCompleted: true
+                    active: false
+                Google:
+                  value:
+                    deviceId: 3K0XXXXX-83XX-HEXX-KIXX-29KH83XXXXXX
+                    exists: true
+                    registrationCompleted: true
+                    active: true
+                    idProvider: Google
+                    email: user@gmail.com
+                Facebook:
+                  value:
+                    idProvider: Facebook
+                    email: user@gmail.com
+                Email:
+                  value:
+                    idProvider: Email
+                    email: user@gmail.com
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                message: Failed to get user
+                description: "Amazon DynamoDB: ${err.message}"
   /user/signup:
     post:
       tags:
@@ -1202,15 +1262,9 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-              examples:
-                InvalidParams:
-                  value:
-                    message: Invalid request parameter
-                    description: deviceId required to sign up user
-                DeviceUsed:
-                  value:
-                    message: This device already used
-                    description: "deviceId: ${deviceId}"
+              example:
+                message: Invalid request parameter
+                description: deviceId and deviceToken required to sign up user
         '500':
           description: Internal Server Error
           content:
@@ -1226,6 +1280,14 @@ paths:
                   value:
                     message: Failed to sign up user
                     description: "Amazon DynamoDB: ${err.message}"
+                SNS-a:
+                  value:
+                    message: Failed to sign up user
+                    description: "Amazon SNS: ${err.message}"
+                SNS-b:
+                  value:
+                    message: Failed to sign up user
+                    description: "Failed to create push notification endpoint"
   /user/confirm-sns-signup:
     post:
       tags:
@@ -1253,9 +1315,14 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-              example:
-                message: Invalid request parameter
-                description: id and password required to confirm sns sign up
+              examples:
+                InvalidParams:
+                  value:
+                    message: Invalid request parameter
+                    description: id and password required to confirm sns sign up
+                InvalidIdToken:
+                  value:
+                    message: Invalid ID token
         '401':
           description: Unauthorized
           content:
@@ -1264,6 +1331,7 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
               example:
                 message: Unauthorized
+                description: Incorrect id or password
         '403':
           description: Forbidden
           content:
@@ -3778,78 +3846,6 @@ paths:
               example:
                 message: Failed to get user
                 description: "Amazon DynamoDB: ${err.message}"
-  /user/device/{deviceId}:
-    get:
-      tags:
-        - User
-      summary: Read user by device ID
-      parameters:
-        - in: path
-          name: deviceId
-          description: Device ID
-          required: true
-          schema:
-            type: string
-      responses:
-        '200':
-          description: Successful Operation
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  idProvider:
-                    type: string
-                  email:
-                    type: string
-                examples:
-                  Google:
-                    value:
-                      idProvider: Google
-                      email: user@gmail.com
-                  Facebook:
-                    value:
-                      idProvider: Facebook
-                      email: user@gmail.com
-                  Email:
-                    value:
-                      idProvider: Email
-                      email: user@gmail.com
-        '403':
-          description: Forbidden
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-              examples:
-                RegistrationNotCompleted:
-                  summary: 'Registration not completed'
-                  value:
-                    message: Invalid user status
-                    description: Registration was not completed. Unable to restore account.
-                InvalidStatusDisabled:
-                  summary: 'Invalid status: DISABLED'
-                  value:
-                    message: Invalid user status
-                    description: User is disabled
-        '404':
-          description: User not found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-              example:
-                message: User not found
-                description: "deviceId: ${deviceId}"
-        '500':
-          description: Internal Server Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-              example:
-                message: Failed to get user
-                description: "Amazon DynamoDB: ${err.message}"
   /user/update-nickname:
     put:
       tags:
@@ -4227,6 +4223,9 @@ components:
         email:
           type: string
           example: user@gmail.com
+        endpointArn:
+          type: string
+          example: arn:aws:sns:ap-northeast-1:012345678901:app
         status:
           type: string
           example: ACTIVE
@@ -4647,20 +4646,39 @@ components:
         - newPassword
         - accessToken
 
+    UserFindByDeviceIdResponse:
+      type: object
+      properties:
+        deviceId:
+          type: string
+        exists:
+          type: boolean
+        registrationCompleted:
+          type: boolean
+        active:
+          type: boolean
+        idProvider:
+          type: string
+        email:
+          type: string
     UserSignUpRequest:
       type: object
       properties:
-        deviceToken:
+        deviceId:
           type: string
           example: 3K0XXXXX-83XX-HEXX-KIXX-29KH83XXXXXX
+        deviceToken:
+          type: string
+          example: 549d137abd2019cda12aa06bff2341ef3ba82da06e3f7adce9daa31e1bcf4dd6
       required:
         - deviceId
+        - deviceToken
     UserSignUpResponse:
       type: object
       properties:
         id:
           type: string
-          example: Google_102345678901234567890
+          example: ad89afgt
         initialPassword:
           type: string
           example: P@ssw0rd
@@ -4684,13 +4702,13 @@ components:
       properties:
         id:
           type: string
-          example: ad89afgt
+          example: Google_102345678901234567890
         email:
           type: string
           example: user@gmail.com
         status:
           type: string
-          example: VERIFIED
+          example: ACTIVE
     UserSignInRequest:
       type: object
       properties:
