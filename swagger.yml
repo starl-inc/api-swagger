@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   title: Starl-Backend API Document
   description: This is API Document of Starl-Backend
-  version: 1.0.4
+  version: 1.0.5
 
 servers:
   - url: https://api.starl.co.jp/v1
@@ -1189,6 +1189,7 @@ paths:
           required: true
           schema:
             type: string
+            example: 0a1b2c3d-4e5f-6g7h-8i9j-0a1b2c3d4e5f6g7h
       responses:
         '200':
           description: Successful Operation
@@ -1222,10 +1223,18 @@ paths:
                     email: user@gmail.com
                 Facebook:
                   value:
+                    deviceId: 3K0XXXXX-83XX-HEXX-KIXX-29KH83XXXXXX
+                    exists: true
+                    registrationCompleted: true
+                    active: true
                     idProvider: Facebook
                     email: user@gmail.com
                 Email:
                   value:
+                    deviceId: 3K0XXXXX-83XX-HEXX-KIXX-29KH83XXXXXX
+                    exists: true
+                    registrationCompleted: true
+                    active: true
                     idProvider: Email
                     email: user@gmail.com
         '500':
@@ -1288,6 +1297,43 @@ paths:
                   value:
                     message: Failed to sign up user
                     description: "Failed to create push notification endpoint"
+  /user/get-token:
+    post:
+      tags:
+        - AuthUser
+      summary: Get token following sns authorization
+      parameters:
+        - in: query
+          name: code
+          description: Authorization Code
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful Operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserGetTokenResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                message: Invalid request parameter
+                description: Invalid request parameter
+        '500':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                message: Failed to get token
+                description: "Http request to cognito token endpoint failed: ${err.message}"
   /user/confirm-sns-signup:
     post:
       tags:
@@ -1316,13 +1362,17 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
               examples:
+                InvalidIdToken:
+                  value:
+                    message: Invalid ID token
+                AlreadyUsed:
+                  value:
+                    message: Failed to confirm sns sign up
+                    description: This sns account already used.
                 InvalidParams:
                   value:
                     message: Invalid request parameter
                     description: id and password required to confirm sns sign up
-                InvalidIdToken:
-                  value:
-                    message: Invalid ID token
         '401':
           description: Unauthorized
           content:
@@ -4685,6 +4735,21 @@ components:
         status:
           type: string
           example: SIGND_UP
+    UserGetTokenResponse:
+      type: object
+        properties:
+          idToken:
+            type: string
+            example: dmcxd329ujdmkemkd349r
+          accessToken:
+            type: string
+            example: eyJz9sdfsdfsdfsd
+          expiresAt:
+            type: string
+            example: 2009-08-07T12:34:56+09:00
+          refreshToken:
+            type: string
+            example: dn43ud8uj32nk2je
     UserConfirmSnsSignUpRequest:
       type: object
       properties:
@@ -4730,6 +4795,9 @@ components:
         accessToken:
           type: string
           example: eyJz9sdfsdfsdfsd
+        expiresAt:
+          type: string
+          example: 2009-08-07T12:34:56+09:00
         refreshToken:
           type: string
           example: dn43ud8uj32nk2je
