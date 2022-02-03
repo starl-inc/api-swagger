@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   title: Starl-Backend API Document
   description: This is API Document of Starl-Backend
-  version: 1.0.6
+  version: 1.0.7
 
 servers:
   - url: https://api.starl.co.jp/v1
@@ -1189,7 +1189,6 @@ paths:
           required: true
           schema:
             type: string
-            example: 0a1b2c3d-4e5f-6g7h-8i9j-0a1b2c3d4e5f6g7h
       responses:
         '200':
           description: Successful Operation
@@ -1309,6 +1308,7 @@ paths:
           required: true
           schema:
             type: string
+            example: 0a1b2c3d-4e5f-6g7h-8i9j-0a1b2c3d4e5f6g7h
       responses:
         '200':
           description: Successful Operation
@@ -1324,9 +1324,9 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
               example:
                 message: Invalid request parameter
-                description: Invalid request parameter
+                description: code required to get token
         '500':
-          description: Bad Request
+          description: Internal Server Error
           content:
             application/json:
               schema:
@@ -1465,6 +1465,43 @@ paths:
               example:
                 message: Failed to sign in user
                 description: "Amazon Cognito: ${err.message}"
+  /user/refresh-token:
+    post:
+      tags:
+        - AuthUser
+      summary: Refresh token
+      requestBody:
+        description: Refresh token
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserRefreshTokenRequest'
+      responses:
+        '200':
+          description: Successful Operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserRefreshTokenResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                message: Invalid request parameter
+                description: refreshToken required to refresh token
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                message: Failed to refresh token
+                description: "Http request to cognito token endpoint failed: ${err.message}"
   /user/register:
     post:
       tags:
@@ -4746,7 +4783,7 @@ components:
           example: eyJz9sdfsdfsdfsd
         expiresAt:
           type: string
-          example: 2009-08-07T12:34:56+09:00
+          example: "2009-08-07T12:34:56+09:00"
         refreshToken:
           type: string
           example: dn43ud8uj32nk2je
@@ -4801,6 +4838,26 @@ components:
         refreshToken:
           type: string
           example: dn43ud8uj32nk2je
+    UserRefreshTokenRequest:
+      type: object
+      properties:
+        refreshToken:
+          type: string
+          example: dn43ud8uj32nk2je
+      required:
+        - refreshToken
+    UserRefreshTokenResponse:
+      type: object
+      properties:
+        idToken:
+          type: string
+          example: dmcxd329ujdmkemkd349r
+        accessToken:
+          type: string
+          example: eyJz9sdfsdfsdfsd
+        expiresAt:
+          type: string
+          example: "2009-08-07T12:34:56+09:00"
     UserRegisterRequest:
       type: object
       properties:
