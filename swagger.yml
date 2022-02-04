@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   title: Starl-Backend API Document
   description: This is API Document of Starl-Backend
-  version: 1.0.9
+  version: 1.0.10
 
 servers:
   - url: https://api.starl.co.jp/v1
@@ -1272,7 +1272,7 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
               example:
                 message: Invalid request parameter
-                description: deviceId and deviceToken required to sign up user
+                description: deviceId required to sign up user
         '500':
           description: Internal Server Error
           content:
@@ -1287,136 +1287,6 @@ paths:
                 DynamoDB:
                   value:
                     message: Failed to sign up user
-                    description: "Amazon DynamoDB: ${err.message}"
-                SNS-a:
-                  value:
-                    message: Failed to sign up user
-                    description: "Amazon SNS: ${err.message}"
-                SNS-b:
-                  value:
-                    message: Failed to sign up user
-                    description: "Failed to create push notification endpoint"
-  /user/get-token:
-    post:
-      tags:
-        - AuthUser
-      summary: Get token following sns authorization
-      requestBody:
-        description: Authorization Code
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/UserGetTokenRequest'
-      responses:
-        '200':
-          description: Successful Operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UserGetTokenResponse'
-        '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-              example:
-                message: Invalid request parameter
-                description: code required to get token
-        '500':
-          description: Internal Server Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-              example:
-                message: Failed to get token
-                description: "Http request to cognito token endpoint failed: ${err.message}"
-  /user/confirm-sns-signup:
-    post:
-      tags:
-        - AuthUser
-      summary: Confirm sns sign up
-      security:
-        - BearerAuth: []
-      requestBody:
-        description: User auth info
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/UserConfirmSnsSignUpRequest'
-      responses:
-        '200':
-          description: Successful Operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UserConfirmSnsSignUpResponse'
-        '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-              examples:
-                InvalidIdToken:
-                  value:
-                    message: Invalid ID token
-                AlreadyUsed:
-                  value:
-                    message: Failed to confirm sns sign up
-                    description: This sns account already used.
-                InvalidParams:
-                  value:
-                    message: Invalid request parameter
-                    description: id and password required to confirm sns sign up
-        '401':
-          description: Unauthorized
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-              example:
-                message: Unauthorized
-                description: Incorrect id or password
-        '403':
-          description: Forbidden
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-              examples:
-                InvalidStatusActive:
-                  summary: 'Invalid status: ACTIVE'
-                  value:
-                    message: Invalid user status
-                    description: User is already active
-                InvalidStatusDisabled:
-                  summary: 'Invalid status: DISABLED'
-                  value:
-                    message: Invalid user status
-                    description: User is disabled
-                InvalidStatusRequireVerification:
-                  summary: 'Invalid status: REQUIRE_VERIFICATION'
-                  value:
-                    message: Invalid user status
-                    description: User is already registered
-        '500':
-          description: Internal Server Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-              examples:
-                Cognito:
-                  value:
-                    message: Failed to confirm sns sign up
-                    description: "Amazon Cognito: ${err.message}"
-                DynamoDB:
-                  value:
-                    message: Failed to confirm sns sign up
                     description: "Amazon DynamoDB: ${err.message}"
   /user/signin:
     post:
@@ -1501,10 +1371,183 @@ paths:
               example:
                 message: Failed to refresh token
                 description: "Http request to cognito token endpoint failed: ${err.message}"
-  /user/register:
+  /user/register-push-notification:
     post:
       tags:
         - AuthUser
+      summary: Register push notification
+      requestBody:
+        description: device token
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserRegisterPushNotificationRequest'
+      responses:
+        '200':
+          description: Successful Operation
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                message: Invalid request parameter
+                description: deviceToken required to refresh token
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                examples:
+                  Cognito:
+                    value:
+                      message: Failed to register push notification
+                      description: "Amazon Cognito: ${err.message}"
+                  DynamoDB:
+                    value:
+                      message: Failed to register push notification
+                      description: "Amazon DynamoDB: ${err.message}"
+                  SNS-a:
+                    value:
+                      message: Failed to register push notification
+                      description: "Amazon SNS: ${err.message}"
+                  SNS-b:
+                    value:
+                      message: Failed to register push notification
+                      description: Failed to create push notification endpoint
+  /user/get-token:
+    post:
+      tags:
+        - AuthUser
+        - SNS
+      summary: Get token following sns authorization
+      requestBody:
+        description: Authorization Code
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserGetTokenRequest'
+      responses:
+        '200':
+          description: Successful Operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserGetTokenResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                message: Invalid request parameter
+                description: code required to get token
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                message: Failed to get token
+                description: "Http request to cognito token endpoint failed: ${err.message}"
+  /user/confirm-sns-signup:
+    post:
+      tags:
+        - AuthUser
+        - SNS
+      summary: Confirm sns sign up
+      security:
+        - BearerAuth: []
+      requestBody:
+        description: User auth info
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserConfirmSnsSignUpRequest'
+      responses:
+        '200':
+          description: Successful Operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserConfirmSnsSignUpResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                InvalidIdToken:
+                  value:
+                    message: Invalid ID token
+                AlreadyUsed:
+                  value:
+                    message: Failed to confirm sns sign up
+                    description: This sns account already used.
+                InvalidParams:
+                  value:
+                    message: Invalid request parameter
+                    description: id and password required to confirm sns sign up
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                message: Unauthorized
+                description: Incorrect id or password
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                InvalidStatusActive:
+                  summary: 'Invalid status: ACTIVE'
+                  value:
+                    message: Invalid user status
+                    description: User is already active
+                InvalidStatusDisabled:
+                  summary: 'Invalid status: DISABLED'
+                  value:
+                    message: Invalid user status
+                    description: User is disabled
+                InvalidStatusRequireVerification:
+                  summary: 'Invalid status: REQUIRE_VERIFICATION'
+                  value:
+                    message: Invalid user status
+                    description: User is already registered
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                Cognito:
+                  value:
+                    message: Failed to confirm sns sign up
+                    description: "Amazon Cognito: ${err.message}"
+                DynamoDB:
+                  value:
+                    message: Failed to confirm sns sign up
+                    description: "Amazon DynamoDB: ${err.message}"
+  /user/register-email:
+    post:
+      tags:
+        - AuthUser
+        - Email
       summary: User registration
       requestBody:
         description: User account info
@@ -1512,14 +1555,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/UserRegisterRequest'
+              $ref: '#/components/schemas/UserRegisterEmailRequest'
       responses:
         '200':
           description: Successful Operation
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UserRegisterResponse'
+                $ref: '#/components/schemas/UserRegisterEmailResponse'
         '400':
           description: Bad Request
           content:
@@ -1581,6 +1624,7 @@ paths:
     post:
       tags:
         - AuthUser
+        - Email
       summary: User resend code
       requestBody:
         description: Email
@@ -1651,6 +1695,7 @@ paths:
     post:
       tags:
         - AuthUser
+        - Email
       summary: User email verification
       requestBody:
         description: User verification code and access token
@@ -1734,6 +1779,7 @@ paths:
     post:
       tags:
         - AuthUser
+        - Email
       summary: User change password
       requestBody:
         description: Pre/new password and access token
@@ -1818,6 +1864,7 @@ paths:
     post:
       tags:
         - AuthUser
+        - Email
       summary: User change email
       requestBody:
         description: User new email and access token
@@ -1894,6 +1941,7 @@ paths:
     post:
       tags:
         - AuthUser
+        - Email
       summary: User reset password
       requestBody:
         description: Email
@@ -1978,6 +2026,7 @@ paths:
     post:
       tags:
         - AuthUser
+        - Email
       summary: User confirm reset password
       requestBody:
         description: email, code and new password
@@ -4124,6 +4173,12 @@ paths:
                       example: |
                         月～日、祝日、祝前日: 17:00～翌0:00
                         定休日：不定休
+                    latitude:
+                      type: number
+                      example: 35.6584857
+                    longitude:
+                      type: number
+                      example: 139.6967967
         '401':
           description: Unauthorized
           content:
@@ -4229,6 +4284,10 @@ tags:
     description: Authentication/Authorization of shop
   - name: AuthUser
     description: Authentication/Authorization of user
+  - name: SNS
+    description: Sign up by sns
+  - name: Email
+    description: Sign up by email
 
   - name: Admin
     description: Endpoints to use in AdminApp
@@ -4291,6 +4350,12 @@ components:
           example: |
             月～日、祝日、祝前日: 17:00～翌0:00
             定休日：不定休
+        latitude:
+          type: number
+          example: 35.6584857
+        longitude:
+          type: number
+          example: 139.6967967
         createdAt:
           type: string
           example: "2021-08-27T00:00:00+09:00"
@@ -4309,7 +4374,7 @@ components:
         email:
           type: string
           example: user@gmail.com
-        endpointArn:
+        pushNotificationArn:
           type: string
           example: arn:aws:sns:ap-northeast-1:012345678901:app
         status:
@@ -4617,6 +4682,12 @@ components:
           example: |
             月～日、祝日、祝前日: 17:00～翌0:00
             定休日：不定休
+        latitude:
+          type: number
+          example: 35.6584857
+        longitude:
+          type: number
+          example: 139.6967967
     CorporationResetShopPasswordRequest:
       type: object
       properties:
@@ -4863,7 +4934,7 @@ components:
         expiresAt:
           type: string
           example: "2009-08-07T12:34:56+09:00"
-    UserRegisterRequest:
+    UserRegisterEmailRequest:
       type: object
       properties:
         email:
@@ -4875,7 +4946,7 @@ components:
       required:
         - email
         - accessToken
-    UserRegisterResponse:
+    UserRegisterEmailResponse:
       type: object
       properties:
         id:
