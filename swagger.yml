@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   title: Starl-Backend API Document
   description: This is API Document of Starl-Backend
-  version: 1.0.11
+  version: 1.0.12
 
 servers:
   - url: https://api.starl.co.jp/v1
@@ -1421,11 +1421,278 @@ paths:
                     value:
                       message: Failed to register push notification
                       description: Failed to create push notification endpoint
-  /user/get-token:
+  /admin/user/{userId}/disable:
+    put:
+      tags:
+        - AuthUser
+      summary: Disable user by admin
+      security:
+        - BearerAuth: [ ]
+      parameters:
+        - in: path
+          name: userId
+          description: User ID
+          required: true
+          schema:
+            type: string
+            example: ad89afgt
+      responses:
+        '200':
+          description: Successful Operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AdminDisableUserResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                message: Unauthorized
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                InvalidStatusSignedUp:
+                  summary: 'Invalid status: SIGNED_UP'
+                  value:
+                    message: Invalid user status
+                    description: User is required to register email
+                InvalidStatusRegistered:
+                  summary: 'Invalid status: REGISTERED'
+                  value:
+                    message: Invalid user status
+                    description: User is required to verify email
+                InvalidStatusVerified:
+                  summary: 'Invalid status: VERIFIED'
+                  value:
+                    message: Invalid user status
+                    description: User is required to set password
+                InvalidStatusDisabled:
+                  summary: 'Invalid status: DISABLED'
+                  value:
+                    message: Invalid user status
+                    description: User is disabled
+                InvalidStatusRequireVerification:
+                  summary: 'Invalid status: REQUIRE_VERIFICATION'
+                  value:
+                    message: Invalid user status
+                    description: User is required to verify email
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                message: User not found
+                description: "userId: ${userId}"
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                message: Failed to disable user
+                description: "Amazon DynamoDB: ${err.message}"
+  /admin/user/{userId}/activate:
+    put:
+      tags:
+        - AuthUser
+      summary: Activate user by admin
+      security:
+        - BearerAuth: [ ]
+      parameters:
+        - in: path
+          name: userId
+          description: User ID
+          required: true
+          schema:
+            type: string
+            example: ad89afgt
+      responses:
+        '200':
+          description: Successful Operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AdminActivateUserResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                message: Unauthorized
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                InvalidStatusSignedUp:
+                  summary: 'Invalid status: SIGNED_UP'
+                  value:
+                    message: Invalid user status
+                    description: User is required to register email
+                InvalidStatusRegistered:
+                  summary: 'Invalid status: REGISTERED'
+                  value:
+                    message: Invalid user status
+                    description: User is required to verify email
+                InvalidStatusVerified:
+                  summary: 'Invalid status: VERIFIED'
+                  value:
+                    message: Invalid user status
+                    description: User is required to set password
+                InvalidStatusActive:
+                  summary: 'Invalid status: ACTIVE'
+                  value:
+                    message: Invalid user status
+                    description: User is already active
+                InvalidStatusRequireVerification:
+                  summary: 'Invalid status: REQUIRE_VERIFICATION'
+                  value:
+                    message: Invalid user status
+                    description: User is required to verify email
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                ShopNotFound:
+                  value:
+                    message: User not found
+                    description: "userId: ${userId}"
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                message: Failed to activateuser
+                description: "Amazon DynamoDB: ${err.message}"
+  /user/signout:
     post:
       tags:
         - AuthUser
-        - SNS
+      summary: User sign out
+      security:
+        - BearerAuth: [ ]
+      requestBody:
+        description: Sign out request
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SignOutRequest'
+      responses:
+        '200':
+          description: Successful Operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SignOutResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                message: Invalid request parameter
+                description: refreshToken required to sign out user
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                message: Unauthorized
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                message: Failed to sign out user
+                description: "Amazon Cognito: ${err.message}"
+  /user/delete:
+    delete:
+      tags:
+        - AuthUser
+      summary: Delete User
+      security:
+        - BearerAuth: [ ]
+      requestBody:
+        description: AccessToken
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                accessToken:
+                  type: string
+                  example: eyJz9sdfsdfsdfsd
+      responses:
+        '200':
+          description: Successful Operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserDeleteResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                message: Invalid request parameter
+                description: accessToken required to delete user
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                message: Unauthorized
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                Cognito:
+                  value:
+                    message: Failed to delete user
+                    description: "Amazon Cognito: ${err.message}"
+                DynamoDB:
+                  value:
+                    message: Failed to delete user
+                    description: "Amazon DynamoDB: ${err.message}"
+
+  # -------------------- AuthUser-SNS --------------------
+  /user/get-token:
+    post:
+      tags:
+        - AuthUser-SNS
       summary: Get token following sns authorization
       requestBody:
         description: Authorization Code
@@ -1462,8 +1729,7 @@ paths:
   /user/confirm-sns-signup:
     post:
       tags:
-        - AuthUser
-        - SNS
+        - AuthUser-SNS
       summary: Confirm sns sign up
       security:
         - BearerAuth: []
@@ -1545,11 +1811,12 @@ paths:
                   value:
                     message: Failed to confirm sns sign up
                     description: "Amazon DynamoDB: ${err.message}"
+
+  # -------------------- AuthUser-Email --------------------
   /user/register-email:
     post:
       tags:
-        - AuthUser
-        - Email
+        - AuthUser-Email
       summary: User registration
       requestBody:
         description: User account info
@@ -1625,8 +1892,7 @@ paths:
   /user/resende-code:
     post:
       tags:
-        - AuthUser
-        - Email
+        - AuthUser-Email
       summary: User resend code
       requestBody:
         description: Email
@@ -1696,8 +1962,7 @@ paths:
   /user/verify:
     post:
       tags:
-        - AuthUser
-        - Email
+        - AuthUser-Email
       summary: User email verification
       requestBody:
         description: User verification code and access token
@@ -1780,8 +2045,7 @@ paths:
   /user/change-password:
     post:
       tags:
-        - AuthUser
-        - Email
+        - AuthUser-Email
       summary: User change password
       requestBody:
         description: Pre/new password and access token
@@ -1865,8 +2129,7 @@ paths:
   /user/change-email:
     post:
       tags:
-        - AuthUser
-        - Email
+        - AuthUser-Email
       summary: User change email
       requestBody:
         description: User new email and access token
@@ -1942,8 +2205,7 @@ paths:
   /user/reset-password:
     post:
       tags:
-        - AuthUser
-        - Email
+        - AuthUser-Email
       summary: User reset password
       requestBody:
         description: Email
@@ -2027,8 +2289,7 @@ paths:
   /user/confirm-reset-password:
     post:
       tags:
-        - AuthUser
-        - Email
+        - AuthUser-Email
       summary: User confirm reset password
       requestBody:
         description: email, code and new password
@@ -2104,272 +2365,6 @@ paths:
                 DynamoDB:
                   value:
                     message: Failed to change password
-                    description: "Amazon DynamoDB: ${err.message}"
-  /admin/user/{userId}/disable:
-    put:
-      tags:
-        - AuthUser
-      summary: Disable user by admin
-      security:
-        - BearerAuth: []
-      parameters:
-        - in: path
-          name: userId
-          description: User ID
-          required: true
-          schema:
-            type: string
-            example: ad89afgt
-      responses:
-        '200':
-          description: Successful Operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/AdminDisableUserResponse'
-        '401':
-          description: Unauthorized
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-              example:
-                message: Unauthorized
-        '403':
-          description: Forbidden
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-              examples:
-                InvalidStatusSignedUp:
-                  summary: 'Invalid status: SIGNED_UP'
-                  value:
-                    message: Invalid user status
-                    description: User is required to register email
-                InvalidStatusRegistered:
-                  summary: 'Invalid status: REGISTERED'
-                  value:
-                    message: Invalid user status
-                    description: User is required to verify email
-                InvalidStatusVerified:
-                  summary: 'Invalid status: VERIFIED'
-                  value:
-                    message: Invalid user status
-                    description: User is required to set password
-                InvalidStatusDisabled:
-                  summary: 'Invalid status: DISABLED'
-                  value:
-                    message: Invalid user status
-                    description: User is disabled
-                InvalidStatusRequireVerification:
-                  summary: 'Invalid status: REQUIRE_VERIFICATION'
-                  value:
-                    message: Invalid user status
-                    description: User is required to verify email
-        '404':
-          description: Not Found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-              example:
-                message: User not found
-                description: "userId: ${userId}"
-        '500':
-          description: Internal Server Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-              example:
-                message: Failed to disable user
-                description: "Amazon DynamoDB: ${err.message}"
-  /admin/user/{userId}/activate:
-    put:
-      tags:
-        - AuthUser
-      summary: Activate user by admin
-      security:
-        - BearerAuth: []
-      parameters:
-        - in: path
-          name: userId
-          description: User ID
-          required: true
-          schema:
-            type: string
-            example: ad89afgt
-      responses:
-        '200':
-          description: Successful Operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/AdminActivateUserResponse'
-        '401':
-          description: Unauthorized
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-              example:
-                message: Unauthorized
-        '403':
-          description: Forbidden
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-              examples:
-                InvalidStatusSignedUp:
-                  summary: 'Invalid status: SIGNED_UP'
-                  value:
-                    message: Invalid user status
-                    description: User is required to register email
-                InvalidStatusRegistered:
-                  summary: 'Invalid status: REGISTERED'
-                  value:
-                    message: Invalid user status
-                    description: User is required to verify email
-                InvalidStatusVerified:
-                  summary: 'Invalid status: VERIFIED'
-                  value:
-                    message: Invalid user status
-                    description: User is required to set password
-                InvalidStatusActive:
-                  summary: 'Invalid status: ACTIVE'
-                  value:
-                    message: Invalid user status
-                    description: User is already active
-                InvalidStatusRequireVerification:
-                  summary: 'Invalid status: REQUIRE_VERIFICATION'
-                  value:
-                    message: Invalid user status
-                    description: User is required to verify email
-        '404':
-          description: Not Found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-              examples:
-                ShopNotFound:
-                  value:
-                    message: User not found
-                    description: "userId: ${userId}"
-        '500':
-          description: Internal Server Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-              example:
-                message: Failed to activateuser
-                description: "Amazon DynamoDB: ${err.message}"
-  /user/signout:
-    post:
-      tags:
-        - AuthUser
-      summary: User sign out
-      security:
-        - BearerAuth: []
-      requestBody:
-        description: Sign out request
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/SignOutRequest'
-      responses:
-        '200':
-          description: Successful Operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/SignOutResponse'
-        '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-              example:
-                message: Invalid request parameter
-                description: refreshToken required to sign out user
-        '401':
-          description: Unauthorized
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-              example:
-                message: Unauthorized
-        '500':
-          description: Internal Server Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-              example:
-                message: Failed to sign out user
-                description: "Amazon Cognito: ${err.message}"
-  /user/delete:
-    delete:
-      tags:
-        - AuthUser
-      summary: Delete User
-      security:
-        - BearerAuth: []
-      requestBody:
-        description: AccessToken
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                accessToken:
-                  type: string
-                  example: eyJz9sdfsdfsdfsd
-      responses:
-        '200':
-          description: Successful Operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UserDeleteResponse'
-        '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-              example:
-                message: Invalid request parameter
-                description: accessToken required to delete user
-        '401':
-          description: Unauthorized
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-              example:
-                message: Unauthorized
-        '500':
-          description: Internal Server Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-              examples:
-                Cognito:
-                  value:
-                    message: Failed to delete user
-                    description: "Amazon Cognito: ${err.message}"
-                DynamoDB:
-                  value:
-                    message: Failed to delete user
                     description: "Amazon DynamoDB: ${err.message}"
 
   # -------------------- Admin --------------------
@@ -4286,9 +4281,9 @@ tags:
     description: Authentication/Authorization of shop
   - name: AuthUser
     description: Authentication/Authorization of user
-  - name: SNS
+  - name: AuthUser-SNS
     description: Sign up by sns
-  - name: Email
+  - name: AuthUser-Email
     description: Sign up by email
 
   - name: Admin
