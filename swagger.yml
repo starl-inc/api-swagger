@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   title: Starl-Backend API Document
   description: This is API Document of Starl-Backend
-  version: 1.0.13
+  version: 1.0.14
 
 servers:
   - url: https://api.starl.co.jp/v1
@@ -266,6 +266,15 @@ paths:
               example:
                 message: Invalid request parameter
                 description: id, newPassword and session required to reset password
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                message: Unauthorized
+                description: Session is expired
         '403':
           description: Forbidden
           content:
@@ -671,6 +680,15 @@ paths:
               example:
                 message: Invalid request parameter
                 description: id, newPassword and session required to reset password
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                message: Unauthorized
+                description: Session is expired
         '403':
           description: Forbidden
           content:
@@ -742,9 +760,15 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-              example:
-                message: Unauthorized
-                description: Incorrect shopId or password
+              examples:
+                IncorrectIdOrPassword:
+                  value:
+                    message: Unauthorized
+                    description: Incorrect shopId or password
+                SessionExpired:
+                  value:
+                    message: Unauthorized
+                    description: Session is expired
         '403':
           description: Forbidden
           content:
@@ -1420,23 +1444,22 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
               examples:
-                examples:
-                  Cognito:
-                    value:
-                      message: Failed to register push notification
-                      description: "Amazon Cognito: ${err.message}"
-                  DynamoDB:
-                    value:
-                      message: Failed to register push notification
-                      description: "Amazon DynamoDB: ${err.message}"
-                  SNS-a:
-                    value:
-                      message: Failed to register push notification
-                      description: "Amazon SNS: ${err.message}"
-                  SNS-b:
-                    value:
-                      message: Failed to register push notification
-                      description: Failed to create push notification endpoint
+                Cognito:
+                  value:
+                    message: Failed to register push notification
+                    description: "Amazon Cognito: ${err.message}"
+                DynamoDB:
+                  value:
+                    message: Failed to register push notification
+                    description: "Amazon DynamoDB: ${err.message}"
+                SNS-a:
+                  value:
+                    message: Failed to register push notification
+                    description: "Amazon SNS: ${err.message}"
+                SNS-b:
+                  value:
+                    message: Failed to register push notification
+                    description: Failed to create push notification endpoint
   /admin/user/{userId}/disable:
     put:
       tags:
@@ -4895,7 +4918,7 @@ components:
           example: eyJz9sdfsdfsdfsd
         expiresAt:
           type: string
-          example: 2009-08-07T12:34:56+09:00
+          example: "2009-08-07T12:34:56+09:00"
         refreshToken:
           type: string
           example: dn43ud8uj32nk2je
