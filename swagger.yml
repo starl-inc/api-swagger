@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   title: Starl-Backend API Document
   description: This is API Document of Starl-Backend
-  version: 1.0.14
+  version: 1.0.15
 
 servers:
   - url: https://api.starl.co.jp/v1
@@ -3426,6 +3426,9 @@ paths:
                     id:
                       type: integer
                       example: 1
+                    userId:
+                      type: string
+                      example: ad89afgt
                     yearMonth:
                       type: integer
                       example: 202108
@@ -4637,6 +4640,9 @@ components:
         refreshToken:
           type: string
           example: dn43ud8uj32nk2je
+        accessToken:
+          type: string
+          example: eyJz9sdfsdfsdfsd
     CorporationActivateResponse:
       type: object
       properties:
@@ -4825,6 +4831,9 @@ components:
         refreshToken:
           type: string
           example: dn43ud8uj32nk2je
+        accessToken:
+          type: string
+          example: eyJz9sdfsdfsdfsd
     ShopActivateResponse:
       type: object
       properties:
