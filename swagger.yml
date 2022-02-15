@@ -3549,11 +3549,6 @@ paths:
                   value:
                     message: Invalid user status
                     description: User is disabled
-                InvalidUserStatusRequireVerification:
-                  summary: 'Invalid user status: REQUIRE_VERIFICATION'
-                  value:
-                    message: Invalid user status
-                    description: User is required to verify email in order to use points
                 InvalidShopStatusRegistered:
                   summary: 'Invalid shop status: REGISTERED'
                   value:
@@ -3814,11 +3809,6 @@ paths:
                   value:
                     message: Invalid user status
                     description: User is disabled
-                InvalidUserStatusRequireVerification:
-                  summary: 'Invalid user status: REQUIRE_VERIFICATION'
-                  value:
-                    message: Invalid user status
-                    description: User is required to verify email in order to use points
                 InvalidShopStatusRegistered:
                   summary: 'Invalid shop status: REGISTERED'
                   value:
@@ -3852,7 +3842,6 @@ paths:
               example:
                 message: Failed to update transaction
                 description: "Amazon DynamoDB: ${err.message}"
-
 
   # -------------------- User --------------------
   /user:
