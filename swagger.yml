@@ -1466,7 +1466,7 @@ paths:
         - AuthUser
       summary: Disable user by admin
       security:
-        - BearerAuth: [ ]
+        - BearerAuth: []
       parameters:
         - in: path
           name: userId
@@ -1517,11 +1517,6 @@ paths:
                   value:
                     message: Invalid user status
                     description: User is disabled
-                InvalidStatusRequireVerification:
-                  summary: 'Invalid status: REQUIRE_VERIFICATION'
-                  value:
-                    message: Invalid user status
-                    description: User is required to verify email
         '404':
           description: Not Found
           content:
@@ -1546,7 +1541,7 @@ paths:
         - AuthUser
       summary: Activate user by admin
       security:
-        - BearerAuth: [ ]
+        - BearerAuth: []
       parameters:
         - in: path
           name: userId
@@ -1597,11 +1592,6 @@ paths:
                   value:
                     message: Invalid user status
                     description: User is already active
-                InvalidStatusRequireVerification:
-                  summary: 'Invalid status: REQUIRE_VERIFICATION'
-                  value:
-                    message: Invalid user status
-                    description: User is required to verify email
         '404':
           description: Not Found
           content:
@@ -1628,7 +1618,7 @@ paths:
         - AuthUser
       summary: User sign out
       security:
-        - BearerAuth: [ ]
+        - BearerAuth: []
       requestBody:
         description: Sign out request
         required: true
@@ -1675,7 +1665,7 @@ paths:
         - AuthUser
       summary: Delete User
       security:
-        - BearerAuth: [ ]
+        - BearerAuth: []
       requestBody:
         description: AccessToken
         required: true
@@ -1830,11 +1820,6 @@ paths:
                   value:
                     message: Invalid user status
                     description: User is disabled
-                InvalidStatusRequireVerification:
-                  summary: 'Invalid status: REQUIRE_VERIFICATION'
-                  value:
-                    message: Invalid user status
-                    description: User is already registered
         '500':
           description: Internal Server Error
           content:
@@ -2177,10 +2162,6 @@ paths:
       responses:
         '200':
           description: Successful Operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UserResetPasswordResponse'
         '400':
           description: Bad Request
           content:
@@ -2261,10 +2242,6 @@ paths:
       responses:
         '200':
           description: Successful Operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UserConfirmResetPasswordResponse'
         '400':
           description: Bad Request
           content:
@@ -2273,7 +2250,7 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
               example:
                 message: Invalid request parameter
-                description: email, code and newPassword required to change email
+                description: email, code and newPassword required to confirm reset password
         '403':
           description: Forbidden
           content:
@@ -2301,11 +2278,6 @@ paths:
                   value:
                     message: Invalid user status
                     description: User is required to set password
-                InvalidStatusActive:
-                  summary: 'Invalid status: ACTIVE'
-                  value:
-                    message: Invalid user status
-                    description: User is already active
                 InvalidStatusDisabled:
                   summary: 'Invalid status: DISABLED'
                   value:
@@ -5035,18 +5007,6 @@ components:
           example: user@gmail.com
       required:
         - email
-    UserResetPasswordResponse:
-      type: object
-      properties:
-        id:
-          type: string
-          example: ad89afgt
-        email:
-          type: string
-          example: user@gmail.com
-        status:
-          type: string
-          example: REQUIRE_VERIFICATION
     UserConfirmResetPasswordRequest:
       type: object
       properties:
@@ -5063,18 +5023,6 @@ components:
         - email
         - code
         - newPassword
-    UserConfirmResetPasswordResponse:
-      type: object
-      properties:
-        id:
-          type: string
-          example: ad89afgt
-        email:
-          type: string
-          example: user@gmail.com
-        status:
-          type: string
-          example: ACTIVE
 
   securitySchemes:
     BearerAuth:
