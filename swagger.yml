@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   title: Starl-Backend API Document
   description: This is API Document of Starl-Backend
-  version: 1.0.17
+  version: 1.0.18
 
 servers:
   - url: https://api.starl.co.jp/v1
@@ -1669,6 +1669,8 @@ paths:
       parameters:
         - in: query
           name: accessToken
+          description: Access Token
+          required: true
           schema:
             type: string
             example: eyJz9sdfsdfsdfsd
@@ -2305,10 +2307,10 @@ paths:
       parameters:
         - in: query
           name: yearMonth
+          description: Year and month of items to return
           schema:
             type: integer
             example: 202107
-          description: Year and month of items to return
       responses:
         '200':
           description: Successful Operation
@@ -2455,17 +2457,16 @@ paths:
       parameters:
         - in: query
           name: corporationId
+          description: Corporation ID
           schema:
             type: string
             example: nikuyokocho
-          description: Corporation ID
         - in: query
           name: yearMonth
+          description: Year and month of items to return
           schema:
             type: integer
             example: 202107
-          required: true
-          description: Year and month of items to return
       responses:
         '200':
           description: Successful Operation
@@ -2745,10 +2746,10 @@ paths:
       parameters:
         - in: query
           name: yearMonth
+          description: Year and month of items to return
           schema:
             type: integer
             example: 202108
-          description: Year and month of items to return
       responses:
         '200':
           description: Successful Operation
@@ -3060,10 +3061,10 @@ paths:
       parameters:
         - in: query
           name: yearMonth
+          description: Year and month of items to return
           schema:
             type: integer
             example: 202108
-          description: Year and month of items to return
       responses:
         '200':
           description: Successful Operation
@@ -3292,10 +3293,10 @@ paths:
       parameters:
         - in: query
           name: yearMonth
+          description: Year and month of items to return
           schema:
             type: integer
             example: 202108
-          description: Year and month of items to return
       responses:
         '200':
           description: Successful Operation
@@ -4053,28 +4054,28 @@ paths:
       parameters:
         - in: query
           name: latitude
+          description: latitude
           schema:
             type: float
             example: 123.456789
-          description: latitude
         - in: query
           name: longitude
+          description: longitude
           schema:
             type: float
             example: 123.456789
-          description: longitude
         - in: query
           name: scale
+          description: Zoom scale
           schema:
             type: float
             example: 15.1
-          description: Zoom scale
         - in: query
           name: limit
+          description: The number of items to return
           schema:
             type: integer
             example: 100
-          description: The number of items to return
       responses:
         '200':
           description: Successful Operation
@@ -4146,10 +4147,10 @@ paths:
       parameters:
         - in: query
           name: yearMonth
+          description: Year and month of items to return
           schema:
             type: integer
             example: 202108
-          description: Year and month of items to return
       responses:
         '200':
           description: Successful Operation
