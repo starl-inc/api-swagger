@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   title: Starl-Backend API Document
   description: This is API Document of Starl-Backend
-  version: 1.0.19
+  version: 1.0.20
 
 servers:
   - url: https://api.starl.co.jp/v1
@@ -1754,7 +1754,7 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
               example:
                 message: Invalid request parameter
-                description: code required to get token
+                description: code and redirectUri required to get token
         '500':
           description: Internal Server Error
           content:
