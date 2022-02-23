@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   title: Starl-Backend API Document
   description: This is API Document of Starl-Backend
-  version: 1.0.18
+  version: 1.0.19
 
 servers:
   - url: https://api.starl.co.jp/v1
@@ -1720,6 +1720,18 @@ paths:
       tags:
         - AuthUser-SNS
       summary: Get token following sns authorization
+      parameters:
+        - in: query
+          name: redirectUri
+          description: Redirect URI
+          required: true
+          schema:
+            type: string
+          examples:
+            SignUp:
+              value: "starpoint://sns-sign-up"
+            SignIn:
+              value: "starpoint://sns-sign-in"
       requestBody:
         description: Authorization Code
         required: true
