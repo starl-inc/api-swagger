@@ -2,10 +2,13 @@ openapi: 3.0.0
 info:
   title: Starl-Backend API Document
   description: This is API Document of Starl-Backend
-  version: 1.0.21
+  version: 1.0.1
 
 servers:
-  - url: https://api.starl.co.jp/v1
+  - url: https://g3im603od8.execute-api.ap-northeast-1.amazonaws.com/v1
+    description: Production server
+  - url: https://eusiurux3i.execute-api.ap-northeast-1.amazonaws.com/v1
+    description: Staging server
 
 paths:
   # -------------------- HealthCheck --------------------
