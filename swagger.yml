@@ -734,6 +734,8 @@ paths:
       tags:
         - AuthShop
       summary: Corporation reset shop password
+      security:
+        - BearerAuth: []
       requestBody:
         description: Shop auth info
         required: true
