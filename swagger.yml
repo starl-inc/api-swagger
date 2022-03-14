@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   title: Starl-Backend API Document
   description: This is API Document of Starl-Backend
-  version: 1.0.1
+  version: 1.0.2
 
 servers:
   - url: https://eusiurux3i.execute-api.ap-northeast-1.amazonaws.com/v1
@@ -2030,9 +2030,19 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-              example:
-                message: Invalid request parameter
-                description: code and accessToken required to verify email
+              examples:
+                InvalidParams:
+                  value:
+                    message: Invalid request parameter
+                    description: code and accessToken required to verify email
+                InvalidCode:
+                  value:
+                    message: Invalid request parameter
+                    description: Invalid verification code
+                CodeExpired:
+                  value:
+                    message: Invalid request parameter
+                    description: Verification code is expired, please resend code
         '403':
           description: Forbidden
           content:
@@ -2255,9 +2265,19 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-              example:
-                message: Invalid request parameter
-                description: email, code and newPassword required to confirm reset password
+              examples:
+                InvalidParams:
+                  value:
+                    message: Invalid request parameter
+                    description: email, code and newPassword required to confirm reset password
+                InvalidCode:
+                  value:
+                    message: Invalid request parameter
+                    description: Invalid verification code
+                CodeExpired:
+                  value:
+                    message: Invalid request parameter
+                    description: Verification code is expired, please try again.
         '403':
           description: Forbidden
           content:
