@@ -5,8 +5,6 @@ info:
   version: 1.0.1
 
 servers:
-  - url: https://g3im603od8.execute-api.ap-northeast-1.amazonaws.com/v1
-    description: Production server
   - url: https://eusiurux3i.execute-api.ap-northeast-1.amazonaws.com/v1
     description: Staging server
 
@@ -1908,11 +1906,6 @@ paths:
                   value:
                     message: Invalid user
                     description: Unable to change email
-                InvalidStatusRegistered:
-                  summary: 'Invalid status: REGISTERED'
-                  value:
-                    message: Invalid user status
-                    description: User is already registered email
                 InvalidStatusVerified:
                   summary: 'Invalid status: VERIFIED'
                   value:
