@@ -1765,7 +1765,6 @@ paths:
         - BearerAuth: []
       requestBody:
         description: User auth info
-        required: true
         content:
           application/json:
             schema:
