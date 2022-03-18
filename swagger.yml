@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   title: Starl-Backend API Document
   description: This is API Document of Starl-Backend
-  version: 1.0.2
+  version: 1.0.3
 
 servers:
   - url: https://eusiurux3i.execute-api.ap-northeast-1.amazonaws.com/v1
@@ -1731,17 +1731,6 @@ paths:
           schema:
             type: string
             example: 0a1b2c3d-4e5f-6g7h-8i9j-0a1b2c3d4e5f6g7h
-        - in: query
-          name: redirectUri
-          description: Redirect URI
-          required: true
-          schema:
-            type: string
-          examples:
-            SignUp:
-              value: "starpoint://sns-sign-up"
-            SignIn:
-              value: "starpoint://sns-sign-in"
       responses:
         '200':
           description: Successful Operation
@@ -1757,7 +1746,7 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
               example:
                 message: Invalid request parameter
-                description: code and redirectUri required to get token
+                description: code required to get token
         '500':
           description: Internal Server Error
           content:
@@ -1788,6 +1777,21 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/UserConfirmSnsSignUpResponse'
+              examples:
+                SignUp:
+                  summary: 'On sign up'
+                  value:
+                    id: Google_102345678901234567890
+                    email: user@gmail.com
+                    status: ACTIVE
+                    signup: true
+                SignIn:
+                  summary: 'On sign in'
+                  value:
+                    id: Google_102345678901234567890
+                    email: user@gmail.com
+                    status: ACTIVE
+                    signup: false
         '400':
           description: Bad Request
           content:
@@ -4911,9 +4915,6 @@ components:
         password:
           type: string
           example: b03ddf3ca2e714a6548e7495e2a03f5e824eaac9837cd7f159c67b90fb4b7342
-      required:
-        - id
-        - password
     UserConfirmSnsSignUpResponse:
       type: object
       properties:
@@ -4926,6 +4927,9 @@ components:
         status:
           type: string
           example: ACTIVE
+        signup:
+          type: boolean
+          example: true
 
     UserChangeEmailRequest:
       type: object
