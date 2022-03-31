@@ -5009,16 +5009,16 @@ components:
 
     UserRegisterEmailRequest:
       type: object
-        properties:
-          email:
-            type: string
-            example: new@gmail.com
-          accessToken:
-            type: string
-            example: eyJz9sdfsdfsdfsd
-        required:
-          - email
-          - accessToken
+      properties:
+        email:
+          type: string
+          example: new@gmail.com
+        accessToken:
+          type: string
+          example: eyJz9sdfsdfsdfsd
+      required:
+        - email
+        - accessToken
     UserChangeEmailRequest:
       type: object
       properties:
