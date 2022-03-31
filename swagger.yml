@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   title: Starl-Backend API Document
   description: This is API Document of Starl-Backend
-  version: 1.0.3
+  version: 1.0.4
 
 servers:
   - url: https://eusiurux3i.execute-api.ap-northeast-1.amazonaws.com/v1
@@ -1368,15 +1368,30 @@ paths:
               example:
                 message: Unauthorized
                 description: Incorrect id or password
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                message: Invalid user status
+                description: User is required to verify email
         '500':
           description: Internal Server Error
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-              example:
-                message: Failed to sign in user
-                description: "Amazon Cognito: ${err.message}"
+              examples:
+                Cognito:
+                  value:
+                    message: Failed to sign in user
+                    description: "Amazon Cognito: ${err.message}"
+                DynamoDB:
+                  value:
+                    message: Failed to sign in user
+                    description: "Amazon DynamoDB: ${err.message}"
   /user/refresh-token:
     post:
       tags:
@@ -1852,6 +1867,73 @@ paths:
                     description: "Amazon DynamoDB: ${err.message}"
 
   # -------------------- AuthUser-Email --------------------
+  /user/register-email:
+    post:
+      tags:
+        - AuthUser-Email
+      summary: User register email
+      requestBody:
+        description: Email and access token
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserRegisterEmailRequest'
+      responses:
+        '200':
+          description: Successful Operation
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                InvalidParams:
+                  value:
+                    message: Invalid request parameter
+                    description: email and accessToken required to register email
+                EmailUsed:
+                  value:
+                    message: This email already used
+                    description: "email: ${email}"
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                InvalidStatusVerified:
+                  summary: 'Invalid status: VERIFIED'
+                  value:
+                    message: Invalid user status
+                    description: User is required to set password
+                InvalidStatusActive:
+                  summary: 'Invalid status: ACTIVE'
+                  value:
+                    message: Invalid user status
+                    description: User is already active
+                InvalidStatusDisabled:
+                  summary: 'Invalid status: DISABLED'
+                  value:
+                    message: Invalid user status
+                    description: User is disabled
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                Cognito:
+                  value:
+                    message: Failed to change email
+                    description: "Amazon Cognito: ${err.message}"
+                DynamoDB:
+                  value:
+                    message: Failed to change email
+                    description: "Amazon DynamoDB: ${err.message}"
   /user/change-email:
     post:
       tags:
@@ -1867,21 +1949,6 @@ paths:
       responses:
         '200':
           description: Successful Operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UserChangeEmailResponse'
-              examples:
-                Registration:
-                  value:
-                    id: ad89afgt
-                    email: new@gmail.com
-                    status: REGISTERED
-                ChangeEmail:
-                  value:
-                    id: ad89afgt
-                    email: new@gmail.com
-                    status: ACTIVE
         '400':
           description: Bad Request
           content:
@@ -1904,11 +1971,16 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
               examples:
-                InvalidUser:
-                  summary: SNS account cannot change email
+                InvalidStatusSignedUp:
+                  summary: 'Invalid status: SIGNED_UP'
                   value:
-                    message: Invalid user
-                    description: Unable to change email
+                    message: Invalid user status
+                    description: User is required to register email
+                InvalidStatusRegistered:
+                  summary: 'Invalid status: VERIFIED'
+                  value:
+                    message: Invalid user status
+                    description: User is required to verify email
                 InvalidStatusVerified:
                   summary: 'Invalid status: VERIFIED'
                   value:
@@ -1919,6 +1991,11 @@ paths:
                   value:
                     message: Invalid user status
                     description: User is disabled
+                InvalidUser:
+                  summary: 'SNS account cannot change email'
+                  value:
+                    message: Invalid user
+                    description: Unable to change email
         '500':
           description: Internal Server Error
           content:
@@ -4930,6 +5007,18 @@ components:
           type: boolean
           example: true
 
+    UserRegisterEmailRequest:
+      type: object
+        properties:
+          email:
+            type: string
+            example: new@gmail.com
+          accessToken:
+            type: string
+            example: eyJz9sdfsdfsdfsd
+        required:
+          - email
+          - accessToken
     UserChangeEmailRequest:
       type: object
       properties:
@@ -4942,18 +5031,6 @@ components:
       required:
         - email
         - accessToken
-    UserChangeEmailResponse:
-      type: object
-      properties:
-        id:
-          type: string
-          example: ad89afgt
-        email:
-          type: string
-          example: new@gmail.com
-        status:
-          type: string
-          example: REGISTERED
     UserResendCodeRequest:
       type: object
       properties:
