@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   title: Starl-Backend API Document
   description: This is API Document of Starl-Backend
-  version: 1.0.4
+  version: 1.0.0
 
 servers:
   - url: https://eusiurux3i.execute-api.ap-northeast-1.amazonaws.com/v1
@@ -1882,6 +1882,10 @@ paths:
       responses:
         '200':
           description: Successful Operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserRegisterEmailResponse'
         '400':
           description: Bad Request
           content:
@@ -2017,7 +2021,7 @@ paths:
         - AuthUser-Email
       summary: User resend code
       requestBody:
-        description: Email
+        description: Access token
         required: true
         content:
           application/json:
@@ -4902,6 +4906,9 @@ components:
     UserSignInResponse:
       type: object
       properties:
+        id:
+          type: string
+          example: ad89afgt
         idToken:
           type: string
           example: dmcxd329ujdmkemkd349r
@@ -5019,6 +5026,18 @@ components:
       required:
         - email
         - accessToken
+    UserRegisterEmailResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          example: ad89afgt
+        email:
+          type: string
+          example: user@gmail.com
+        status:
+          type: string
+          example: REGISTERED
     UserChangeEmailRequest:
       type: object
       properties:
