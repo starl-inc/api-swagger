@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   title: Starl-Backend API Document
   description: This is API Document of Starl-Backend
-  version: 1.0.1
+  version: 1.0.0
 
 servers:
   - url: https://eusiurux3i.execute-api.ap-northeast-1.amazonaws.com/v1
@@ -79,8 +79,6 @@ paths:
       tags:
         - AuthAdmin
       summary: Admin sign out
-      security:
-        - BearerAuth: []
       requestBody:
         description: Sign out request
         required: true
@@ -485,8 +483,6 @@ paths:
       tags:
         - AuthCorporation
       summary: Corporation sign out
-      security:
-        - BearerAuth: []
       requestBody:
         description: Sign out request
         required: true
@@ -1168,8 +1164,6 @@ paths:
       tags:
         - AuthShop
       summary: Shop sign out
-      security:
-        - BearerAuth: []
       requestBody:
         description: Sign out request
         required: true
@@ -1417,9 +1411,15 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-              example:
-                message: Invalid request parameter
-                description: refreshToken required to refresh token
+              examples:
+                InvalidParams:
+                  value:
+                    message: Invalid request parameter
+                    description: refreshToken required to refresh token
+                InvalidRequest:
+                  value:
+                    message: Failed to refresh token
+                    description: Invalid request
         '500':
           description: Internal Server Error
           content:
@@ -1635,8 +1635,6 @@ paths:
       tags:
         - AuthUser
       summary: User sign out
-      security:
-        - BearerAuth: []
       requestBody:
         description: Sign out request
         required: true
@@ -5128,13 +5126,9 @@ components:
         code:
           type: string
           example: 123456
-        newPassword:
-          type: string
-          example: fb4b7342
       required:
         - email
         - code
-        - newPassword
     UserConfirmResetPasswordResponse:
       type: object
       properties:
