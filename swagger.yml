@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   title: Starl-Backend API Document
   description: This is API Document of Starl-Backend
-  version: 1.0.0
+  version: 1.0.1
 
 servers:
   - url: https://eusiurux3i.execute-api.ap-northeast-1.amazonaws.com/v1
@@ -2343,6 +2343,10 @@ paths:
       responses:
         '200':
           description: Successful Operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserConfirmResetPasswordResponse'
         '400':
           description: Bad Request
           content:
@@ -2353,7 +2357,7 @@ paths:
                 InvalidParams:
                   value:
                     message: Invalid request parameter
-                    description: email, code and newPassword required to confirm reset password
+                    description: email and code required to confirm reset password
                 InvalidCode:
                   value:
                     message: Invalid request parameter
@@ -5131,6 +5135,18 @@ components:
         - email
         - code
         - newPassword
+    UserConfirmResetPasswordResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          example: ad89afgt
+        tempPassword:
+          type: string
+          example: P@ssw0rd
+        status:
+          type: string
+          example: VERIFIED
 
   securitySchemes:
     BearerAuth:
