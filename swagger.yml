@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   title: Starl-Backend API Document
   description: This is API Document of Starl-Backend
-  version: 1.0.0
+  version: 1.0.1
 
 servers:
   - url: https://eusiurux3i.execute-api.ap-northeast-1.amazonaws.com/v1
@@ -1368,9 +1368,17 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-              example:
-                message: Invalid user status
-                description: User is required to verify email
+              examples:
+                InvalidStatusRegistered:
+                  summary: 'Invalid status: REGISTERED'
+                  value:
+                    message: Invalid user status
+                    description: User is required to verify email
+                InvalidStatusDisabled:
+                  summary: 'Invalid status: DISABLED'
+                  value:
+                    message: Invalid user status
+                    description: User is disabled
         '500':
           description: Internal Server Error
           content:
@@ -2355,7 +2363,7 @@ paths:
                 InvalidParams:
                   value:
                     message: Invalid request parameter
-                    description: email and code required to confirm reset password
+                    description: email, code and newPassword required to confirm reset password
                 InvalidCode:
                   value:
                     message: Invalid request parameter
@@ -5126,21 +5134,22 @@ components:
         code:
           type: string
           example: 123456
+        newPassword:
+          type: string
+          example: fb4b7342
       required:
         - email
         - code
+        - newPassword
     UserConfirmResetPasswordResponse:
       type: object
       properties:
         id:
           type: string
           example: ad89afgt
-        tempPassword:
-          type: string
-          example: P@ssw0rd
         status:
           type: string
-          example: VERIFIED
+          example: ACTIVE
 
   securitySchemes:
     BearerAuth:
