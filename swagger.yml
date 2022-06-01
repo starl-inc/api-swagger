@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   title: Starl-Backend API Document
   description: This is API Document of Starl-Backend
-  version: 1.0.1
+  version: 1.0.2
 
 servers:
   - url: https://eusiurux3i.execute-api.ap-northeast-1.amazonaws.com/v1
@@ -1736,6 +1736,94 @@ paths:
                 DynamoDB:
                   value:
                     message: Failed to delete user
+                    description: "Amazon DynamoDB: ${err.message}"
+
+  # -------------------- AuthUser-Web --------------------
+  /user/web-signup:
+    post:
+      tags:
+        - AuthUser-Web
+      summary: Sign up web user
+      requestBody:
+        description: User object to signup
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserWebSignUpRequest'
+      responses:
+        '200':
+          description: Successful Operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserWebSignUpResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                message: Invalid request parameter
+                description: email and password required to sign up web user
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                Cognito:
+                  value:
+                    message: Failed to sign up web user
+                    description: "Amazon Cognito: ${err.message}"
+                DynamoDB:
+                  value:
+                    message: Failed to sign up web user
+                    description: "Amazon DynamoDB: ${err.message}"
+  /user/confirm-web-signup:
+    post:
+      tags:
+        - AuthUser-Web
+      summary: Confirm web sign up
+      requestBody:
+        description: User object to confrim signup
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserConfirmWebSignUpRequest'
+      responses:
+        '200':
+          description: Successful Operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserConfirmWebSignUpResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                message: Invalid request parameter
+                description: id and code required to sign up web user
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                Cognito:
+                  value:
+                    message: Failed to confirm web sign up
+                    description: "Amazon Cognito: ${err.message}"
+                DynamoDB:
+                  value:
+                    message: Failed to confirm web sign up
                     description: "Amazon DynamoDB: ${err.message}"
 
   # -------------------- AuthUser-SNS --------------------
@@ -4341,6 +4429,8 @@ tags:
     description: Authentication/Authorization of shop
   - name: AuthUser
     description: Authentication/Authorization of user
+  - name: AuthUser-Web
+      description: Sign up via web
   - name: AuthUser-SNS
     description: Sign up by sns
   - name: AuthUser-Email
@@ -4983,6 +5073,49 @@ components:
         message:
           type: string
           example: User successfully disabled to be deleted in 30 days
+
+    UserWebSignUpRequest:
+      type: object
+      properties:
+        email:
+          type: string
+          example: user@gmail.com
+        password:
+          type: string
+          example: b03ddf3ca2e714a6548e7495e2a03f5e824eaac9837cd7f159c67b90fb4b7342
+      required:
+        - email
+        - password
+    UserWebSignUpResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          example: ad89afgt
+        status:
+          type: string
+          example: REGISTERED
+    UserConfirmWebSignUpRequest:
+      type: object
+      properties:
+        id:
+          type: string
+          example: ad89afgt
+        code:
+          type: string
+          example: 123456
+      required:
+        - id
+        - code
+    UserConfirmWebSignUpResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          example: ad89afgt
+        status:
+          type: string
+          example: ACTIVE
 
     UserGetTokenResponse:
       type: object
