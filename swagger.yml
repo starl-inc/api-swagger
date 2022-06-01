@@ -4430,7 +4430,7 @@ tags:
   - name: AuthUser
     description: Authentication/Authorization of user
   - name: AuthUser-Web
-      description: Sign up via web
+    description: Sign up via web
   - name: AuthUser-SNS
     description: Sign up by sns
   - name: AuthUser-Email
