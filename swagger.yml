@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   title: Starl-Backend API Document
   description: This is API Document of Starl-Backend
-  version: 1.0.2
+  version: 1.0.3
 
 servers:
   - url: https://eusiurux3i.execute-api.ap-northeast-1.amazonaws.com/v1
@@ -2109,7 +2109,7 @@ paths:
                   value:
                     message: Failed to change email
                     description: "Amazon DynamoDB: ${err.message}"
-  /user/resende-code:
+  /user/resend-code:
     post:
       tags:
         - AuthUser-Email
