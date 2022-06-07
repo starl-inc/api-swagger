@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   title: Starl-Backend API Document
   description: This is API Document of Starl-Backend
-  version: 1.0.4
+  version: 1.0.5
 
 servers:
   - url: https://eusiurux3i.execute-api.ap-northeast-1.amazonaws.com/v1
@@ -5120,9 +5120,9 @@ components:
         redirectUri:
           type: string
           example: https://point.starl.co.jp/process-sns-signin
-        required:
-          - code
-          - redirectUri
+      required:
+        - code
+        - redirectUri
     UserGetTokenViaWebResponse:
       type: object
       properties:
@@ -5162,9 +5162,9 @@ components:
         password:
           type: string
           example: b03ddf3ca2e714a6548e7495e2a03f5e824eaac9837cd7f159c67b90fb4b7342
-        required:
-          - id
-          - password
+      required:
+        - id
+        - password
     UserConfirmSnsSignUpResponse:
       type: object
       properties:
