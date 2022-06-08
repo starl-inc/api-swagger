@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   title: Starl-Backend API Document
   description: This is API Document of Starl-Backend
-  version: 1.0.8
+  version: 1.0.9
 
 servers:
   - url: https://eusiurux3i.execute-api.ap-northeast-1.amazonaws.com/v1
@@ -5368,12 +5368,8 @@ components:
         email:
           type: string
           example: user@gmail.com
-        password:
-          type: string
-          example: b03ddf3ca2e714a6548e7495e2a03f5e824eaac9837cd7f159c67b90fb4b7342
       required:
         - email
-        - password
     UserWebSignUpResponse:
       type: object
       properties:
@@ -5418,7 +5414,19 @@ components:
           example: user@gmail.com
         status:
           type: string
-          example: ACTIVE
+          example: VERIFIED
+        idToken:
+          type: string
+          example: dmcxd329ujdmkemkd349r
+        accessToken:
+          type: string
+          example: eyJz9sdfsdfsdfsd
+        expiresAt:
+          type: string
+          example: "2009-08-07T12:34:56+09:00"
+        refreshToken:
+          type: string
+          example: dn43ud8uj32nk2je
     UserRegisterEmailRequest:
       type: object
       properties:
