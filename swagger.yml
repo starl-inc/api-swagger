@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   title: Starl-Backend API Document
   description: This is API Document of Starl-Backend
-  version: 1.0.6
+  version: 1.0.7
 
 servers:
   - url: https://eusiurux3i.execute-api.ap-northeast-1.amazonaws.com/v1
@@ -2699,6 +2699,8 @@ paths:
       tags:
         - Admin
       summary: Read shops by admin
+      security:
+        - BearerAuth: []
       parameters:
         - in: query
           name: corporationId
@@ -4294,8 +4296,6 @@ paths:
       tags:
         - User
       summary: Read nearby shops by user
-      security:
-        - BearerAuth: []
       parameters:
         - in: query
           name: latitude
