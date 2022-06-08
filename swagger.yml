@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   title: Starl-Backend API Document
   description: This is API Document of Starl-Backend
-  version: 1.0.7
+  version: 1.0.8
 
 servers:
   - url: https://eusiurux3i.execute-api.ap-northeast-1.amazonaws.com/v1
@@ -1953,25 +1953,64 @@ paths:
                   value:
                     message: Failed to sign up web user
                     description: "Amazon DynamoDB: ${err.message}"
-  /user/confirm-web-signup:
+  /user/web-signup/resend-code:
     post:
       tags:
         - AuthUser-Email
-      summary: Confirm web sign up
+      summary: User resend code for web sign up
+      requestBody:
+        description:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserWebSignUpResendCodeRequest'
+      responses:
+        '200':
+          description: Successful Operation
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                message: Invalid request parameter
+                description: email required to sign up web user
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                Cognito:
+                  value:
+                    message: Failed to resend code
+                    description: "Amazon Cognito: ${err.message}"
+                DynamoDB:
+                  value:
+                    message: Failed to resend code
+                    description: "Amazon DynamoDB: ${err.message}"
+  /user/web-signup/confirm:
+    post:
+      tags:
+        - AuthUser-Email
+      summary: User confirm web sign up
       requestBody:
         description: User object to confrim signup
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/UserConfirmWebSignUpRequest'
+              $ref: '#/components/schemas/UserWebSignUpConfirmRequest'
       responses:
         '200':
           description: Successful Operation
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UserConfirmWebSignUpResponse'
+                $ref: '#/components/schemas/UserWebSignUpConfirmResponse'
         '400':
           description: Bad Request
           content:
@@ -2067,6 +2106,151 @@ paths:
                   value:
                     message: Failed to change email
                     description: "Amazon DynamoDB: ${err.message}"
+  /user/register-email/resend-code:
+    post:
+      tags:
+        - AuthUser-Email
+      summary: User resend code for register email
+      requestBody:
+        description: Access token
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserRegisterEmailResendCodeRequest'
+      responses:
+        '200':
+          description: Successful Operation
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                message: Invalid request parameter
+                description: accessToken required to resend code
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                InvalidStatusSignedUp:
+                  summary: 'Invalid status: SIGNED_UP'
+                  value:
+                    message: Invalid user status
+                    description: User is required to register email
+                InvalidStatusVerified:
+                  summary: 'Invalid status: VERIFIED'
+                  value:
+                    message: Invalid user status
+                    description: User is already verified
+                InvalidStatusActive:
+                  summary: 'Invalid status: ACTIVE'
+                  value:
+                    message: Invalid user status
+                    description: User is already active
+                InvalidStatusDisabled:
+                  summary: 'Invalid status: DISABLED'
+                  value:
+                    message: Invalid user status
+                    description: User is disabled
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                Cognito:
+                  value:
+                    message: Failed to resend code
+                    description: "Amazon Cognito: ${err.message}"
+                DynamoDB:
+                  value:
+                    message: Failed to resend code
+                    description: "Amazon DynamoDB: ${err.message}"
+  /user/register-email/verify:
+    post:
+      tags:
+        - AuthUser-Email
+      summary: User email verification for change email
+      requestBody:
+        description: User verification code and access token
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserRegisterEmailVerifyRequest'
+      responses:
+        '200':
+          description: Successful Operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserRegisterEmailVerifyResponse'
+              example:
+                id: ad89afgt
+                email: user@gmail.com
+                status: VERIFIED
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                InvalidParams:
+                  value:
+                    message: Invalid request parameter
+                    description: code and accessToken required to verify email
+                InvalidCode:
+                  value:
+                    message: Invalid request parameter
+                    description: Invalid verification code
+                CodeExpired:
+                  value:
+                    message: Invalid request parameter
+                    description: Verification code is expired, please resend code
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                InvalidStatusSignedUp:
+                  summary: 'Invalid status: SIGNED_UP'
+                  value:
+                    message: Invalid user status
+                    description: User is required to register email
+                InvalidStatusVerified:
+                  summary: 'Invalid status: VERIFIED'
+                  value:
+                    message: Invalid user status
+                    description: User is already verified
+                InvalidStatusDisabled:
+                  summary: 'Invalid status: DISABLED'
+                  value:
+                    message: Invalid user status
+                    description: User is disabled
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                Cognito:
+                  value:
+                    message: Failed to verify email
+                    description: "Amazon Cognito: ${err.message}"
+                DynamoDB:
+                  value:
+                    message: Failed to verify email
+                    description: "Amazon DynamoDB: ${err.message}"
   /user/change-email:
     post:
       tags:
@@ -2144,18 +2328,18 @@ paths:
                   value:
                     message: Failed to change email
                     description: "Amazon DynamoDB: ${err.message}"
-  /user/resend-code:
+  /user/change-email/resend-code:
     post:
       tags:
         - AuthUser-Email
-      summary: User resend code
+      summary: User resend code for change email
       requestBody:
         description: Access token
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/UserResendCodeRequest'
+              $ref: '#/components/schemas/UserChangeEmailResendCodeRequest'
       responses:
         '200':
           description: Successful Operation
@@ -2180,11 +2364,16 @@ paths:
                   value:
                     message: Invalid user status
                     description: User is required to register email
+                InvalidStatusRegistered:
+                  summary: 'Invalid status: VERIFIED'
+                  value:
+                    message: Invalid user status
+                    description: User is required to verify email
                 InvalidStatusVerified:
                   summary: 'Invalid status: VERIFIED'
                   value:
                     message: Invalid user status
-                    description: User is already verified
+                    description: User is required to set password
                 InvalidStatusDisabled:
                   summary: 'Invalid status: DISABLED'
                   value:
@@ -2205,38 +2394,29 @@ paths:
                   value:
                     message: Failed to resend code
                     description: "Amazon DynamoDB: ${err.message}"
-  /user/verify:
+  /user/change-email/verify:
     post:
       tags:
         - AuthUser-Email
-      summary: User email verification
+      summary: User email verification for change email
       requestBody:
         description: User verification code and access token
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/UserVerifyRequest'
+              $ref: '#/components/schemas/UserChangeEmailVerifyRequest'
       responses:
         '200':
           description: Successful Operation
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UserVerifyResponse'
-              examples:
-                Registration:
-                  summary: Verification of registration
-                  value:
-                    id: ad89afgt
-                    email: user@gmail.com
-                    status: VERIFIED
-                ChangeEmail:
-                  summary: Verification of update email
-                  value:
-                    id: ad89afgt
-                    email: user@gmail.com
-                    status: ACTIVE
+                $ref: '#/components/schemas/UserChangeEmailVerifyResponse'
+              example:
+                id: ad89afgt
+                email: user@gmail.com
+                status: ACTIVE
         '400':
           description: Bad Request
           content:
@@ -2457,7 +2637,7 @@ paths:
                   value:
                     message: Failed to reset password
                     description: "Amazon DynamoDB: ${err.message}"
-  /user/confirm-reset-password:
+  /user/reset-password/confirm:
     post:
       tags:
         - AuthUser-Email
@@ -2468,7 +2648,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/UserConfirmResetPasswordRequest'
+              $ref: '#/components/schemas/UserResetPasswordConfirmRequest'
       responses:
         '200':
           description: Successful Operation
@@ -5206,7 +5386,16 @@ components:
         status:
           type: string
           example: REGISTERED
-    UserConfirmWebSignUpRequest:
+    UserWebSignUpResendCodeRequest:
+      type: object
+      properties:
+        email:
+          type: string
+          example: user@gmail.com
+        code:
+      required:
+        - email
+    UserWebSignUpConfirmRequest:
       type: object
       properties:
         email:
@@ -5218,7 +5407,7 @@ components:
       required:
         - email
         - code
-    UserConfirmWebSignUpResponse:
+    UserWebSignUpConfirmResponse:
       type: object
       properties:
         id:
@@ -5254,6 +5443,38 @@ components:
         status:
           type: string
           example: REGISTERED
+    UserRegisterEmailResendCodeRequest:
+      type: object
+      properties:
+        accessToken:
+          type: string
+          example: eyJz9sdfsdfsdfsd
+      required:
+        - accessToken
+    UserRegisterEmailVerifyRequest:
+      type: object
+      properties:
+        code:
+          type: string
+          example: 123456
+        accessToken:
+          type: string
+          example: eyJz9sdfsdfsdfsd
+      required:
+        - code
+        - accessToken
+    UserRegisterEmailVerifyResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          example: ad89afgt
+        email:
+          type: string
+          example: user@gmail.com
+        status:
+          type: string
+          example: VERIFIED
     UserChangeEmailRequest:
       type: object
       properties:
@@ -5266,7 +5487,7 @@ components:
       required:
         - email
         - accessToken
-    UserResendCodeRequest:
+    UserChangeEmailResendCodeRequest:
       type: object
       properties:
         accessToken:
@@ -5274,7 +5495,7 @@ components:
           example: eyJz9sdfsdfsdfsd
       required:
         - accessToken
-    UserVerifyRequest:
+    UserChangeEmailVerifyRequest:
       type: object
       properties:
         code:
@@ -5286,7 +5507,7 @@ components:
       required:
         - code
         - accessToken
-    UserVerifyResponse:
+    UserChangeEmailVerifyResponse:
       type: object
       properties:
         id:
@@ -5331,7 +5552,7 @@ components:
           example: user@gmail.com
       required:
         - email
-    UserConfirmResetPasswordRequest:
+    UserResetPasswordConfirmRequest:
       type: object
       properties:
         email:
