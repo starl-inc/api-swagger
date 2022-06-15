@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   title: Starl-Backend API Document
   description: This is API Document of Starl-Backend
-  version: 1.0.13
+  version: 1.0.14
 
 servers:
   - url: https://eusiurux3i.execute-api.ap-northeast-1.amazonaws.com/v1
@@ -1765,14 +1765,22 @@ paths:
                     id: Google_102345678901234567890
                     email: user@gmail.com
                     status: ACTIVE
-                    signup: true
+                    onSignUp: true
+                    idToken: dmcxd329ujdmkemkd349r
+                    accessToken: eyJz9sdfsdfsdfsd
+                    expiresAt: "2009-08-07T12:34:56+09:00"
+                    refreshToken: dn43ud8uj32nk2je
                 OnSignIn:
                   summary: 'On sign in'
                   value:
                     id: Google_102345678901234567890
                     email: user@gmail.com
                     status: ACTIVE
-                    signup: false
+                    onSignUp: false
+                    idToken: dmcxd329ujdmkemkd349r
+                    accessToken: eyJz9sdfsdfsdfsd
+                    expiresAt: "2009-08-07T12:34:56+09:00"
+                    refreshToken: dn43ud8uj32nk2je
         '400':
           description: Bad Request
           content:
@@ -1869,22 +1877,14 @@ paths:
                     id: Google_102345678901234567890
                     email: user@gmail.com
                     status: ACTIVE
-                    onSignUp: true
-                    idToken: dmcxd329ujdmkemkd349r
-                    accessToken: eyJz9sdfsdfsdfsd
-                    expiresAt: "2009-08-07T12:34:56+09:00"
-                    refreshToken: dn43ud8uj32nk2je
+                    signup: true
                 OnSignIn:
                   summary: 'On sign in'
                   value:
                     id: Google_102345678901234567890
                     email: user@gmail.com
                     status: ACTIVE
-                    onSignUp: false
-                    idToken: dmcxd329ujdmkemkd349r
-                    accessToken: eyJz9sdfsdfsdfsd
-                    expiresAt: "2009-08-07T12:34:56+09:00"
-                    refreshToken: dn43ud8uj32nk2je
+                    signup: false
         '400':
           description: Bad Request
           content:
