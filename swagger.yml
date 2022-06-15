@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   title: Starl-Backend API Document
   description: This is API Document of Starl-Backend
-  version: 1.0.12
+  version: 1.0.13
 
 servers:
   - url: https://eusiurux3i.execute-api.ap-northeast-1.amazonaws.com/v1
@@ -2013,6 +2013,33 @@ paths:
               example:
                 message: Invalid request parameter
                 description: email required to sign up web user
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                InvalidStatusSignedUp:
+                  summary: 'Invalid status: SIGNED_UP'
+                  value:
+                    message: Invalid user status
+                    description: User is required to register email
+                InvalidStatusVerified:
+                  summary: 'Invalid status: VERIFIED'
+                  value:
+                    message: Invalid user status
+                    description: User is already verified
+                InvalidStatusActive:
+                  summary: 'Invalid status: ACTIVE'
+                  value:
+                    message: Invalid user status
+                    description: User is already active
+                InvalidStatusDisabled:
+                  summary: 'Invalid status: DISABLED'
+                  value:
+                    message: Invalid user status
+                    description: User is disabled
         '500':
           description: Internal Server Error
           content:
@@ -2056,6 +2083,33 @@ paths:
               example:
                 message: Invalid request parameter
                 description: id and code required to sign up web user
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                InvalidStatusSignedUp:
+                  summary: 'Invalid status: SIGNED_UP'
+                  value:
+                    message: Invalid user status
+                    description: User is required to register email
+                InvalidStatusVerified:
+                  summary: 'Invalid status: VERIFIED'
+                  value:
+                    message: Invalid user status
+                    description: User is already verified
+                InvalidStatusActive:
+                  summary: 'Invalid status: ACTIVE'
+                  value:
+                    message: Invalid user status
+                    description: User is already active
+                InvalidStatusDisabled:
+                  summary: 'Invalid status: DISABLED'
+                  value:
+                    message: Invalid user status
+                    description: User is disabled
         '500':
           description: Internal Server Error
           content:
