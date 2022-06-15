@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   title: Starl-Backend API Document
   description: This is API Document of Starl-Backend
-  version: 1.0.10
+  version: 1.0.11
 
 servers:
   - url: https://eusiurux3i.execute-api.ap-northeast-1.amazonaws.com/v1
@@ -1776,6 +1776,58 @@ paths:
               example:
                 message: Failed to get token
                 description: "Http request to cognito token endpoint failed: ${err.message}"
+  /user/confirm-sns-signup-via-web:
+    post:
+      tags:
+        - AuthUser-SNS
+      summary: Confirm sns sign up via web
+      security:
+        - BearerAuth: []
+      responses:
+        '200':
+          description: Successful Operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserConfirmSnsSignUpResponse'
+              examples:
+                SignUp:
+                  summary: 'On sign up'
+                  value:
+                    id: Google_102345678901234567890
+                    email: user@gmail.com
+                    status: ACTIVE
+                    signup: true
+                SignIn:
+                  summary: 'On sign in'
+                  value:
+                    id: Google_102345678901234567890
+                    email: user@gmail.com
+                    status: ACTIVE
+                    signup: false
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                message: Invalid ID token
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                Cognito:
+                  value:
+                    message: Failed to confirm sns sign up
+                    description: "Amazon Cognito: ${err.message}"
+                DynamoDB:
+                  value:
+                    message: Failed to confirm sns sign up
+                    description: "Amazon DynamoDB: ${err.message}"
   /user/get-token:
     post:
       tags:
