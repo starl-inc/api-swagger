@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   title: Starl-Backend API Document
   description: This is API Document of Starl-Backend
-  version: 1.0.15
+  version: 1.0.16
 
 servers:
   - url: https://eusiurux3i.execute-api.ap-northeast-1.amazonaws.com/v1
@@ -1437,11 +1437,11 @@ paths:
               example:
                 message: Failed to refresh token
                 description: "Http request to cognito token endpoint failed: ${err.message}"
-  /user/register-push-notification:
+  /user/register-push-notification/ios:
     post:
       tags:
         - AuthUser
-      summary: Register push notification
+      summary: Register push notification for iPhone
       security:
         - BearerAuth: []
       requestBody:
@@ -1462,7 +1462,7 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
               example:
                 message: Invalid request parameter
-                description: deviceToken required to refresh token
+                description: deviceToken required to register push notification for iPhone
         '500':
           description: Internal Server Error
           content:
@@ -1472,19 +1472,68 @@ paths:
               examples:
                 Cognito:
                   value:
-                    message: Failed to register push notification
+                    message: Failed to register push notification for iPhone
                     description: "Amazon Cognito: ${err.message}"
                 DynamoDB:
                   value:
-                    message: Failed to register push notification
+                    message: Failed to register push notification for iPhone
                     description: "Amazon DynamoDB: ${err.message}"
                 SNS-a:
                   value:
-                    message: Failed to register push notification
+                    message: Failed to register push notification for iPhone
                     description: "Amazon SNS: ${err.message}"
                 SNS-b:
                   value:
-                    message: Failed to register push notification
+                    message: Failed to register push notification for iPhone
+                    description: Failed to create push notification endpoint
+  /user/register-push-notification/android:
+    post:
+      tags:
+        - AuthUser
+      summary: Register push notification for android
+      security:
+        - BearerAuth: [ ]
+      requestBody:
+        description: device token
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserRegisterPushNotificationRequest'
+      responses:
+        '200':
+          description: Successful Operation
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                message: Invalid request parameter
+                description: deviceToken required to register push notification for android
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                Cognito:
+                  value:
+                    message: Failed to register push notification for android
+                    description: "Amazon Cognito: ${err.message}"
+                DynamoDB:
+                  value:
+                    message: Failed to register push notification for android
+                    description: "Amazon DynamoDB: ${err.message}"
+                SNS-a:
+                  value:
+                    message: Failed to register push notification for android
+                    description: "Amazon SNS: ${err.message}"
+                SNS-b:
+                  value:
+                    message: Failed to register push notification for android
                     description: Failed to create push notification endpoint
   /admin/user/{userId}/disable:
     put:
