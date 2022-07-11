@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   title: Starl-Backend API Document
   description: This is API Document of Starl-Backend
-  version: 1.0.17
+  version: 1.0.18
 
 servers:
   - url: https://eusiurux3i.execute-api.ap-northeast-1.amazonaws.com/v1
@@ -1494,7 +1494,7 @@ paths:
       security:
         - BearerAuth: [ ]
       requestBody:
-        description: device token
+        description: device info
         required: true
         content:
           application/json:
@@ -1508,7 +1508,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/UserRegisterPushNotificationResponse'
               examples:
-                AlreadyExists:
+                AlreadyRegistered:
                   value:
                     message: Device is already registered.
                 Updated:
@@ -5423,10 +5423,14 @@ components:
     UserRegisterPushNotificationRequest:
       type: object
       properties:
+        deviceId:
+          type: string
+          example: 3K0XXXXX-83XX-HEXX-KIXX-29KH83XXXXXX
         deviceToken:
           type: string
           example: 549d137abd2019cda12aa06bff2341ef3ba82da06e3f7adce9daa31e1bcf4dd6
       required:
+        - deviceId
         - deviceToken
     AdminDisableUserResponse:
       type: object
