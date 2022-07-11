@@ -1503,6 +1503,17 @@ paths:
       responses:
         '200':
           description: Successful Operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserRegisterPushNotificationResponse'
+              examples:
+                AlreadyExists:
+                  value:
+                    message: Device is already registered.
+                Updated:
+                  value:
+                    message: Updated push notification endpoint.
         '400':
           description: Bad Request
           content:
@@ -1511,7 +1522,7 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
               example:
                 message: Invalid request parameter
-                description: deviceToken required to register push notification for android
+                description: deviceId and deviceToken required to register push notification for android
         '500':
           description: Internal Server Error
           content:
@@ -5384,6 +5395,11 @@ components:
         refreshToken:
           type: string
           example: dn43ud8uj32nk2je
+    UserRegisterPushNotificationResponse:
+      type: object
+      properties:
+        message:
+          type: string
     UserRefreshTokenRequest:
       type: object
       properties:
